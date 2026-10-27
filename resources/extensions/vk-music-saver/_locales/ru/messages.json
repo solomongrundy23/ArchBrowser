@@ -1,0 +1,17 @@
+{
+	"extName": {
+		"message": "VK Music Saver — скачать музыку из ВКонтакте"
+	},
+	"extDescription": {
+		"message": "Скачивайте треки и плейлисты в один клик. Создано командой VK Next."
+	},
+	"popup_title": {
+		"message": "VK Music Saver"
+	},
+	"popup_donate": {
+		"message": "Поддержать проект"
+	},
+	"popup_feedback": {
+		"message": "Сообщить об ошибке"
+	}
+}

@@ -1,0 +1,42 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "version": "1.1.20",
+  "default_locale": "en",
+  "description": "__MSG_appDesc__",
+  "manifest_version": 3,
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "action": {
+    "default_title": "User Agent switcher",
+    "default_icon": "images/logo.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "128": "images/logo-128.png",
+    "16": "images/logo-16.png",
+    "32": "images/logo-32.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/helper_cs.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "declarativeNetRequest",
+    "offscreen",
+    "tabs"
+  ],
+  "storage": {
+    "managed_schema": "js/schema.json"
+  },
+  "host_permissions": ["*://*/*"]
+}

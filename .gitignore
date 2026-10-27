@@ -1,0 +1,29 @@
+# Зависимости
+node_modules/
+
+# Сборки и установщики
+dist/
+
+# Скриншоты и артефакты ручных проверок
+shots/
+smoke-*.txt
+*-err.txt
+*-out.txt
+*.log
+
+# Временные файлы
+*.tmp
+*.temp
+*.bak
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Локальные секреты и настройки
+.env
+.env.*
+!.env.example
+
+# Кэши
+.cache/
+npm-debug.log*

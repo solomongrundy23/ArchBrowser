@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<!--
+  - This file is part of Privacy Manager.
+  - Copyright (C) 2017-present Manvel Saroyan
+  - 
+  - Privacy Manager is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  - 
+  - Privacy Manager is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU General Public License for more details.
+  - 
+  - You should have received a copy of the GNU General Public License
+  - along with Privacy Manager. If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<html>
+	<head>
+		<title>Privacy Manager</title>
+		<link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/pm-tab-panel.css" />
+
+		<script type="text/javascript" src="js/pm-components.js" defer></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/ui.js"></script>
+	</head>
+	<body>
+		<template id="settings-list">
+			<li>
+				<pm-toggle text="My text" description="Description of the element goes here">
+					</pm-toggle>
+			</li>
+		</template>
+		<div id="main">
+			<pm-tab-panel>
+	
+				<pm-tabs>
+					<pm-tab id="tab-main" data-i18n="main_tab"></pm-tab>
+					<pm-tab id="tab-cookies" data-i18n="cookies_general"></pm-tab>
+					<pm-tab id="tab-network" data-i18n="network_tab"></pm-tab>
+				</pm-tabs>
+			
+				<pm-panels>
+					<pm-panel aria-labelledby="tab-main" id="panel-main">
+
+						<div class="settings-list-container">
+							<section id="privacyManagement">
+								<h2 data-i18n="privacyManagement"></h2>
+								<ul class="settings-list"></ul>
+								<button data-i18n="openIncognito" data-action="open-in-incognito" id="incognito"></button>
+							</section>
+							<section id="startupClear">
+								<h2 data-i18n="startupClear"></h2>
+								<ul class="settings-list"></ul>
+							</section>
+						</div>
+
+					</pm-panel>
+					<pm-panel aria-labelledby="tab-cookies" id="panel-cookies">
+						
+						<div class="settings-list-container">
+							<ul class="settings-list"></ul>
+							<div class="separator"></div>
+							<ul class="settings-list"></ul>
+						</div>
+			
+						<section>
+							<h4 data-i18n="cookies_general"></h4>
+
+							<pm-table>
+								<template sort="domain"
+													data-action="get-cookies"
+													data-key-action="get-cookies"
+													data-key-delete="delete-domain"
+													data-whitelist="false">
+											<div>
+												<div class="data-container">
+													<span data-text="domain" class="domainName"></span>
+													<span data-text="cookienum" class="cookiesNumber"></span>
+												</div>
+												<button role="checkbox" 
+																data-action="whitelist-domain"
+																title="whitelist"
+																class="icon whitelist"></button>
+												<button class="icon delete" 
+																data-action="delete-domain"
+																tabindex="-1"></button>
+											</div>
+									</template>
+									<template sort="name"
+														data-key-action="edit-cookie"
+														data-key-delete="delete-cookie"
+														data-key-quite="close-expanded-domain"
+														data-action=""
+														data-dialog="cookie-edit"
+														data-whitelist="false">
+											<div>
+												<button class="icon edit"
+																data-action="edit-cookie"></button>
+												<div class="data-container">
+													<span data-text="name" class="cookieName"></span>
+													<span data-text="value" class="cookieValue"></span>
+												</div>
+												<button role="checkbox"
+																data-action="whitelist-cookie"
+																data-text="whitelist"
+																class="icon whitelist"
+																title="whitelist"></button>
+												<button class="icon delete"
+																data-action="delete-cookie"></button>
+											</div>
+									</template>
+							</pm-table>
+
+							<div id="cookiesContainer">
+								<div id="cookie-controls" class="controls">
+									<input type="search" id="search-domain" placeholder="Search domain">
+									<pm-button data-i18n="addCookie" data-action="add-cookie"></pm-button>
+									<pm-button data-i18n="deleteAll" data-action="open-cookie-removal-dialog"></pm-button>
+								</div>
+							</div>
+						</section>
+
+					</pm-panel>
+					<pm-panel aria-labelledby="tab-network" id="panel-network">
+
+						<div class="settings-list-container">
+							<ul class="settings-list"></ul>
+							<div class="separator"></div>
+							<ul class="settings-list"></ul>
+						</div>
+						<div id="requestsWidget">
+							<pm-table>
+								<template
+													data-action="get-request" 
+													data-key-action="get-request"
+													data-key-down="next-sibling" 
+													data-key-up="previouse-sibling"
+													data-type="send/receive">
+									<div>
+										<div class="data-container">
+											<span data-text="url" class="networkUrl"></span>
+											<span data-text="type" class="networkType"></span>
+										</div>
+									</div>
+								</template>
+								<template data-key-down="next-sibling" 
+													data-key-up="previouse-sibling"
+													data-key-quite="close-expanded-request"
+													data-action="tba">
+									<div>
+										<div class="data-container">
+											<span data-text="name" class="networkName"></span>
+											<span data-text="value" class="networkValue"></span>
+										</div>
+									</div>
+								</template>
+							</pm-table>
+							<div class="controls">
+								<pm-button data-i18n="downloadAll" data-action="download-all" download="requests.txt"></pm-button>
+								<pm-button data-i18n="deleteAll" data-action="delete-all"></pm-button>
+							</div>
+						</div>
+
+					</pm-panel>
+				</pm-panels>
+			
+			</pm-tab-panel>
+			
+			<!-- Dialog -->
+			<pm-dialog class="cookies">
+				<div slot="body">
+					<form action="#">
+						<div class="fieldset-container">
+							<div>
+								<p>
+									<label>
+										<span data-i18n="cookieDialog_domain"></span>
+										<!-- TODO: Revisit the Domain pattern -->
+										<input required="true" data-id="domain" type="text" disabled="disabled" title="Not a valid Domain name" pattern="^[a-zA-Z0-9-_]+\.[a-zA-Z0-9-_.]*">
+									</label>
+								</p>
+								<p>
+									<label>
+										<span data-i18n="cookieDialog_name"></span>
+										<input data-id="name" type="text" required="true">
+									</label>
+								</p>
+								<p>
+									<label>
+										<span data-i18n="cookieDialog_value"></span>
+										<input data-id="value" type="text" required="true">
+									</label>
+								</p>
+								<p>
+									<label>
+										<span data-i18n="cookieDialog_path"></span>
+										<input data-id="path" type="text" title="Should start with '/'" pattern="^\/.*" value="/" required="true">
+									</label>
+								</p>
+								<p>
+									<label>
+										<span data-i18n="cookieDialog_expDate"></span>
+											<input data-id="expirationDate" type="date" required="true">
+									</label>
+								</p>
+								<p>
+									<label>
+										<span data-i18n="cookieDialog_expTime"></span>
+											<input data-id="expirationTime" type="time" step="1">
+									</label>
+								</p>
+							</div>
+							<div>
+								<p>
+									<label>
+										<span data-i18n="cookieDialog_hostOnyl"></span>
+										<input data-id="hostOnly" type="checkbox">
+									</label>
+								</p>
+								<p>
+									<label>
+										<span data-i18n="cookieDialog_httpOnyl"></span>
+										<input data-id="httpOnly" type="checkbox">
+									</label>
+								</p>
+								<p>
+									<label>
+										<span data-i18n="cookieDialog_secure"></span>
+										<input data-id="secure" type="checkbox">
+									</label>
+								</p>
+								<p>
+									<label>
+										<span data-i18n="cookieDialog_session"></span>
+										<input data-id="session" type="checkbox">
+									</label>
+								</p>
+								<p>
+									<label>
+										<span data-i18n="cookieDialog_storeId"></span>
+										<input data-id="storeId" type="number" required="true" value="0">
+									</label>
+								</p>
+							</div>
+						</div>
+						<div id="cookie-edit-control" class="controls">
+							<pm-button data-id="actionBtn" data-i18n="cookieDialog_update" data-action="update-cookie"></pm-button>
+							<pm-button id="delete-cookie" data-i18n="cookieDialog_delete" data-action="delete-cookie"></pm-button>
+						</div>
+					</form>
+				</div>
+			</pm-dialog>
+
+			<pm-dialog class="delete-cookies">
+				<div slot="body">
+					<div data-i18n="cookieDialog_deleteAll_msg" class="message"></div>
+					<div class="controls">
+						<pm-button data-i18n="cookieDialog_cancel" data-action="close-dialog"></pm-button>
+						<pm-button data-i18n="deleteAll" data-action="delete-all-cookies"></pm-button>
+					</div>
+				</div>
+			</pm-dialog>
+
+			<pm-dialog class="info">
+				<div slot="body">
+					<div data-id="description"></div>
+				</div>
+			</pm-dialog>
+
+		</div>
+	</body>
+</html>

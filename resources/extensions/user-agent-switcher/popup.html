@@ -1,0 +1,87 @@
+<html>
+<head>
+  <link rel="stylesheet" href="css/helper.css"/>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+  <script src="js/jquery.js"></script>
+  <script src="js/popup.js"></script>
+</head>
+<body class="popup">
+  <table class="options_header">
+    <tbody>
+      <tr class="table_row">
+        <td><img src="images/logo.png" class="options_header_logo"></td>
+        <td class="popup_item"><p><b>User-Agent</b> Switcher</p></td>
+        <td><a target="_blank"><img src="images/settings.png" class="options_header_settings" style="cursor: pointer;"></a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table id="options_table"></table>
+
+  <footer class="footer">
+    <div class="user-agent-sw">
+      <a class="user-agent-sw__item" href="https://cutt.ly/lytIhCUS" target="_blank">
+        <div class="user-agent-sw__item-icon-wrapper">
+          <img class="user-agent-sw__item-icon" src="images/logo-for-ads.png" alt="">
+        </div>
+        <div class="user-agent-sw__item-content">
+          <div class="user-agent-sw__item-title">Allow Copy</div>
+          <div class="user-agent-sw__item-description">Enable copy on protected websites with one click!</div>
+        </div>
+      </a>
+      <div class="user-agent-sw__note">
+        <div>This is something I developed recently.</div>
+      </div>
+    </div>
+
+    <div class="donate-section">
+      <button id="donate-btn" class="donate-btn" type="button">
+        <span class="donate-btn__text">Support User-Agent Switcher</span>
+        <svg class="donate-btn__arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+</footer>
+
+  <div id="donate-modal" class="donate-modal" hidden>
+    <div class="donate-modal__overlay"></div>
+    <div class="donate-modal__content">
+      <button class="donate-modal__close" type="button" aria-label="Close">&times;</button>
+
+      <div class="donate-modal__icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 8h1a4 4 0 0 1 0 8h-1" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6 1v3M10 1v3M14 1v3" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <h3 class="donate-modal__title">Enjoying User-Agent Switcher?</h3>
+      <p class="donate-modal__subtitle">It's free, ad-free, and built by one developer. A small tip helps keep it that way.</p>
+
+      <div class="donate-amounts">
+        <button type="button" class="donate-amount" data-amount="2" data-url="https://www.creem.io/payment/prod_l1hwOiYr1Xv1UBaUZFLyv">
+          <span class="donate-amount__value">$2</span>
+          <span class="donate-amount__label">Coffee</span>
+        </button>
+        <button type="button" class="donate-amount donate-amount--selected" data-amount="4" data-url="https://www.creem.io/payment/prod_4qDVucIR8AjUcS2qHwqCKx">
+          <span class="donate-amount__badge">Popular</span>
+          <span class="donate-amount__value">$4</span>
+          <span class="donate-amount__label">Snack</span>
+        </button>
+        <button type="button" class="donate-amount" data-amount="9" data-url="https://www.creem.io/payment/prod_DgulRXhGqcuBGQqoaVLoP">
+          <span class="donate-amount__value">$9</span>
+          <span class="donate-amount__label">Lunch</span>
+        </button>
+      </div>
+
+      <button type="button" id="donate-support-btn" class="donate-support-btn">
+        Support development
+      </button>
+
+      <p class="donate-modal__footer">No ads. No data collected. Ever.</p>
+    </div>
+  </div>
+</body>
+</html>

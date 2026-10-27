@@ -1,0 +1,871 @@
+{
+    "name": {
+        "message": "Privacy Badger",
+        "description": ""
+    },
+    "description": {
+        "message": "לומד באופן אוטומטי לחסום עוקבנים מוסתרים. נוצר על ידי ארגון ללא מטרות רווח מוביל EFF כדי למנוע מחברות לרגל אחריך.",
+        "description": ""
+    },
+    "canvas_fingerprinting": {
+        "message": "לקיחת טביעת אצבע קנבס",
+        "description": ""
+    },
+    "popup_help_button": {
+        "message": "עזרה",
+        "description": ""
+    },
+    "popup_share_button": {
+        "message": "שתף",
+        "description": ""
+    },
+    "popup_options_button": {
+        "message": "אפשרויות",
+        "description": ""
+    },
+    "popup_special_page_header": {
+        "message": "אין מה לעשות בדף זה",
+        "description": ""
+    },
+    "popup_special_page_paragraph": {
+        "message": "Privacy Badger אינו עובד על עמודים מיוחדים כמו זה. נסה לגלוש במקום כלשהו אחר.",
+        "description": ""
+    },
+    "popup_first_run_header": {
+        "message": "עבודה טובה בפתיחת החלון הקופץ!",
+        "description": ""
+    },
+    "popup_disabled_site_header": {
+        "message": "Privacy Badger מושבת באתר זה",
+        "description": ""
+    },
+    "popup_disable_for_site": {
+        "message": "השבת עבור האתר הזה",
+        "description": ""
+    },
+    "popup_enable_for_site": {
+        "message": "אפשר עבור האתר הזה",
+        "description": ""
+    },
+    "report_broken_site": {
+        "message": "דווח על אתר שבור",
+        "description": ""
+    },
+    "popup_donate_to_eff": {
+        "message": "תרום אל EFF — ארגון ללא מטרות רווח שמגן על פרטיות דיגיטלית",
+        "description": ""
+    },
+    "popup_review_pb": {
+        "message": "נהנה מן Privacy Badger? השאר ביקורת!",
+        "description": ""
+    },
+    "popup_sweatshirt_promo": {
+        "message": "Show your support with a new Privacy Badger sweatshirt!",
+        "description": ""
+    },
+    "popup_effector_signup": {
+        "message": "Get the latest privacy news from EFF",
+        "description": ""
+    },
+    "version": {
+        "message": "גרסה $VERSION_STRING$",
+        "description": "",
+        "placeholders": {
+            "version_string": {
+                "content": "$1",
+                "example": "2018.8.1"
+            }
+        }
+    },
+    "popup_instructions": {
+        "message": "$COUNT$ $LINK_START$עוקבנים$LINK_END$ פוטנציאליים נחסמו",
+        "description": "",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "15"
+            },
+            "link_start": {
+                "content": "$2",
+                "example": "<a href='https://privacybadger.org/#What-is-a-third-party-tracker'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "popup_instructions_no_trackers": {
+        "message": "$LINK_START$עוקבנים$LINK_END$ לא נחסמו",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "$1",
+                "example": "<a href='https://privacybadger.org/#What-is-a-third-party-tracker'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "popup_blocked": {
+        "message": "אין משאבי צד שלישי בדף זה. הידד לפרטיות!",
+        "description": ""
+    },
+    "tooltip_block": {
+        "message": "הזז את המַחְלֵק שמאלה כדי לחסום תחום",
+        "description": ""
+    },
+    "tooltip_cookieblock": {
+        "message": "מרכז את המַחְלֵק כדי לחסום עוגיות",
+        "description": ""
+    },
+    "tooltip_allow": {
+        "message": "הזז את המַחְלֵק ימינה כדי להתיר תחום",
+        "description": ""
+    },
+    "badger_status_block": {
+        "message": "$DOMAIN$ חסום",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_cookieblock": {
+        "message": "עוגיות חסומות מן $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_blocked_scripts": {
+        "message": "עוגיות חסומות ותסריטים חסומים של ייסוד טביעת אצבע מן $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_allow": {
+        "message": "$DOMAIN$ מותר",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_noaction": {
+        "message": "אין מעקב עבור $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "dnt_tooltip": {
+        "message": "תחום זה מבטיח לא לעקוב אחריך",
+        "description": ""
+    },
+    "domain_slider_label": {
+        "message": "Settings for $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "domain_slider_block_tooltip": {
+        "message": "חסום לגמרי",
+        "description": ""
+    },
+    "domain_slider_cookieblock_tooltip": {
+        "message": "חסום עוגיות",
+        "description": ""
+    },
+    "domain_slider_allow_tooltip": {
+        "message": "התר",
+        "description": ""
+    },
+    "breakage_warning_tooltip": {
+        "message": "חסימת תחום זה ידועה בתור שוברת אתרים",
+        "description": ""
+    },
+    "google_signin_tooltip": {
+        "message": "כדי לאפשר התחברות אל אתרים עם חשבון Google שלך, העבר מחלק זה ימינה, וטען מחדש את הדף",
+        "description": ""
+    },
+    "feed_the_badger_title": {
+        "message": "לחץ כדי להחזיר שליטה בתחום זה אל Privacy Badger",
+        "description": ""
+    },
+    "not_yet_blocked_header": {
+        "message": "Privacy Badger לא החליט עדין אם תחומים אלו צריכים להיחסם",
+        "description": ""
+    },
+    "intro_not_an_adblocker_paragraph": {
+        "message": "Privacy Badger מתחיל לחסום ברגע שהוא רואה את אותו עוקבן בשלושה אתרים שונים. שלוש פגיעות והוא בחוץ!",
+        "description": ""
+    },
+    "non_tracker": {
+        "message": "לא נראה שהתחומים למטה עוקבים אחריך",
+        "description": ""
+    },
+    "non_tracker_tip": {
+        "message": "כרגע Privacy Badger בודק רק אם צדדים שלישיים משתמשים בעוגיות, אחסון מקומי HTML5 או לקיחת טביעת אצבע קנבס כדי לאתר את גלישתך. חלק מתחומים אלו עשוי להשתמש בשיטות מעקב אשר Privacy Badger אינו יכול לגלות.",
+        "description": ""
+    },
+    "report_input_label": {
+        "message": "תאר בקצרה את הבעיה:",
+        "description": ""
+    },
+    "error_input": {
+        "message": "מה לא בסדר?",
+        "description": ""
+    },
+    "report_terms": {
+        "message": "זה ישלח באופן אוטומטי את המידע הבא אל EFF: הדף שאתה כרגע מבקר בו, גרסת הדפדפן שלך, הגרסה של Privacy Badger והמצב של כל המחלקים בדף זה.",
+        "description": ""
+    },
+    "report_button": {
+        "message": "שלח דוח",
+        "description": ""
+    },
+    "report_cancel": {
+        "message": "בטל",
+        "description": ""
+    },
+    "report_close": {
+        "message": "סגור",
+        "description": ""
+    },
+    "report_success": {
+        "message": "תודה! נחקור זאת לעומק.",
+        "description": ""
+    },
+    "report_fail": {
+        "message": "אופס. משהו השתבש.",
+        "description": ""
+    },
+    "share_title": {
+        "message": "ספר לחבריך",
+        "description": ""
+    },
+    "share_tracker_header": {
+        "message": "Privacy Badger חסם $COUNT$ עוקבנים פוטנציאליים בתחום $DOMAIN$:",
+        "description": "",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "15"
+            },
+            "domain": {
+                "content": "$2",
+                "example": "example.com"
+            }
+        }
+    },
+    "share_base_message": {
+        "message": "Privacy Badger (privacybadger.org) הוא תוסף דפדפן שלומד באופן אוטומטי לחסום עוקבנים מוסתרים. Privacy Badger נוצר על ידי הקרן של החזית האלקטרונית, ארגון ללא מטרות רווח שנלחם על זכויותיך באופן מקוון.",
+        "description": ""
+    },
+    "copy_button_initial": {
+        "message": "העתק ללוח עריכה",
+        "description": ""
+    },
+    "copy_button_copied": {
+        "message": "הועתק",
+        "description": ""
+    },
+    "popup_info_firstparty_protections": {
+        "message": "הגנה מפני מעקב קישורים פעילה",
+        "description": ""
+    },
+    "popup_info_firstparty_description": {
+        "message": "אתרים מסוימים $LINK_START$משתמשים במעקב קישורים כדי לעקוב אחריך$LINK_END$ ברגע שאתה לוחץ על קישור כדי לעזוב את האתר. Privacy Badger מסיר מעקב מקישורים כאלו באתר הזה.",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "<a href='https://privacybadger.org/#What-about-tracking-by-the-sites-I-actively-visit%2c-like-NYTimes.com-or-Facebook.com' target='_blank'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "popup_info_youtube": {
+        "message": "פרסומות לא נחסמות? YouTube לא עובד? זה כנראה לא בגלל Privacy Badger.",
+        "description": ""
+    },
+    "extension_error_text": {
+        "message": "אנא $LINK_START$ספר לנו$LINK_END$ על השגיאה הבאה:",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "$1",
+                "example": "<a href='http://example.com'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "firstRun_title": {
+        "message": "תודה על התקנת Privacy Badger!",
+        "description": ""
+    },
+    "intro_logo_alt_text": {
+        "message": "EFF logo",
+        "description": ""
+    },
+    "intro_eff_header": {
+        "message": "A privacy tool by $START_HTML$EFF$END_HTML$, a member-supported nonprofit",
+        "description": "",
+        "placeholders": {
+            "start_html": {
+                "content": "$1",
+                "example": "<b>"
+            },
+            "end_html": {
+                "content": "$2",
+                "example": "</b>"
+            }
+        }
+    },
+    "intro_nag_header": {
+        "message": "Almost done!",
+        "description": ""
+    },
+    "intro_pin_nudge": {
+        "message": "$START_SPAN_TAG$הצמד את Privacy Badger אל סרגל הכלים שלך$END_SPAN_TAG$ עבור גישה קלה אל הכפתור \"$DISABLE_FOR_SITE$\".",
+        "description": "",
+        "placeholders": {
+            "start_span_tag": {
+                "content": "<b>"
+            },
+            "disable_for_site": {
+                "content": "$1",
+                "example": "Disable for this site"
+            },
+            "end_span_tag": {
+                "content": "</b>"
+            }
+        }
+    },
+    "intro_pin_instructions": {
+        "message": "כדי להצמיד את האיקון של Privacy Badger, לחץ על איקון של חתיכת הפאזל בסרגל הכלים של הדפדפן שלך. לאחר מכן, לחץ על האיקון הצמד ליד Privacy Badger.",
+        "description": ""
+    },
+    "intro_animation_button_stop": {
+        "message": "Stop animation",
+        "description": ""
+    },
+    "intro_animation_button_play": {
+        "message": "Play animation",
+        "description": ""
+    },
+    "intro_disable_header": {
+        "message": "One tip before you enjoy better browsing",
+        "description": ""
+    },
+    "intro_disable_button_context": {
+        "message": "Privacy Badger is all set to protect you from hidden trackers. But blocking trackers sometimes breaks websites.",
+        "description": ""
+    },
+    "intro_disable_button": {
+        "message": "אם אתה חושב כי Privacy Badger שובר עמוד (סרטון לא מתנגן, לדוגמה), $START_HTML$אתה יכול ללחוץ על הכפתור '$DISABLE_FOR_SITE$' כדי לכבות את Privacy Badger עבור אותו אתר.$END_HTML$",
+        "description": "",
+        "placeholders": {
+            "start_html": {
+                "content": "$1",
+                "example": "<b>"
+            },
+            "disable_for_site": {
+                "content": "$2",
+                "example": "Disable for this site"
+            },
+            "end_html": {
+                "content": "$3",
+                "example": "</b>"
+            }
+        }
+    },
+    "intro_features_header": {
+        "message": "Privacy Badger protects your browsing from trackers.",
+        "description": ""
+    },
+    "intro_features_subheader": {
+        "message": "Learn how.",
+        "description": ""
+    },
+    "intro_welcome": {
+        "message": "Privacy Badger לומד באופן אוטומטי לחסום עוקבנים מוסתרים. קח דקה כדי לראות כיצד.",
+        "description": ""
+    },
+    "intro_beyond_ads": {
+        "message": "תופס עוקבנים ערמומיים",
+        "description": ""
+    },
+    "intro_beyond_ads_paragraph": {
+        "message": "Privacy Badger שולח את <a href='https://globalprivacycontrol.org/' target='_blank'>האות בקרה גלובלית של פרטיות</a>, כדי להוציא אותך משיתוף ומכירה של נתונים, ואת <a href='https://www.eff.org/issues/do-not-track' target='_blank'>האות אל תעקוב</a> כדי לומר לחברות לא לעקוב אחריך.",
+        "description": ""
+    },
+    "intro_beyond_ads_paragraph2": {
+        "message": "אם הם מתעלמים מסימנים אלו, Privacy Badger ילמד לחסום אותם — בין אם הם מפרסמים או עוקבנים מסוגים אחרים.",
+        "description": ""
+    },
+    "intro_not_an_adblocker": {
+        "message": "לא חוסם פרסומות",
+        "description": ""
+    },
+    "intro_learns_paragraph": {
+        "message": "Privacy Badger מגלה באופן אוטומטי עוקבנים על סמך התנהגותם.",
+        "description": ""
+    },
+    "intro_not_an_adblocker_paragraph2": {
+        "message": "מעקב מוסתר קורה בכל מיני דרכים; פרסומות הן רק הקצה הגלוי של הקרחון. Privacy Badger לא חוסם פרסומות אלא אם הן עוקבות אחריך.",
+        "description": ""
+    },
+    "intro_open_popup": {
+        "message": "נסה לפתוח את החלון הקופץ של Privacy Badger",
+        "description": ""
+    },
+    "intro_open_popup_alt": {
+        "message": "סרגל כלים של דפדפן עם איקון Privacy Badger מוקף",
+        "description": ""
+    },
+    "intro_donate_heading": {
+        "message": "פרטיות היא ספורט קבוצתי!",
+        "description": ""
+    },
+    "intro_donate1": {
+        "message": "כאשר אתה משתמש ב־Privacy Badger אתה מצטרף אל <a href='https://www.eff.org/' target='_blank'>הקרן של החזית האלקטרונית</a> ואל מיליוני משתמשים אחרים בלחימה למען פרטיות. אנחנו ארגון ללא מטרות רווח הנלחם על זכויותיך באופן מקוון. תודה שהצטרפת אלינו!",
+        "description": ""
+    },
+    "intro_donate_subheading": {
+        "message": "עזור לנו ע״י תרומה",
+        "description": ""
+    },
+    "donate_to_eff": {
+        "message": "תרום אל EFF",
+        "description": ""
+    },
+    "share_button_title_facebook": {
+        "message": "שתף ב־Facebook",
+        "description": ""
+    },
+    "share_button_title_mastodon": {
+        "message": "שתף ב־Mastodon",
+        "description": ""
+    },
+    "share_button_title_bluesky": {
+        "message": "שתף ב־Bluesky",
+        "description": ""
+    },
+    "intro_link_policy": {
+        "message": "מדיניות פרטיות",
+        "description": ""
+    },
+    "options_title": {
+        "message": "אפשרויות Privacy Badger",
+        "description": ""
+    },
+    "disabled_sites": {
+        "message": "אתרים מושבתים",
+        "description": ""
+    },
+    "options_disable_tip_title": {
+        "message": "איך להשבית את Privacy Badger בלי לעזוב את האתר",
+        "description": ""
+    },
+    "options_disable_tip_alt": {
+        "message": "תחילה, לחץ על האיקון של Privacy Badger בסרגל הכלים של הדפדפן שלך. לאחר מכן, לחץ על הכפתור \"$DISABLE_FOR_SITE$\".",
+        "description": "",
+        "placeholders": {
+            "disable_for_site": {
+                "content": "$1",
+                "example": "Disable for this site"
+            }
+        }
+    },
+    "disabled_for_these_domains": {
+        "message": "Privacy Badger מושבת באתרים הבאים. זה אומר כי Privacy Badger לא יחסום שום דבר כאשר תבקר באתרים הכתובים למטה, והוא לא ישלח את האות אל תעקוב או את האות בקרה גלובלית של פרטיות.",
+        "description": ""
+    },
+    "add_domain_button": {
+        "message": "הוסף אתר",
+        "description": ""
+    },
+    "remove_button": {
+        "message": "הסר נבחרים",
+        "description": ""
+    },
+    "invalid_domain": {
+        "message": "אנא הוסף תחום או כתובת תקפים",
+        "description": ""
+    },
+    "options_general_settings": {
+        "message": "הגדרות כלליות",
+        "description": ""
+    },
+    "show_counter_checkbox": {
+        "message": "הראה ספירת עוקבנים",
+        "description": ""
+    },
+    "options_enable_dnt_checkbox": {
+        "message": "שלח אל אתרים את האותות \"<a href='https://globalprivacycontrol.org/' target='_blank'>בקרה גלובלית של פרטיות</a>\" ו\"<a href='https://www.eff.org/issues/do-not-track' target='_blank'>אל תעקוב</a>\"",
+        "description": ""
+    },
+    "options_dnt_policy_setting": {
+        "message": "בדוק אם <a target='_blank' href='https://www.eff.org/privacybadger/faq#What-is-a-third-party-tracker'>תחומי צד־שלישי</a> מצייתים אל <a target='_blank' href='https://www.eff.org/dnt-policy'>מדיניות אל תעקוב של EFF</a>",
+        "description": ""
+    },
+    "options_privacy_settings": {
+        "message": "פרטיות",
+        "description": ""
+    },
+    "options_disable_hyperlink_auditing": {
+        "message": "מנע מאתרים לעקוב אחר אילו אתרים אתה לוחץ (\"מבדק היפר־קישורים\")",
+        "description": ""
+    },
+    "options_disable_network_prediction": {
+        "message": "השבת חיזוי אתרים",
+        "description": ""
+    },
+    "options_disable_google_nav_error_service": {
+        "message": "השבת שליחת כתובות אתר שאתה מבקר בהן אל Google. זה משבית הצעות אל דפים דומים כאשר דף אינו יכול להימצא.",
+        "description": ""
+    },
+    "options_disable_floc": {
+        "message": "השבת את מעקב הפרסומות של ארגז חול הפרטיות של Google",
+        "description": ""
+    },
+    "options_advanced_settings": {
+        "message": "מתקדם",
+        "description": ""
+    },
+    "options_learn_setting": {
+        "message": "למד לחסום עוקבנים חדשים מתוך גלישתך",
+        "description": ""
+    },
+    "local_learning_warning": {
+        "message": "אפשור למידה עשוי לעשות אותך בר־זיהוי יותר כלפי אתרים",
+        "description": ""
+    },
+    "options_show_nontracking_domains_checkbox": {
+        "message": "הראה תחומים שנראה כי אינם עוקבים אחריך",
+        "description": ""
+    },
+    "options_incognito_setting": {
+        "message": "למד בחלונות פרטיים או בחלונות עילום שם",
+        "description": ""
+    },
+    "options_incognito_warning": {
+        "message": "איפשור למידה בחלונות פרטיים או בחלונות עילום שם עלול להותיר עקבות של היסטוריה של גלישה פרטית. כברירת מחדל, Privacy Badger יחסום עוקבנים שהוא כבר יודע עליהם בחלונות פרטיים או בחלונות עילום שם, אבל הוא לא ילמד על עוקבנים חדשים. ייתכן שתרצה לאפשר אפשרות זו אם חלק גדול של הגלישה שלך מתרחש בחלונות פרטיים או בחלונות עילום שם.",
+        "description": ""
+    },
+    "options_widget_replacement_tab": {
+        "message": "החלפת יישומונים",
+        "description": ""
+    },
+    "options_widget_replacement_desc": {
+        "message": "בעת חסימת כפתורים חברתיים ויישומונים שימושיים פוטנציאלים אחרים (סרטון, שמע, תגובות), Privacy Badger יכול להחליף אותם בממלאי מקום של לחץ־כדי־לשפעל.",
+        "description": ""
+    },
+    "options_widget_exceptions_header": {
+        "message": "יישומונים מוחרגים",
+        "description": ""
+    },
+    "options_hide_social_widgets": {
+        "message": "חסום אבל אל תחליף את היישומונים הבאים:",
+        "description": ""
+    },
+    "options_widget_site_exceptions_header": {
+        "message": "אתרים מוחרגים",
+        "description": ""
+    },
+    "options_widget_site_exceptions_label": {
+        "message": "התר תמיד יישומונים באתרים אלו:",
+        "description": ""
+    },
+    "options_domain_list_tab": {
+        "message": "תחומי מעקב",
+        "description": ""
+    },
+    "options_domain_list_trackers": {
+        "message": "Privacy Badger החליט לחסום $COUNT$ $TRACKER_LINK_START$תחומי מעקב$TRACKER_LINK_END$ פוטנציאליים עד כה",
+        "description": "",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "900"
+            },
+            "tracker_link_start": {
+                "content": "$2",
+                "example": "<a href='https://privacybadger.org/#What-is-a-third-party-tracker'>"
+            },
+            "tracker_link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "options_domain_list_no_trackers": {
+        "message": "Privacy Badger לא גילה $LINK_START$תחומי מעקב$LINK_END$ עדין. המשך לגלוש!",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "$1",
+                "example": "<a href='http://example.com'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "what_is_a_tracker": {
+        "message": "מהו עוקבן?",
+        "description": ""
+    },
+    "options_domain_search": {
+        "message": "חפש תחומים:",
+        "description": ""
+    },
+    "options_domain_search_tooltip": {
+        "message": "כדי לשלול תחומים, הוסף בראש אל מונח החיפוש שלך \"-\". לדוגמה, \".co -.com\" יראה תחומי .co ותחומי .co.uk אבל לא תחומי .com",
+        "description": ""
+    },
+    "options_domain_type_filter": {
+        "message": "סנן לפי סוג:",
+        "description": ""
+    },
+    "options_domain_filter_all": {
+        "message": "הכול",
+        "description": ""
+    },
+    "options_domain_filter_user": {
+        "message": "נשלט־משתמש",
+        "description": ""
+    },
+    "options_domain_filter_dnt": {
+        "message": "תואם אל מדיניות אל תעקוב של EFF",
+        "description": ""
+    },
+    "options_domain_status_filter": {
+        "message": "סנן לפי מעמד:",
+        "description": ""
+    },
+    "options_domain_filter_block": {
+        "message": "חסום",
+        "description": ""
+    },
+    "options_domain_filter_cookieblock": {
+        "message": "חסום חלקית",
+        "description": ""
+    },
+    "options_domain_filter_allow": {
+        "message": "מותר",
+        "description": ""
+    },
+    "options_show_not_yet_blocked": {
+        "message": "הראה תחומים אשר Privacy Badger לא החליט עדין אם לחסום",
+        "description": ""
+    },
+    "options_hide_in_seed": {
+        "message": "הסתר תחומים שמוצגים ברשימה הקדם־מאומנת האחרונה",
+        "description": ""
+    },
+    "options_domain_list_sites": {
+        "message": "$DOMAIN$ נראה עוקב באתרים הבאים:",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "options_domain_remove": {
+        "message": "Remove $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "options_remove_origin_confirm": {
+        "message": "האם אתה בטוח שאתה רוצה להסיר תחום זה מן Privacy Badger?",
+        "description": ""
+    },
+    "data_settings": {
+        "message": "ניהול נתונים",
+        "description": ""
+    },
+    "manage_data_intro": {
+        "message": "יבוא נתוני משתמש:<ul><li>דריסת הגדרות כלליות</li><li>שילוב רשימות של אתרים מושבתים</li><li>שילוב מידע על אילו עוקבנים Privacy Badger ראה</li><li>דריסת התאמות אישיות של מחלקים</li></ul>",
+        "description": ""
+    },
+    "export_user_data": {
+        "message": "ייצא נתוני משתמש",
+        "description": ""
+    },
+    "download": {
+        "message": "הורד",
+        "description": ""
+    },
+    "import_user_data": {
+        "message": "ייבא נתוני משתמש",
+        "description": ""
+    },
+    "import": {
+        "message": "ייבא",
+        "description": ""
+    },
+    "import_select_file": {
+        "message": "אנא בחר קובץ לייבא.",
+        "description": ""
+    },
+    "invalid_json": {
+        "message": "קובץ JSON בלתי תקף.",
+        "description": ""
+    },
+    "import_successful": {
+        "message": "רשימת עוקבנים והגדרות עודכנו בהצלחה!",
+        "description": ""
+    },
+    "sync_intro": {
+        "message": "סינכרון ענן:<ul><li>דורש סינכרון Firefox/Chrome</li><li>העלאה דורסת נתונים קיימים כלשהם של Privacy Badger בענן</li><li>הורדה משלבת את רשימות האתרים בהם Privacy Badger מושבת</li></ul>",
+        "description": ""
+    },
+    "upload_cloud": {
+        "message": "ייצא אתרים מושבתים אל ענן",
+        "description": ""
+    },
+    "upload": {
+        "message": "העלה",
+        "description": ""
+    },
+    "download_cloud": {
+        "message": "ייבא אתרים מושבתים מענן",
+        "description": ""
+    },
+    "download_cloud_success": {
+        "message": "נתוני ענן יובאו בהצלחה.",
+        "description": ""
+    },
+    "download_cloud_failure": {
+        "message": "נתוני ענן לא יכלו לרדת.",
+        "description": ""
+    },
+    "upload_cloud_success": {
+        "message": "נתונים הועלו בהצלחה אל הענן",
+        "description": ""
+    },
+    "upload_cloud_failure": {
+        "message": "נתונים לא יכלו להיעלות אל הענן",
+        "description": ""
+    },
+    "download_cloud_no_data": {
+        "message": "אין נתוני ענן להוריד.",
+        "description": ""
+    },
+    "reset_data": {
+        "message": "אפס תחומי מעקב",
+        "description": ""
+    },
+    "reset": {
+        "message": "אפס",
+        "description": ""
+    },
+    "reset_data_confirm": {
+        "message": "איפוס תחומי מעקב:\n\n  • ימחק את כל הנתונים על עוקבנים אשר Privacy Badger למד מגלישתך \n  • ישחזר את רשימת תחומי המעקב אל הרשימה הקדם־מאומנת (בקר בכתובת www.eff.org/badger-pretraining כדי ללמוד עוד)",
+        "description": ""
+    },
+    "remove_all_data": {
+        "message": "הסר את כל תחומי המעקב",
+        "description": ""
+    },
+    "remove_all": {
+        "message": "הסר הכול",
+        "description": ""
+    },
+    "remove_all_data_confirm": {
+        "message": "הסרת כל תחומי המעקב:\n\n  • תמחק את כל מה ש־Privacy Badger יודע על עוקבנים\n  • תיגרום אל Privacy Badger לא לחסום שום דבר עד שיהיה לו סיכוי ללמוד את זה שוב מגלישתך",
+        "description": ""
+    },
+    "intro_text1": {
+        "message": "אתה מוגן כעת על ידי Privacy Badger.",
+        "description": ""
+    },
+    "intro_text2": {
+        "message": "כדי ללמוד כיצד Privacy Badger עובד, לחץ למטה עבור הדרכה זריזה.",
+        "description": ""
+    },
+    "first_run_text": {
+        "message": "למד כיצד Privacy Badger מגן על פרטיותך",
+        "description": ""
+    },
+    "learn_more_link": {
+        "message": "בקר בכתובת $LINK$ כדי ללמוד עוד.",
+        "description": "",
+        "placeholders": {
+            "link": {
+                "content": "$1",
+                "example": "<a href='https://example.com'>example.com</a>"
+            }
+        }
+    },
+    "learn_more": {
+        "message": "Learn more",
+        "description": ""
+    },
+    "social_tooltip_pb_has_replaced": {
+        "message": "זה $BUTTON$ החליף כפתור Privacy Badger",
+        "description": "",
+        "placeholders": {
+            "button": {
+                "content": "$1",
+                "example": "Facebook Like"
+            }
+        }
+    },
+    "widget_placeholder_pb_has_replaced": {
+        "message": "Privacy Badger החליף $START_ANCHOR_TAG$יישומון $WIDGET$ זה$END_ANCHOR_TAG$",
+        "description": "",
+        "placeholders": {
+            "widget": {
+                "content": "$1",
+                "example": "Google reCAPTCHA"
+            },
+            "start_anchor_tag": {
+                "content": "$2",
+                "example": "<a href='https://vimeo.com/76979871'>"
+            },
+            "end_anchor_tag": {
+                "content": "$3",
+                "example": "</a>"
+            }
+        }
+    },
+    "allow_once": {
+        "message": "התר פעם אחת",
+        "description": ""
+    },
+    "allow_on_site": {
+        "message": "התר תמיד באתר זה",
+        "description": ""
+    }
+}

@@ -1,0 +1,871 @@
+{
+    "name": {
+        "message": "Privacy Badger",
+        "description": ""
+    },
+    "description": {
+        "message": "Lærer automatisk at blokere skjulte sporinger. Fra digital rettighedsnonprofit EFF for at stoppe virksomheder i at udspionere dig.",
+        "description": ""
+    },
+    "canvas_fingerprinting": {
+        "message": "canvas-fingeraftryk",
+        "description": ""
+    },
+    "popup_help_button": {
+        "message": "Hjælp",
+        "description": ""
+    },
+    "popup_share_button": {
+        "message": "Del",
+        "description": ""
+    },
+    "popup_options_button": {
+        "message": "Indstillinger",
+        "description": ""
+    },
+    "popup_special_page_header": {
+        "message": "Der er intet at gøre på denne side",
+        "description": ""
+    },
+    "popup_special_page_paragraph": {
+        "message": "Privacy Badger virker ikke på specielle sider som denne. Prøv at browse et andet sted.",
+        "description": ""
+    },
+    "popup_first_run_header": {
+        "message": "Godt gået at åbne popoppen!",
+        "description": ""
+    },
+    "popup_disabled_site_header": {
+        "message": "Privacy Badger er deaktiveret på dette netsted",
+        "description": ""
+    },
+    "popup_disable_for_site": {
+        "message": "Deaktiver for dette netsted",
+        "description": ""
+    },
+    "popup_enable_for_site": {
+        "message": "Aktiver for dette netsted",
+        "description": ""
+    },
+    "report_broken_site": {
+        "message": "Rapportér ødelagt netsted",
+        "description": ""
+    },
+    "popup_donate_to_eff": {
+        "message": "Donér til EFF—en nonprofit der forsvarer digitalt privatliv",
+        "description": ""
+    },
+    "popup_review_pb": {
+        "message": "Kan du lide Privacy Badger? Giv en anmeldelse!",
+        "description": ""
+    },
+    "popup_sweatshirt_promo": {
+        "message": "Vis din støtte med en ny Privacy Badger sweatshirt!",
+        "description": ""
+    },
+    "popup_effector_signup": {
+        "message": "Få de seneste privatlivsnyheder fra EFF",
+        "description": ""
+    },
+    "version": {
+        "message": "version $VERSION_STRING$",
+        "description": "",
+        "placeholders": {
+            "version_string": {
+                "content": "$1",
+                "example": "2018.8.1"
+            }
+        }
+    },
+    "popup_instructions": {
+        "message": "$COUNT$ potentielle $LINK_START$trackere$LINK_END$ blokeret",
+        "description": "",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "15"
+            },
+            "link_start": {
+                "content": "$2",
+                "example": "<a href='https://privacybadger.org/#What-is-a-third-party-tracker'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "popup_instructions_no_trackers": {
+        "message": "Ingen $LINK_START$trackere$LINK_END$ blokeret",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "$1",
+                "example": "<a href='https://privacybadger.org/#What-is-a-third-party-tracker'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "popup_blocked": {
+        "message": "Der er ingen tredjepartsressourcer på denne side. Hurra for privatliv!",
+        "description": ""
+    },
+    "tooltip_block": {
+        "message": "Flyt skyderen til venstre for at blokere et domæne",
+        "description": ""
+    },
+    "tooltip_cookieblock": {
+        "message": "Centrer skyderen for at blokere cookies",
+        "description": ""
+    },
+    "tooltip_allow": {
+        "message": "Flyt skyderen til højre for at tillade et domæne",
+        "description": ""
+    },
+    "badger_status_block": {
+        "message": "Blokerede $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_cookieblock": {
+        "message": "Blokerede cookies fra $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_blocked_scripts": {
+        "message": "Blokerede cookies og fingeraftryksscripts fra $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_allow": {
+        "message": "Tilladte $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_noaction": {
+        "message": "Ingen sporing fra $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "dnt_tooltip": {
+        "message": "Dette domæne lover ikke at spore dig",
+        "description": ""
+    },
+    "domain_slider_label": {
+        "message": "Indstillinger for $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "domain_slider_block_tooltip": {
+        "message": "Bloker helt",
+        "description": ""
+    },
+    "domain_slider_cookieblock_tooltip": {
+        "message": "Bloker cookies",
+        "description": ""
+    },
+    "domain_slider_allow_tooltip": {
+        "message": "Tillad",
+        "description": ""
+    },
+    "breakage_warning_tooltip": {
+        "message": "Blokering af dette domæne er kendt for at ødelægge hjemmesider",
+        "description": ""
+    },
+    "google_signin_tooltip": {
+        "message": "Flyt denne skyder til højre for at aktivere login på hjemmesider med din Google-konto, og genindlæs siden",
+        "description": ""
+    },
+    "feed_the_badger_title": {
+        "message": "Klik for at give Privacy Badger kontrol over dette domæne",
+        "description": ""
+    },
+    "not_yet_blocked_header": {
+        "message": "Din Badger har endnu ikke besluttet, om disse domæner skal blokeres",
+        "description": ""
+    },
+    "intro_not_an_adblocker_paragraph": {
+        "message": "Privacy Badger starter sin blokering når den ser den samme sporing på tre forskellige netsteder. Tre forseelser og det er ud!",
+        "description": ""
+    },
+    "non_tracker": {
+        "message": "Domænerne herunder ser ikke ud til at spore dig",
+        "description": ""
+    },
+    "non_tracker_tip": {
+        "message": "I øjeblikket tjekker Privacy Badger kun om tredjeparter bruger cookies, lokal HTML5-lagring, eller canvas-fingeraftryk til at spore din browsing. Nogle af disse domæner kan bruge sporingsmetoder som Privacy Badger ikke kan opdage.",
+        "description": ""
+    },
+    "report_input_label": {
+        "message": "Beskriv kort problemet:",
+        "description": ""
+    },
+    "error_input": {
+        "message": "Hvad er der galt?",
+        "description": ""
+    },
+    "report_terms": {
+        "message": "Dette sender automatisk følgende oplysninger til EFF: den side, du besøger i øjeblikket, din browserversion, versionen af Privacy Badger og status for alle skyderne på denne side.",
+        "description": ""
+    },
+    "report_button": {
+        "message": "Send rapport",
+        "description": ""
+    },
+    "report_cancel": {
+        "message": "Annuller",
+        "description": ""
+    },
+    "report_close": {
+        "message": "Luk",
+        "description": ""
+    },
+    "report_success": {
+        "message": "Tak! Vi skal nok komme til bunds i det.",
+        "description": ""
+    },
+    "report_fail": {
+        "message": "Ups. Noget gik galt.",
+        "description": ""
+    },
+    "share_title": {
+        "message": "Del med dine venner",
+        "description": ""
+    },
+    "share_tracker_header": {
+        "message": "Privacy Badger blokerede $COUNT$ potentielle trackere på $DOMAIN$:",
+        "description": "",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "15"
+            },
+            "domain": {
+                "content": "$2",
+                "example": "example.com"
+            }
+        }
+    },
+    "share_base_message": {
+        "message": "Privacy Badger (privacybadger.org) er en browserudvidelse der automatisk lærer at blokere skjulte sporinger. Privacy Badger laves af Electronic Frontier Foundation, en nonprofit der kæmper for dine rettigheder online.",
+        "description": ""
+    },
+    "copy_button_initial": {
+        "message": "Kopiér til udklipsholder",
+        "description": ""
+    },
+    "copy_button_copied": {
+        "message": "Kopieret",
+        "description": ""
+    },
+    "popup_info_firstparty_protections": {
+        "message": "Linksporingsbeskyttelse aktiveret",
+        "description": ""
+    },
+    "popup_info_firstparty_description": {
+        "message": "Nogle hjemmesider $LINK_START$bruger linksporing til at følge dig$LINK_END$ hver gang, du klikker på et link for at forlade hjemmesiden. Privacy Badger fjerner sporing fra sådanne links på denne hjemmeside.",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "<a href='https://privacybadger.org/#What-about-tracking-by-the-sites-I-actively-visit%2c-like-NYTimes.com-or-Facebook.com' target='_blank'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "popup_info_youtube": {
+        "message": "Er reklamer ikke blokeret! Virker YouTube ikke? Det er sikkert ikke på grund af Privacy Badger.",
+        "description": ""
+    },
+    "extension_error_text": {
+        "message": "$LINK_START$Fortæl os$LINK_END$ om følgende fejl:",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "$1",
+                "example": "<a href='http://example.com'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "firstRun_title": {
+        "message": "Tak for at installere Privacy Badger!",
+        "description": ""
+    },
+    "intro_logo_alt_text": {
+        "message": "EFF logo",
+        "description": ""
+    },
+    "intro_eff_header": {
+        "message": "Et privatlivsværktøj af $START_HTML$EFF$END_HTML$, en medlemsstøttet nonprofit",
+        "description": "",
+        "placeholders": {
+            "start_html": {
+                "content": "$1",
+                "example": "<b>"
+            },
+            "end_html": {
+                "content": "$2",
+                "example": "</b>"
+            }
+        }
+    },
+    "intro_nag_header": {
+        "message": "Næsten færdig!",
+        "description": ""
+    },
+    "intro_pin_nudge": {
+        "message": "$START_SPAN_TAG$Lås Privacy Badger til din værktøjsbjælke$END_SPAN_TAG$ for nem adgang til knappen \"$DISABLE_FOR_SITE$\".",
+        "description": "",
+        "placeholders": {
+            "start_span_tag": {
+                "content": "<b>"
+            },
+            "disable_for_site": {
+                "content": "$1",
+                "example": "Disable for this site"
+            },
+            "end_span_tag": {
+                "content": "</b>"
+            }
+        }
+    },
+    "intro_pin_instructions": {
+        "message": "For at låse Privacy Badgers ikon, klik på puslespilsbrikikonet i din browsers værktøjsbjælke. Klik dernæst på låseikonet ved siden af Privacy Badger.",
+        "description": ""
+    },
+    "intro_animation_button_stop": {
+        "message": "Stop animation",
+        "description": ""
+    },
+    "intro_animation_button_play": {
+        "message": "Afspil animation",
+        "description": ""
+    },
+    "intro_disable_header": {
+        "message": "Et tip før du nyder bedre browsing",
+        "description": ""
+    },
+    "intro_disable_button_context": {
+        "message": "Privacy Badger er klar til beskytte dig fra skjulte sporinger. Men at blokere sporinger ødelægger nogle gange netsteder.",
+        "description": ""
+    },
+    "intro_disable_button": {
+        "message": "Hvis du tror at Privacy Badger ødelægger en side (f.eks. en video spiller ikke), $START_HTML$kan du klikke på \"$DISABLE_FOR_SITE$\"-knappen for at slå Privacy Badger fra på det netsted.$END_HTML$",
+        "description": "",
+        "placeholders": {
+            "start_html": {
+                "content": "$1",
+                "example": "<b>"
+            },
+            "disable_for_site": {
+                "content": "$2",
+                "example": "Disable for this site"
+            },
+            "end_html": {
+                "content": "$3",
+                "example": "</b>"
+            }
+        }
+    },
+    "intro_features_header": {
+        "message": "Privacy Badger beskytter din browsing fra sporinger.",
+        "description": ""
+    },
+    "intro_features_subheader": {
+        "message": "Lær hvordan.",
+        "description": ""
+    },
+    "intro_welcome": {
+        "message": "Privacy Badger lærer automatisk at blokere skjulte sporinger. Bug et minut på at se hvordan.",
+        "description": ""
+    },
+    "intro_beyond_ads": {
+        "message": "Fanger luskede sporinger",
+        "description": ""
+    },
+    "intro_beyond_ads_paragraph": {
+        "message": "Privacy Badger sender signalet <a href='https://globalprivacycontrol.org/' target='_blank'>Global Privatlivskontrol</a>, for at fravælge deling og salg af dine data, og signalet <a href='https://www.eff.org/issues/do-not-track' target='_blank'>Spor Ikke</a> for at bede virksomheder om ikke at spore dig.",
+        "description": ""
+    },
+    "intro_beyond_ads_paragraph2": {
+        "message": "Hvis de ignorerer disse signaler, vil Privacy Badger lære at blokere dem—uanset om de reklamerer eller sporer på andre måder.",
+        "description": ""
+    },
+    "intro_not_an_adblocker": {
+        "message": "Ikke en reklameblokering",
+        "description": ""
+    },
+    "intro_learns_paragraph": {
+        "message": "Privacy Badger opdager automatisk sporinger baseret på deres opførsel.",
+        "description": ""
+    },
+    "intro_not_an_adblocker_paragraph2": {
+        "message": "Skjult sporing sker på mange måder; reklamer er blot den synlige top af isbjerget. Privacy Badger blokerer ikke reklamer med mindre de sporer dig.",
+        "description": ""
+    },
+    "intro_open_popup": {
+        "message": "Prøv at åbne Privacy Badgers popop",
+        "description": ""
+    },
+    "intro_open_popup_alt": {
+        "message": "Browserværktøjsbjælke med Privacy Badgers ikon indcirklet",
+        "description": ""
+    },
+    "intro_donate_heading": {
+        "message": "Privatliv er en gruppesport!",
+        "description": ""
+    },
+    "intro_donate1": {
+        "message": "Når du bruger Privacy Badger, tilslutter du dig <a href='https://www.eff.org/' target='_blank'>Electronic Frontier Foundation</a> og millioner af andre brugere i kampen for privatliv. Vi er en nonprofit organisation der kæmper for dine rettigheder online. Tak for at slutte dig til os!",
+        "description": ""
+    },
+    "intro_donate_subheading": {
+        "message": "Hjælp os ved at donere",
+        "description": ""
+    },
+    "donate_to_eff": {
+        "message": "Donér til EFF",
+        "description": ""
+    },
+    "share_button_title_facebook": {
+        "message": "Del på Facebook",
+        "description": ""
+    },
+    "share_button_title_mastodon": {
+        "message": "Del på Mastodon",
+        "description": ""
+    },
+    "share_button_title_bluesky": {
+        "message": "Del på Bluesky",
+        "description": ""
+    },
+    "intro_link_policy": {
+        "message": "Privatlivspolitik",
+        "description": ""
+    },
+    "options_title": {
+        "message": "Privacy Badger Indstillinger",
+        "description": ""
+    },
+    "disabled_sites": {
+        "message": "Deaktiverede Steder",
+        "description": ""
+    },
+    "options_disable_tip_title": {
+        "message": "Sådan deaktiveres Privacy Badger uden at forlade netstedet",
+        "description": ""
+    },
+    "options_disable_tip_alt": {
+        "message": "Først, klik på Privacy Badgers ikon i din browsers værktøjsbjælke. Klik dernæst på knappen \"$DISABLE_FOR_SITE$\".",
+        "description": "",
+        "placeholders": {
+            "disable_for_site": {
+                "content": "$1",
+                "example": "Disable for this site"
+            }
+        }
+    },
+    "disabled_for_these_domains": {
+        "message": "Privacy Badger er deaktiveret på følgende netsteder. Det betyder at Privacy Badger ikke blokerer noget når du besøger netstederne listet her, og den vil ikke sende signalerne Spor Ikke eller Global Privatlivskontrol.",
+        "description": ""
+    },
+    "add_domain_button": {
+        "message": "Tilføj netsted",
+        "description": ""
+    },
+    "remove_button": {
+        "message": "Fjern valgte",
+        "description": ""
+    },
+    "invalid_domain": {
+        "message": "Tilføj venligst et gyldigt domæne eller URL",
+        "description": ""
+    },
+    "options_general_settings": {
+        "message": "Generelle Indstillinger",
+        "description": ""
+    },
+    "show_counter_checkbox": {
+        "message": "Vis antal sporinger",
+        "description": ""
+    },
+    "options_enable_dnt_checkbox": {
+        "message": "Send signalerne \"<a href='https://globalprivacycontrol.org/' target='_blank'>Global Privatlivskontrol</a>\" og \"<a href='https://www.eff.org/issues/do-not-track' target='_blank'>Spor Ikke</a>\" til netsteder",
+        "description": ""
+    },
+    "options_dnt_policy_setting": {
+        "message": "Tjek om <a target='_blank' href='https://www.eff.org/privacybadger/faq#What-is-a-third-party-tracker'>tredjepartsdomæner</a> overholder <a target='_blank' href='https://www.eff.org/dnt-policy'>EFFs \"Spor Ikke\"-politik</a>",
+        "description": ""
+    },
+    "options_privacy_settings": {
+        "message": "Privatliv",
+        "description": ""
+    },
+    "options_disable_hyperlink_auditing": {
+        "message": "Forhindrer netsteder i at spore hvilke links du klikker på (\"hyperlink auditing\")",
+        "description": ""
+    },
+    "options_disable_network_prediction": {
+        "message": "Deaktiver forhåndshentning",
+        "description": ""
+    },
+    "options_disable_google_nav_error_service": {
+        "message": "Deaktiver afsendelse af netadresser du besøger til Google. Dette deaktiverer forslag til lignende sider når en side ikke kan findes.",
+        "description": ""
+    },
+    "options_disable_floc": {
+        "message": "Deaktiver Googles reklamesporing \"Privatlivs-sandboxing\"",
+        "description": ""
+    },
+    "options_advanced_settings": {
+        "message": "Avanceret",
+        "description": ""
+    },
+    "options_learn_setting": {
+        "message": "Lær at blokere nye sporinger fra din browsning",
+        "description": ""
+    },
+    "local_learning_warning": {
+        "message": "Aktivering af læring kan gøre dig nemmere at identificere for netsteder",
+        "description": ""
+    },
+    "options_show_nontracking_domains_checkbox": {
+        "message": "Vis domæner der ser ud til ikke at spore dig",
+        "description": ""
+    },
+    "options_incognito_setting": {
+        "message": "Lær i Private/Inkognito-vinduer",
+        "description": ""
+    },
+    "options_incognito_warning": {
+        "message": "At aktivere læring i Private/Inkognito-vinduer kan efterlade spor af din private browsinghistorik på din computer. Som standard vil Privacy Badger blokere sporinger den allerede kender til i Private/Inkognito-vinduer, men den vil ikke lære om nye sporinger. Du vil muligvis slå denne indsilling til hvis du browser meget med Private/Inkognito-vinduer.",
+        "description": ""
+    },
+    "options_widget_replacement_tab": {
+        "message": "Kontroludskiftning",
+        "description": ""
+    },
+    "options_widget_replacement_desc": {
+        "message": "Ved blokering af sociale knapper og andre potentielt brugbare (video, lyd, kommentarer) kontroller, kan Privacy Badger udskifte dem med klik-for-at-aktivere pladsholdere.",
+        "description": ""
+    },
+    "options_widget_exceptions_header": {
+        "message": "Widgetundtagelser",
+        "description": ""
+    },
+    "options_hide_social_widgets": {
+        "message": "Blokér men udskift ikke følgende widgets:",
+        "description": ""
+    },
+    "options_widget_site_exceptions_header": {
+        "message": "Netstedsundtagelser",
+        "description": ""
+    },
+    "options_widget_site_exceptions_label": {
+        "message": "Tillad altid widgets på disse netsteder:",
+        "description": ""
+    },
+    "options_domain_list_tab": {
+        "message": "Sporingsdomæner",
+        "description": ""
+    },
+    "options_domain_list_trackers": {
+        "message": "Privacy Badger har besluttet at blokere $COUNT$ potentielle $TRACKER_LINK_START$sporingsdomæner$TRACKER_LINK_END$ indtil nu",
+        "description": "",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "900"
+            },
+            "tracker_link_start": {
+                "content": "$2",
+                "example": "<a href='https://privacybadger.org/#What-is-a-third-party-tracker'>"
+            },
+            "tracker_link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "options_domain_list_no_trackers": {
+        "message": "Privacy Badger har ikke opdaget nogle $LINK_START$sporingsdomæner$LINK_END$ endnu. Fortsæt med at browse!",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "$1",
+                "example": "<a href='http://example.com'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "what_is_a_tracker": {
+        "message": "Hvad er en sporing?",
+        "description": ""
+    },
+    "options_domain_search": {
+        "message": "Søg domæner:",
+        "description": ""
+    },
+    "options_domain_search_tooltip": {
+        "message": "Sæt \"-\" foran dine søgeudtryk for at udelukke domæner. For eksempel vil \".co -.com\" vise .co og .co.uk men ikke .com-domæner.",
+        "description": ""
+    },
+    "options_domain_type_filter": {
+        "message": "Filtrer efter type:",
+        "description": ""
+    },
+    "options_domain_filter_all": {
+        "message": "alle",
+        "description": ""
+    },
+    "options_domain_filter_user": {
+        "message": "brugerstyret",
+        "description": ""
+    },
+    "options_domain_filter_dnt": {
+        "message": "i overensstemmelse med EFFs politik \"Spor Ikke\"",
+        "description": ""
+    },
+    "options_domain_status_filter": {
+        "message": "Filtrer efter status:",
+        "description": ""
+    },
+    "options_domain_filter_block": {
+        "message": "blokeret",
+        "description": ""
+    },
+    "options_domain_filter_cookieblock": {
+        "message": "delvist blokeret",
+        "description": ""
+    },
+    "options_domain_filter_allow": {
+        "message": "tilladt",
+        "description": ""
+    },
+    "options_show_not_yet_blocked": {
+        "message": "Vis domæner din Badger endnu ikke har besluttet at blokere",
+        "description": ""
+    },
+    "options_hide_in_seed": {
+        "message": "Skjul domæner der findes i den seneste forhåndstrænede liste",
+        "description": ""
+    },
+    "options_domain_list_sites": {
+        "message": "$DOMAIN$ udførte sporing på følgende netsteder:",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "options_domain_remove": {
+        "message": "Fjern $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "options_remove_origin_confirm": {
+        "message": "Er du sikker på at du vil fjerne dette domæne fra Privacy Badger?",
+        "description": ""
+    },
+    "data_settings": {
+        "message": "Håndter Data",
+        "description": ""
+    },
+    "manage_data_intro": {
+        "message": "Import af brugerdata:<ul><li>Overskriver generelle indstillinger</li><li>Kombinerer lister over deaktiverede steder</li><li>Kombinerer informationer om hvilke sporinger Privacy Badger har set</li><li>Overskriver skyderes brugerindstillinger</li></ul>",
+        "description": ""
+    },
+    "export_user_data": {
+        "message": "Eksporter brugerdata",
+        "description": ""
+    },
+    "download": {
+        "message": "Hent",
+        "description": ""
+    },
+    "import_user_data": {
+        "message": "Importer brugerdata",
+        "description": ""
+    },
+    "import": {
+        "message": "Importer",
+        "description": ""
+    },
+    "import_select_file": {
+        "message": "Vælg en fil at importere.",
+        "description": ""
+    },
+    "invalid_json": {
+        "message": "Ugyldig JSON-fil.",
+        "description": ""
+    },
+    "import_successful": {
+        "message": "Sporingsliste og opsætning succesfuldt opdateret!",
+        "description": ""
+    },
+    "sync_intro": {
+        "message": "Skysynkronisering:<ul><li>Kræver Firefox/Chrome-Synkronisering</li><li>Oplægning overskriver eksisterende Privacy Badger-data i skyen</li><li>Hentning kombinerer listerne over steder hvor din Privacy Badger er deaktiveret</li></ul>",
+        "description": ""
+    },
+    "upload_cloud": {
+        "message": "Eksporter deaktiverede steder til skyen",
+        "description": ""
+    },
+    "upload": {
+        "message": "Læg op",
+        "description": ""
+    },
+    "download_cloud": {
+        "message": "Importer deaktiverede steder fra skyen",
+        "description": ""
+    },
+    "download_cloud_success": {
+        "message": "Skydata importeret med success.",
+        "description": ""
+    },
+    "download_cloud_failure": {
+        "message": "Skydata kunne ikke hentes.",
+        "description": ""
+    },
+    "upload_cloud_success": {
+        "message": "Data succesfuldt lagt op i skyen",
+        "description": ""
+    },
+    "upload_cloud_failure": {
+        "message": "Data kunne ikke lægges op i skyen",
+        "description": ""
+    },
+    "download_cloud_no_data": {
+        "message": "Ingen skydata at hente.",
+        "description": ""
+    },
+    "reset_data": {
+        "message": "Nulstil sporingsdomæner",
+        "description": ""
+    },
+    "reset": {
+        "message": "Nulstil",
+        "description": ""
+    },
+    "reset_data_confirm": {
+        "message": "Nulstilling af sporingsdomæner vil:\n\n• Slette alle data om sporinger som Privacy Badger har lært fra din browsning.\n• Gendanner listen over sporingdomæner til den seneste før-trænede liste (besøg www.eff.org/badger-pretraining for at lære mere)",
+        "description": ""
+    },
+    "remove_all_data": {
+        "message": "Fjern alle sporingsdomæner",
+        "description": ""
+    },
+    "remove_all": {
+        "message": "Fjern alle",
+        "description": ""
+    },
+    "remove_all_data_confirm": {
+        "message": "At fjerne alle sporingsdomæner vil:\n\n• Slette alt Privacy Badger ved om sporinger\n• Få Privacy Badger til ikke at blokere noget indtil den har haft en chance til igen at lære fra din browsning",
+        "description": ""
+    },
+    "intro_text1": {
+        "message": "Du er nu beskyttet af Privacy Badger.",
+        "description": ""
+    },
+    "intro_text2": {
+        "message": "For at lære hvordan Privacy Badger virker, klik herunder for en hurtig gennemgang.",
+        "description": ""
+    },
+    "first_run_text": {
+        "message": "Lær hvordan Privacy Badger beskytter dit privatliv",
+        "description": ""
+    },
+    "learn_more_link": {
+        "message": "Besøg $LINK$ for at lære mere.",
+        "description": "",
+        "placeholders": {
+            "link": {
+                "content": "$1",
+                "example": "<a href='https://example.com'>example.com</a>"
+            }
+        }
+    },
+    "learn_more": {
+        "message": "Lær mere",
+        "description": ""
+    },
+    "social_tooltip_pb_has_replaced": {
+        "message": "Privacy Badger har erstattet denne $BUTTON$ knap",
+        "description": "",
+        "placeholders": {
+            "button": {
+                "content": "$1",
+                "example": "Facebook Like"
+            }
+        }
+    },
+    "widget_placeholder_pb_has_replaced": {
+        "message": "Privacy Badger har erstattet $START_ANCHOR_TAG$denne $WIDGET$-kontrol$END_ANCHOR_TAG$",
+        "description": "",
+        "placeholders": {
+            "widget": {
+                "content": "$1",
+                "example": "Google reCAPTCHA"
+            },
+            "start_anchor_tag": {
+                "content": "$2",
+                "example": "<a href='https://vimeo.com/76979871'>"
+            },
+            "end_anchor_tag": {
+                "content": "$3",
+                "example": "</a>"
+            }
+        }
+    },
+    "allow_once": {
+        "message": "Tillad en gang",
+        "description": ""
+    },
+    "allow_on_site": {
+        "message": "Tillad altid på dette netsted",
+        "description": ""
+    }
+}

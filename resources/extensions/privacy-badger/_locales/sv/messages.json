@@ -1,0 +1,871 @@
+{
+    "name": {
+        "message": "Privacy Badger",
+        "description": ""
+    },
+    "description": {
+        "message": "Lär sig att blockera dolda spårare. Skapat av ideella EFF för att hindra företag från att spionera på dig.",
+        "description": ""
+    },
+    "canvas_fingerprinting": {
+        "message": "canvasfingeravtryck",
+        "description": ""
+    },
+    "popup_help_button": {
+        "message": "Hjälp",
+        "description": ""
+    },
+    "popup_share_button": {
+        "message": "Dela",
+        "description": ""
+    },
+    "popup_options_button": {
+        "message": "Inställningar",
+        "description": ""
+    },
+    "popup_special_page_header": {
+        "message": "Inget att göra på den här sidan",
+        "description": ""
+    },
+    "popup_special_page_paragraph": {
+        "message": "Privacy Badger fungerar inte på särskilda sidor som den här. Prova att besöka en annan sida.",
+        "description": ""
+    },
+    "popup_first_run_header": {
+        "message": "Bra jobbat – du öppnade popupfönstret!",
+        "description": ""
+    },
+    "popup_disabled_site_header": {
+        "message": "Privacy Badger är inaktiverat på den här webbplatsen",
+        "description": ""
+    },
+    "popup_disable_for_site": {
+        "message": "Inaktivera för denna webbplats",
+        "description": ""
+    },
+    "popup_enable_for_site": {
+        "message": "Aktivera för denna webbplats",
+        "description": ""
+    },
+    "report_broken_site": {
+        "message": "Rapportera en webbplats som inte fungerar",
+        "description": ""
+    },
+    "popup_donate_to_eff": {
+        "message": "Donera till EFF – en ideell organisation som försvarar digital integritet",
+        "description": ""
+    },
+    "popup_review_pb": {
+        "message": "Gillar du Privacy Badger? Lämna en recension!",
+        "description": ""
+    },
+    "popup_sweatshirt_promo": {
+        "message": "Visa ditt stöd med en ny Privacy Badger-tröja!",
+        "description": ""
+    },
+    "popup_effector_signup": {
+        "message": "Få de senaste integritetsnyheterna från EFF",
+        "description": ""
+    },
+    "version": {
+        "message": "version $VERSION_STRING$",
+        "description": "",
+        "placeholders": {
+            "version_string": {
+                "content": "$1",
+                "example": "2018.8.1"
+            }
+        }
+    },
+    "popup_instructions": {
+        "message": "Potentiella $LINK_START$spårare$LINK_END$ som blockerats: $COUNT$",
+        "description": "",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "15"
+            },
+            "link_start": {
+                "content": "$2",
+                "example": "<a href='https://privacybadger.org/#What-is-a-third-party-tracker'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "popup_instructions_no_trackers": {
+        "message": "Inga blockerade $LINK_START$spårare$LINK_END$",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "$1",
+                "example": "<a href='https://privacybadger.org/#What-is-a-third-party-tracker'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "popup_blocked": {
+        "message": "Det finns inga tredjepartsresurser på den här sidan. Hurra för integriteten!",
+        "description": ""
+    },
+    "tooltip_block": {
+        "message": "Flytta skjutreglaget åt vänster för att blockera domänen",
+        "description": ""
+    },
+    "tooltip_cookieblock": {
+        "message": "Flytta skjutreglaget till mitten för att blockera kakor",
+        "description": ""
+    },
+    "tooltip_allow": {
+        "message": "Flytta skjutreglaget åt höger för att tillåta domänen",
+        "description": ""
+    },
+    "badger_status_block": {
+        "message": "$DOMAIN$ blockerades",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_cookieblock": {
+        "message": "Kakor från $DOMAIN$ blockerades",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_blocked_scripts": {
+        "message": "Kakor och fingeravtrycksskript från $DOMAIN$ blockerades",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_allow": {
+        "message": "$DOMAIN$ tilläts",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_noaction": {
+        "message": "$DOMAIN$ verkar inte spåra dig",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "dnt_tooltip": {
+        "message": "Den här domänen lovar att inte spåra dig",
+        "description": ""
+    },
+    "domain_slider_label": {
+        "message": "Inställningar för $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "domain_slider_block_tooltip": {
+        "message": "Blockera helt",
+        "description": ""
+    },
+    "domain_slider_cookieblock_tooltip": {
+        "message": "Blockera kakor",
+        "description": ""
+    },
+    "domain_slider_allow_tooltip": {
+        "message": "Tillåt",
+        "description": ""
+    },
+    "breakage_warning_tooltip": {
+        "message": "Om den här domänen blockeras kan webbplatser sluta fungera",
+        "description": ""
+    },
+    "google_signin_tooltip": {
+        "message": "Flytta skjutreglaget åt höger och läs in sidan på nytt för att logga in på webbplatser med ditt Google-konto",
+        "description": ""
+    },
+    "feed_the_badger_title": {
+        "message": "Klicka för att låta Privacy Badger styra den här domänen igen",
+        "description": ""
+    },
+    "not_yet_blocked_header": {
+        "message": "Privacy Badger har ännu inte avgjort om dessa domäner ska blockeras",
+        "description": ""
+    },
+    "intro_not_an_adblocker_paragraph": {
+        "message": "Privacy Badger börjar blockera när den ser samma spårare på tre olika webbplatser. Tre träffar och den är ute!",
+        "description": ""
+    },
+    "non_tracker": {
+        "message": "Domänerna nedan verkar inte spåra dig",
+        "description": ""
+    },
+    "non_tracker_tip": {
+        "message": "Privacy Badger kontrollerar för närvarande endast om tredjeparter använder kakor, HTML5-lagring eller canvas-fingeravtryck för att spåra din surfning. Vissa domäner kan använda spårningsmetoder som Privacy Badger inte kan upptäcka.",
+        "description": ""
+    },
+    "report_input_label": {
+        "message": "Beskriv kortfattat problemet:",
+        "description": ""
+    },
+    "error_input": {
+        "message": "Vad är fel?",
+        "description": ""
+    },
+    "report_terms": {
+        "message": "Följande information skickas automatiskt till EFF: sidan du besöker, din webbläsarversion, Privacy Badger-versionen och statusen för alla skjutreglage på den här sidan.",
+        "description": ""
+    },
+    "report_button": {
+        "message": "Skicka rapport",
+        "description": ""
+    },
+    "report_cancel": {
+        "message": "Avbryt",
+        "description": ""
+    },
+    "report_close": {
+        "message": "Stäng",
+        "description": ""
+    },
+    "report_success": {
+        "message": "Tack! Vi undersöker problemet.",
+        "description": ""
+    },
+    "report_fail": {
+        "message": "Hoppsan. Något gick fel.",
+        "description": ""
+    },
+    "share_title": {
+        "message": "Berätta för dina vänner",
+        "description": ""
+    },
+    "share_tracker_header": {
+        "message": "Privacy Badger blockerade $COUNT$ potentiella spårare på $DOMAIN$:",
+        "description": "",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "15"
+            },
+            "domain": {
+                "content": "$2",
+                "example": "example.com"
+            }
+        }
+    },
+    "share_base_message": {
+        "message": "Privacy Badger (privacybadger.org) är ett webbläsartillägg som automatiskt lär sig att blockera dolda spårare. Privacy Badger är skapat av Electronic Frontier Foundation, en ideell organisation som kämpar för dina rättigheter på nätet.",
+        "description": ""
+    },
+    "copy_button_initial": {
+        "message": "Kopiera till urklipp",
+        "description": ""
+    },
+    "copy_button_copied": {
+        "message": "Kopierat",
+        "description": ""
+    },
+    "popup_info_firstparty_protections": {
+        "message": "Skydd mot länkspårning är aktivt",
+        "description": ""
+    },
+    "popup_info_firstparty_description": {
+        "message": "Vissa webbplatser $LINK_START$använder länkspårning för att följa dig$LINK_END$ när du klickar på en länk för att lämna webbplatsen. Privacy Badger tar bort spårningen från sådana länkar på den här webbplatsen.",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "<a href='https://privacybadger.org/#What-about-tracking-by-the-sites-I-actively-visit%2c-like-NYTimes.com-or-Facebook.com' target='_blank'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "popup_info_youtube": {
+        "message": "Blockeras inte annonserna? Fungerar inte YouTube? Privacy Badger är förmodligen inte orsaken.",
+        "description": ""
+    },
+    "extension_error_text": {
+        "message": "$LINK_START$Berätta för oss$LINK_END$ om följande fel:",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "$1",
+                "example": "<a href='http://example.com'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "firstRun_title": {
+        "message": "Tack för att du installerade Privacy Badger!",
+        "description": ""
+    },
+    "intro_logo_alt_text": {
+        "message": "EFF-logotyp",
+        "description": ""
+    },
+    "intro_eff_header": {
+        "message": "Ett integritetsverktyg från $START_HTML$EFF$END_HTML$, en medlemsstödd ideell organisation",
+        "description": "",
+        "placeholders": {
+            "start_html": {
+                "content": "$1",
+                "example": "<b>"
+            },
+            "end_html": {
+                "content": "$2",
+                "example": "</b>"
+            }
+        }
+    },
+    "intro_nag_header": {
+        "message": "Nästan klart!",
+        "description": ""
+    },
+    "intro_pin_nudge": {
+        "message": "$START_SPAN_TAG$Fäst Privacy Badger i verktygsfältet$END_SPAN_TAG$ så att du enkelt kommer åt knappen ”$DISABLE_FOR_SITE$”.",
+        "description": "",
+        "placeholders": {
+            "start_span_tag": {
+                "content": "<b>"
+            },
+            "disable_for_site": {
+                "content": "$1",
+                "example": "Disable for this site"
+            },
+            "end_span_tag": {
+                "content": "</b>"
+            }
+        }
+    },
+    "intro_pin_instructions": {
+        "message": "Klicka på pusselbitsikonen i webbläsarens verktygsfält för att fästa Privacy Badger-ikonen. Klicka sedan på nålikonen bredvid Privacy Badger.",
+        "description": ""
+    },
+    "intro_animation_button_stop": {
+        "message": "Stoppa animeringen",
+        "description": ""
+    },
+    "intro_animation_button_play": {
+        "message": "Spela upp animeringen",
+        "description": ""
+    },
+    "intro_disable_header": {
+        "message": "Ett tips innan du börjar surfa med bättre skydd",
+        "description": ""
+    },
+    "intro_disable_button_context": {
+        "message": "Privacy Badger är redo att skydda dig mot dolda spårare. Blockering av spårare kan dock ibland göra att webbplatser slutar fungera.",
+        "description": ""
+    },
+    "intro_disable_button": {
+        "message": "Om du tror att Privacy Badger orsakar problem på en sida, till exempel att en video inte spelas upp, $START_HTML$kan du klicka på knappen ”$DISABLE_FOR_SITE$” för att inaktivera Privacy Badger på den webbplatsen.$END_HTML$",
+        "description": "",
+        "placeholders": {
+            "start_html": {
+                "content": "$1",
+                "example": "<b>"
+            },
+            "disable_for_site": {
+                "content": "$2",
+                "example": "Disable for this site"
+            },
+            "end_html": {
+                "content": "$3",
+                "example": "</b>"
+            }
+        }
+    },
+    "intro_features_header": {
+        "message": "Privacy Badger skyddar din surfning från spårare.",
+        "description": ""
+    },
+    "intro_features_subheader": {
+        "message": "Lär dig hur.",
+        "description": ""
+    },
+    "intro_welcome": {
+        "message": "Privacy Badger lär sig automatiskt att blockera dolda spårare. Ta en minut och se hur.",
+        "description": ""
+    },
+    "intro_beyond_ads": {
+        "message": "Fångar lömska spårare",
+        "description": ""
+    },
+    "intro_beyond_ads_paragraph": {
+        "message": "Privacy Badger skickar <a href='https://globalprivacycontrol.org/' target='_blank'>signalen Global sekretesskontroll</a> för att välja bort datadelning och försäljning, och <a href='https://www.eff.org/issues/do-not-track' target='_blank'>signalen Spåra inte</a> för att tala om för företag att inte spåra dig.",
+        "description": ""
+    },
+    "intro_beyond_ads_paragraph2": {
+        "message": "Om företagen ignorerar signalerna lär sig Privacy Badger att blockera dem – oavsett om de är annonsörer eller andra slags spårare.",
+        "description": ""
+    },
+    "intro_not_an_adblocker": {
+        "message": "Inte en annonsblockerare",
+        "description": ""
+    },
+    "intro_learns_paragraph": {
+        "message": "Privacy Badger upptäcker automatiskt spårare baserat på deras beteende.",
+        "description": ""
+    },
+    "intro_not_an_adblocker_paragraph2": {
+        "message": "Dold spårning sker på många olika sätt; annonser är bara den synliga toppen av isberget. Privacy Badger blockerar inte annonser såvida de inte spårar dig.",
+        "description": ""
+    },
+    "intro_open_popup": {
+        "message": "Testa att öppna Privacy Badgers popupfönster",
+        "description": ""
+    },
+    "intro_open_popup_alt": {
+        "message": "Webbläsarens verktygsfält med Privacy Badger-ikonen inringad",
+        "description": ""
+    },
+    "intro_donate_heading": {
+        "message": "Integritet är en lagsport!",
+        "description": ""
+    },
+    "intro_donate1": {
+        "message": "När du använder Privacy Badger ansluter du dig till <a href='https://www.eff.org/' target='_blank'>Electronic Frontier Foundation</a> och miljontals andra användare i kampen för integritet. Vi är en ideell organisation som kämpar för dina rättigheter på nätet. Tack för att du är med!",
+        "description": ""
+    },
+    "intro_donate_subheading": {
+        "message": "Hjälp oss genom att donera",
+        "description": ""
+    },
+    "donate_to_eff": {
+        "message": "Donera till EFF",
+        "description": ""
+    },
+    "share_button_title_facebook": {
+        "message": "Dela på Facebook",
+        "description": ""
+    },
+    "share_button_title_mastodon": {
+        "message": "Dela på Mastodon",
+        "description": ""
+    },
+    "share_button_title_bluesky": {
+        "message": "Dela på Bluesky",
+        "description": ""
+    },
+    "intro_link_policy": {
+        "message": "Sekretesspolicy",
+        "description": ""
+    },
+    "options_title": {
+        "message": "Inställningar för Privacy Badger",
+        "description": ""
+    },
+    "disabled_sites": {
+        "message": "Inaktiverade webbplatser",
+        "description": ""
+    },
+    "options_disable_tip_title": {
+        "message": "Så inaktiverar du Privacy Badger utan att lämna webbplatsen",
+        "description": ""
+    },
+    "options_disable_tip_alt": {
+        "message": "Klicka först på Privacy Badgers ikon i webbläsarens verktygsfält. Klicka sedan på knappen ”$DISABLE_FOR_SITE$”.",
+        "description": "",
+        "placeholders": {
+            "disable_for_site": {
+                "content": "$1",
+                "example": "Disable for this site"
+            }
+        }
+    },
+    "disabled_for_these_domains": {
+        "message": "Privacy Badger är inaktiverat på följande webbplatser. Det innebär att ingenting blockeras när du besöker webbplatserna i listan och att signalerna Spåra inte och Global sekretesskontroll inte skickas.",
+        "description": ""
+    },
+    "add_domain_button": {
+        "message": "Lägg till webbplats",
+        "description": ""
+    },
+    "remove_button": {
+        "message": "Ta bort markerade",
+        "description": ""
+    },
+    "invalid_domain": {
+        "message": "Lägg till en giltig domän eller URL",
+        "description": ""
+    },
+    "options_general_settings": {
+        "message": "Allmänna inställningar",
+        "description": ""
+    },
+    "show_counter_checkbox": {
+        "message": "Visa antalet spårare",
+        "description": ""
+    },
+    "options_enable_dnt_checkbox": {
+        "message": "Skicka signalerna ”<a href='https://globalprivacycontrol.org/' target='_blank'>Global sekretesskontroll</a>” och ”<a href='https://www.eff.org/issues/do-not-track' target='_blank'>Spåra inte</a>” till webbplatser",
+        "description": ""
+    },
+    "options_dnt_policy_setting": {
+        "message": "Kontrollera om <a target='_blank' href='https://www.eff.org/privacybadger/faq#What-is-a-third-party-tracker'>tredjepartsdomäner</a> följer <a target='_blank' href='https://www.eff.org/dnt-policy'>EFF:s Spåra inte-policy</a>",
+        "description": ""
+    },
+    "options_privacy_settings": {
+        "message": "Sekretess",
+        "description": ""
+    },
+    "options_disable_hyperlink_auditing": {
+        "message": "Förhindra webbplatser från att spåra vilka länkar du klickar på (”länkgranskning”)",
+        "description": ""
+    },
+    "options_disable_network_prediction": {
+        "message": "Inaktivera förhämtning",
+        "description": ""
+    },
+    "options_disable_google_nav_error_service": {
+        "message": "Skicka inte URL:er som du besöker till Google. Det här inaktiverar förslag på liknande sidor när en sida inte kan hittas.",
+        "description": ""
+    },
+    "options_disable_floc": {
+        "message": "Inaktivera annonsspårning via Googles ”Privacy Sandbox”",
+        "description": ""
+    },
+    "options_advanced_settings": {
+        "message": "Avancerat",
+        "description": ""
+    },
+    "options_learn_setting": {
+        "message": "Lär Privacy Badger att blockera nya spårare medan du surfar",
+        "description": ""
+    },
+    "local_learning_warning": {
+        "message": "Om inlärning aktiveras kan du bli lättare att identifiera på webbplatser",
+        "description": ""
+    },
+    "options_show_nontracking_domains_checkbox": {
+        "message": "Visa domäner som inte verkar spåra dig",
+        "description": ""
+    },
+    "options_incognito_setting": {
+        "message": "Inlärning i privata fönster och inkognitofönster",
+        "description": ""
+    },
+    "options_incognito_warning": {
+        "message": "Inlärning i privata fönster och inkognitofönster kan lämna spår av din privata surfhistorik på datorn. Som standard blockerar Privacy Badger kända spårare i dessa fönster men lär sig inte om nya spårare. Du kan aktivera inställningen om du ofta surfar i privata fönster eller inkognitofönster.",
+        "description": ""
+    },
+    "options_widget_replacement_tab": {
+        "message": "Ersättning av gränssnittskomponenter",
+        "description": ""
+    },
+    "options_widget_replacement_desc": {
+        "message": "När Privacy Badger blockerar sociala knappar och andra potentiellt användbara gränssnittskomponenter, till exempel video, ljud och kommentarer, kan de ersättas med platshållare som aktiveras med ett klick.",
+        "description": ""
+    },
+    "options_widget_exceptions_header": {
+        "message": "Undantag för gränssnittskomponenter",
+        "description": ""
+    },
+    "options_hide_social_widgets": {
+        "message": "Blockera men ersätt inte följande gränssnittskomponenter:",
+        "description": ""
+    },
+    "options_widget_site_exceptions_header": {
+        "message": "Webbplatsundantag",
+        "description": ""
+    },
+    "options_widget_site_exceptions_label": {
+        "message": "Tillåt alltid gränssnittskomponenter på dessa webbplatser:",
+        "description": ""
+    },
+    "options_domain_list_tab": {
+        "message": "Spårningsdomäner",
+        "description": ""
+    },
+    "options_domain_list_trackers": {
+        "message": "Privacy Badger har hittills valt att blockera $COUNT$ potentiella $TRACKER_LINK_START$spårningsdomäner$TRACKER_LINK_END$",
+        "description": "",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "900"
+            },
+            "tracker_link_start": {
+                "content": "$2",
+                "example": "<a href='https://privacybadger.org/#What-is-a-third-party-tracker'>"
+            },
+            "tracker_link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "options_domain_list_no_trackers": {
+        "message": "Privacy Badger har inte upptäckt några $LINK_START$spårningsdomäner$LINK_END$ ännu. Fortsätt surfa!",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "$1",
+                "example": "<a href='http://example.com'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "what_is_a_tracker": {
+        "message": "Vad är en spårare?",
+        "description": ""
+    },
+    "options_domain_search": {
+        "message": "Sök domäner:",
+        "description": ""
+    },
+    "options_domain_search_tooltip": {
+        "message": "Lägg till ett minustecken i söktermen för att utesluta domäner. Sökningen ”.co -.com” visar till exempel .co och .co.uk men inte .com-domäner.",
+        "description": ""
+    },
+    "options_domain_type_filter": {
+        "message": "Filtrera efter typ:",
+        "description": ""
+    },
+    "options_domain_filter_all": {
+        "message": "alla",
+        "description": ""
+    },
+    "options_domain_filter_user": {
+        "message": "användarstyrda",
+        "description": ""
+    },
+    "options_domain_filter_dnt": {
+        "message": "överensstämmer med EFF:s Spåra inte-policy",
+        "description": ""
+    },
+    "options_domain_status_filter": {
+        "message": "Filtrera efter status:",
+        "description": ""
+    },
+    "options_domain_filter_block": {
+        "message": "blockerade",
+        "description": ""
+    },
+    "options_domain_filter_cookieblock": {
+        "message": "delvis blockerade",
+        "description": ""
+    },
+    "options_domain_filter_allow": {
+        "message": "tillåtna",
+        "description": ""
+    },
+    "options_show_not_yet_blocked": {
+        "message": "Visa domäner som Privacy Badger ännu inte har beslutat att blockera",
+        "description": ""
+    },
+    "options_hide_in_seed": {
+        "message": "Dölj domäner som finns i den senaste förinlärda listan",
+        "description": ""
+    },
+    "options_domain_list_sites": {
+        "message": "$DOMAIN$ har observerats spåra på följande webbplatser:",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "options_domain_remove": {
+        "message": "Ta bort $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "options_remove_origin_confirm": {
+        "message": "Vill du verkligen ta bort den här domänen från Privacy Badger?",
+        "description": ""
+    },
+    "data_settings": {
+        "message": "Hantera data",
+        "description": ""
+    },
+    "manage_data_intro": {
+        "message": "Importera användardata:<ul><li>Skriver över allmänna inställningar</li><li>Sammanfogar listor över inaktiverade webbplatser</li><li>Sammanfogar information om spårare som Privacy Badger har sett</li><li>Skriver över anpassningar av skjutreglagen</li></ul>",
+        "description": ""
+    },
+    "export_user_data": {
+        "message": "Exportera användardata",
+        "description": ""
+    },
+    "download": {
+        "message": "Hämta",
+        "description": ""
+    },
+    "import_user_data": {
+        "message": "Importera användardata",
+        "description": ""
+    },
+    "import": {
+        "message": "Importera",
+        "description": ""
+    },
+    "import_select_file": {
+        "message": "Välj en fil att importera.",
+        "description": ""
+    },
+    "invalid_json": {
+        "message": "Ogiltig JSON-fil.",
+        "description": ""
+    },
+    "import_successful": {
+        "message": "Spårningslistan och inställningarna uppdaterades!",
+        "description": ""
+    },
+    "sync_intro": {
+        "message": "Molnsynkronisering:<ul><li>Kräver Firefox Sync eller Chrome Sync</li><li>Uppladdning skriver över alla befintliga Privacy Badger-data i molnet</li><li>Hämtning sammanfogar listorna över webbplatser där Privacy Badger är inaktiverat</li></ul>",
+        "description": ""
+    },
+    "upload_cloud": {
+        "message": "Exportera inaktiverade webbplatser till molnet",
+        "description": ""
+    },
+    "upload": {
+        "message": "Ladda upp",
+        "description": ""
+    },
+    "download_cloud": {
+        "message": "Importera inaktiverade webbplatser från molnet",
+        "description": ""
+    },
+    "download_cloud_success": {
+        "message": "Molndata har importerats.",
+        "description": ""
+    },
+    "download_cloud_failure": {
+        "message": "Molndata kunde inte hämtas.",
+        "description": ""
+    },
+    "upload_cloud_success": {
+        "message": "Data har laddats upp till molnet.",
+        "description": ""
+    },
+    "upload_cloud_failure": {
+        "message": "Data kunde inte laddas upp till molnet.",
+        "description": ""
+    },
+    "download_cloud_no_data": {
+        "message": "Inga molndata att hämta.",
+        "description": ""
+    },
+    "reset_data": {
+        "message": "Återställ spårningsdomäner",
+        "description": ""
+    },
+    "reset": {
+        "message": "Återställ",
+        "description": ""
+    },
+    "reset_data_confirm": {
+        "message": "Om du återställer spårningsdomäner sker följande:\n\n  • Alla data om spårare som Privacy Badger har lärt sig om under din surfning tas bort\n  • Listan över spårningsdomäner återställs till den senaste förinlärda listan (läs mer på www.eff.org/badger-pretraining)",
+        "description": ""
+    },
+    "remove_all_data": {
+        "message": "Ta bort alla spårningsdomäner",
+        "description": ""
+    },
+    "remove_all": {
+        "message": "Ta bort alla",
+        "description": ""
+    },
+    "remove_all_data_confirm": {
+        "message": "Om du tar bort alla spårningsdomäner sker följande:\n\n  • Allt som Privacy Badger känner till om spårare tas bort\n  • Privacy Badger blockerar ingenting förrän det har fått möjlighet att lära sig på nytt utifrån din surfning",
+        "description": ""
+    },
+    "intro_text1": {
+        "message": "Du skyddas nu av Privacy Badger.",
+        "description": ""
+    },
+    "intro_text2": {
+        "message": "Klicka nedan för en snabb introduktion till hur Privacy Badger fungerar.",
+        "description": ""
+    },
+    "first_run_text": {
+        "message": "Se hur Privacy Badger skyddar din integritet",
+        "description": ""
+    },
+    "learn_more_link": {
+        "message": "Besök $LINK$ för att lära dig mer.",
+        "description": "",
+        "placeholders": {
+            "link": {
+                "content": "$1",
+                "example": "<a href='https://example.com'>example.com</a>"
+            }
+        }
+    },
+    "learn_more": {
+        "message": "Läs mer",
+        "description": ""
+    },
+    "social_tooltip_pb_has_replaced": {
+        "message": "Privacy Badger har ersatt den här $BUTTON$-knappen",
+        "description": "",
+        "placeholders": {
+            "button": {
+                "content": "$1",
+                "example": "Facebook Like"
+            }
+        }
+    },
+    "widget_placeholder_pb_has_replaced": {
+        "message": "Privacy Badger har ersatt $START_ANCHOR_TAG$den här $WIDGET$-komponenten$END_ANCHOR_TAG$",
+        "description": "",
+        "placeholders": {
+            "widget": {
+                "content": "$1",
+                "example": "Google reCAPTCHA"
+            },
+            "start_anchor_tag": {
+                "content": "$2",
+                "example": "<a href='https://vimeo.com/76979871'>"
+            },
+            "end_anchor_tag": {
+                "content": "$3",
+                "example": "</a>"
+            }
+        }
+    },
+    "allow_once": {
+        "message": "Tillåt en gång",
+        "description": ""
+    },
+    "allow_on_site": {
+        "message": "Tillåt alltid på den här webbplatsen",
+        "description": ""
+    }
+}

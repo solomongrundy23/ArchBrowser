@@ -1,0 +1,44 @@
+{
+  "name": {
+		"message": "Поиск Яндексa"
+	},
+	"description": {
+		"message": "Вводите запросы в адресную строку и получайте ответы от Яндекса"
+	},
+  "searchName": {
+    "message": "Яндекс"
+  },
+  "searchDomain": {
+    "message": ".kz"
+  },
+  "ctxSearchMessageMarket": {
+    "message": "Найти на Яндекс.Маркет \"%s\""
+  },
+  "ctxSearchUrlMarket": {
+    "message": "https://market.yandex.ru/search?text=__QUERY__&from=searchext"
+  },
+  "ctxSearchMessageVideo": {
+    "message": "Найти на Яндекс.Видео \"%s\""
+  },
+  "ctxSearchUrlVideo": {
+    "message": "https://yandex.ru/video/search?text=__QUERY__&from=searchext"
+  },
+  "ctxSearchMessageImage": {
+    "message": "Найти похожее на Яндекс.Картинки"
+  },
+  "ctxSearchUrlImage": {
+    "message": "https://yandex.ru/images/search?&rpt=imageview&url=__SRC_URL__&from=searchext"
+  },
+  "ctxSearchMessageMap": {
+    "message": "Найти на Яндекс.Карты \"%s\""
+  },
+  "ctxSearchUrlMap": {
+    "message": "https://yandex.ru/maps/?mode=search&text=__QUERY__&from=searchext"
+  },
+  "ctxSearchMessageQuestion": {
+    "message": "Найти на Яндекс.Кью \"%s\""
+  },
+  "ctxSearchUrlQuestion": {
+    "message": "https://yandex.ru/q/search?text=__QUERY__&from=searchext"
+  }
+}

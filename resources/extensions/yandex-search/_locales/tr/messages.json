@@ -1,0 +1,44 @@
+{
+  "name": {
+		"message": "Yandex Arama"
+	},
+	"description": {
+		"message": "Sorguları adres satırına girin ve Yandex'ten yanıtları alın"
+	},
+  "searchName": {
+    "message": "Yandex"
+  },
+  "searchDomain": {
+    "message": ".com.tr"
+  },
+  "ctxSearchMessageMarket": {
+    "message": "Bulmak için Yandex.Video \"%s\""
+  },
+  "ctxSearchUrlMarket": {
+    "message": "https://yandex.com.tr/video/search?text=__QUERY__&from=searchext"
+  },
+  "ctxSearchMessageVideo": {
+    "message": "Bulmak için Yandex.Video \"%s\""
+  },
+  "ctxSearchUrlVideo": {
+    "message": "https://yandex.com.tr/video/search?text=__QUERY__&from=searchext"
+  },
+  "ctxSearchMessageImage": {
+    "message": "Bulmak için Yandex.Görsel"
+  },
+  "ctxSearchUrlImage": {
+    "message": "https://yandex.com.tr/images/search?&rpt=imageview&url=__SRC_URL__&from=searchext"
+  },
+  "ctxSearchMessageMap": {
+    "message": "Bulmak için Yandex.Haritalar \"%s\""
+  },
+  "ctxSearchUrlMap": {
+    "message": "https://yandex.com.tr/maps/?mode=search&text=__QUERY__&from=searchext"
+  },
+  "ctxSearchMessageQuestion": {
+    "message": "Bulmak için Yandex.Video \"%s\""
+  },
+  "ctxSearchUrlQuestion": {
+    "message": "https://yandex.com.tr/video/search?text=__QUERY__&from=searchext"
+  }
+}

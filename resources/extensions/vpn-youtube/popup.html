@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube VPN</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body class="yt-skin">
+  <!-- Верхняя навигация (раньше была снизу) -->
+  <nav class="top-nav" aria-label="Разделы">
+    <button type="button" class="nav-item active" data-page="home">
+      <span class="nav-icon nav-icon-home" aria-hidden="true"></span>
+      <span class="nav-label">Главная</span>
+    </button>
+    <button type="button" class="nav-item" data-page="subscriptions">
+      <span class="nav-icon nav-icon-subs" aria-hidden="true"></span>
+      <span class="nav-label">Подписки</span>
+    </button>
+    <button type="button" class="nav-item" data-page="help">
+      <span class="nav-icon nav-icon-help" aria-hidden="true"></span>
+      <span class="nav-label">Помощь</span>
+    </button>
+    <button type="button" class="nav-item" data-page="notifications" id="notificationsNavBtn">
+      <span class="nav-bell-wrap">
+        <span class="nav-icon nav-icon-news" aria-hidden="true"></span>
+        <span class="nav-bell-badge" id="notifBadge" style="display:none"></span>
+      </span>
+      <span class="nav-label">Новости</span>
+    </button>
+  </nav>
+
+  <div class="app-scroll">
+    <div class="container">
+    <!-- Страница: Главная -->
+    <div class="page" id="page-home">
+      <header class="yt-masthead">
+        <div class="yt-brand-block">
+          <div class="yt-logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </div>
+          <div class="yt-brand-text">
+            <span class="yt-brand-title">YouTube</span>
+            <span class="yt-brand-sub">VPN</span>
+          </div>
+        </div>
+        <button type="button" class="settings-btn" id="settingsBtn" title="Настройки" aria-label="Настройки">
+          <span class="settings-icon" aria-hidden="true"></span>
+        </button>
+      </header>
+
+      <div class="page-content" id="homePageContent">
+
+        <div id="homeContent" class="home-layout">
+          <div class="status-banner" id="status">
+            <span class="status-indicator" id="statusIndicator"></span>
+            <span class="status-text" id="statusText">Отключено</span>
+          </div>
+
+          <section class="connect-hero" aria-label="Подключение">
+            <button type="button" id="toggleBtn" class="toggle-btn yt-primary-action">
+              <span class="mode-icon mode-icon-play connect-btn-play" aria-hidden="true"></span>
+              <span id="btnText">Подключиться</span>
+            </button>
+          </section>
+
+          <section class="mode-panel" id="modeSwitcher" aria-label="Режим">
+            <div class="mode-switcher-label">Режим работы</div>
+            <div class="mode-switcher-buttons">
+              <button type="button" class="mode-btn mode-btn-youtube" id="youtubeOnlyBtn" data-mode="youtube-only">
+                <span class="mode-icon mode-icon-play" aria-hidden="true"></span>
+                <span class="mode-text">Только YouTube</span>
+              </button>
+              <button type="button" class="mode-btn active" id="allInternetBtn" data-mode="all-internet">
+                <span class="mode-icon mode-icon-globe" aria-hidden="true"></span>
+                <span class="mode-text">Весь интернет</span>
+              </button>
+            </div>
+            <div class="custom-select-wrapper" id="serverSelectWrapper">
+              <label class="select-label">Сервер</label>
+              <button type="button" class="custom-select-button" id="serverSelectButton">
+                <span class="custom-select-text" id="serverSelectText" class="skeleton-text is-skeleton">&nbsp;</span>
+                <span class="custom-select-arrow" aria-hidden="true"></span>
+              </button>
+              <div class="custom-select-dropdown" id="serverSelectDropdown" style="display: none;">
+                <div class="custom-select-option" data-value="auto">🌐 Лучший сервер</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="account-sheet info" id="info">
+            <div class="sheet-title">Аккаунт</div>
+            <div class="info-row">
+              <span class="info-label"><strong>ID:</strong></span>
+              <span class="info-value">
+                <span id="userIdInfo" class="skeleton-text is-skeleton">&nbsp;</span>
+                <span class="info-tooltip-wrapper">
+                  <span class="info-tooltip-icon">ⓘ</span>
+                  <span class="info-tooltip-text" id="userIdTooltip"></span>
+                </span>
+              </span>
+            </div>
+            <div class="info-row">
+              <span class="info-label"><strong>Сервер:</strong></span>
+              <span class="info-value" id="serverInfo" class="skeleton-text is-skeleton">&nbsp;</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label"><strong>Подписка:</strong></span>
+              <span class="info-value skeleton-text is-skeleton" id="subscriptionInfo">&nbsp;</span>
+            </div>
+            <div class="info-row" id="subscriptionDateContainer" style="display: none;">
+              <span class="info-label"><strong>Действует до</strong></span>
+              <span class="info-value" id="subscriptionDate">-</span>
+            </div>
+            <button type="button" id="manageSubscriptionBtn" class="manage-subscription-btn is-skeleton-btn" disabled>
+              <span class="skeleton-text is-skeleton btn-skeleton">&nbsp;</span>
+            </button>
+            <button type="button" id="cabinetBtn" class="cabinet-btn">Открыть личный кабинет</button>
+          
+            <div class="extension-account-panel" id="extensionAccountPanel">
+              <p class="extension-account-hint" id="extensionAccountHint">
+                Войдите в уже существующий аккаунт или создайте новый, чтобы не потерять доступ к текущей подписке
+              </p>
+              <div class="extension-account-actions">
+                <button type="button" id="extensionLoginBtn" class="extension-account-btn">Войти</button>
+                <button type="button" id="extensionRegisterBtn" class="extension-account-btn extension-account-btn-secondary">Создать аккаунт</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- Страница: Подписки -->
+    <div class="page" id="page-subscriptions" style="display: none;">
+      <header class="subpage-head">
+        <h1 class="subpage-title">Подписки</h1>
+        <div class="filter-buttons filter-chips">
+          <button type="button" class="filter-btn active" data-filter="all">Все</button>
+          <button type="button" class="filter-btn" data-filter="youtube">YouTube</button>
+          <button type="button" class="filter-btn" data-filter="internet">Интернет</button>
+        </div>
+      </header>
+      <div class="page-content">
+        <div class="subscriptions-list" id="subscriptionsList"></div>
+      </div>
+    </div>
+
+    <!-- Страница: Помощь -->
+    <div class="page" id="page-help" style="display: none;">
+      <header class="subpage-head">
+        <h1 class="subpage-title">Помощь</h1>
+      </header>
+      <div class="page-content">
+        <div class="help-list" id="helpList"></div>
+      </div>
+    </div>
+
+    <!-- Страница: Уведомления -->
+    <div class="page" id="page-notifications" style="display: none;">
+      <header class="subpage-head">
+        <h1 class="subpage-title">Уведомления</h1>
+      </header>
+      <div class="page-content">
+        <div class="notifications-list" id="notificationsList"></div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно подписки -->
+  <div class="modal-overlay" id="subscription-modal">
+    <div class="modal-content">
+      <button type="button" class="modal-close" id="modal-close-btn" aria-label="Закрыть">×</button>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <div class="alert-modal-overlay" id="alert-modal" style="display: none;">
+    <div class="alert-modal-content">
+      <div class="alert-modal-icon" id="alert-icon">⚠️</div>
+      <div class="alert-modal-title" id="alert-title">Уведомление</div>
+      <div class="alert-modal-message" id="alert-message"></div>
+      <button type="button" class="alert-modal-button" id="alert-ok-btn">OK</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="settings-modal" style="display: none;">
+    <div class="modal-content settings-modal-content">
+      <button type="button" class="modal-close" id="settings-modal-close-btn" aria-label="Закрыть">×</button>
+      <div class="modal-body">
+        <h2 class="settings-modal-title">Выберите язык</h2>
+        <div class="language-options">
+          <button type="button" class="language-option" data-lang="ru">
+            <span class="language-flag">🇷🇺</span>
+            <span class="language-name">Русский</span>
+            <span class="language-check" id="lang-check-ru">✓</span>
+          </button>
+          <button type="button" class="language-option" data-lang="en">
+            <span class="language-flag">🇺🇸</span>
+            <span class="language-name">Английский</span>
+            <span class="language-check" id="lang-check-en">✓</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="popup.js"></script>
+
+  <!-- In-app баннер -->
+  <div class="inapp-banner" id="inappBanner" style="display:none;">
+    <button class="inapp-banner-close" id="inappBannerClose" type="button">×</button>
+    <img class="inapp-banner-img" id="inappBannerImg" alt="" style="display:none;">
+    <div class="inapp-banner-title" id="inappBannerTitle"></div>
+    <div class="inapp-banner-body" id="inappBannerBody"></div>
+    <a class="inapp-banner-cta" id="inappBannerCta" href="#" target="_blank" rel="noreferrer" style="display:none;"></a>
+  </div>
+</body>
+</html>

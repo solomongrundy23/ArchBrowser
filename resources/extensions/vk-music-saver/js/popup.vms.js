@@ -1,0 +1,1 @@
+﻿"use strict";(globalThis.webpackChunkvk_music_saver=globalThis.webpackChunkvk_music_saver||[]).push([[887],{1035(){const e=document.getElementById("donateText");e&&(e.innerText=chrome.i18n.getMessage("popup_donate"));const t=document.getElementById("feedbackText");t&&(t.innerText=chrome.i18n.getMessage("popup_feedback"))}},e=>{var t;t=1035,e(e.s=t)}]);

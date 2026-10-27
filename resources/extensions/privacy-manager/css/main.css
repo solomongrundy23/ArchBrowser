@@ -1,0 +1,230 @@
+/*
+ * This file is part of Privacy Manager.
+ * Copyright (C) 2017-present Manvel Saroyan
+ * 
+ * Privacy Manager is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Privacy Manager is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Privacy Manager. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+ :root
+ {
+  --color-primary: #679c16;
+  --color-secondary: #989898;
+}
+
+body
+{
+  margin: 0px;
+  position: relative;
+	max-width: 700px;
+  background-color: #F9F9F9;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#main
+{
+  min-width: 520px;
+}
+
+[lang="ru"]
+{
+  min-width: 550px;
+}
+
+pm-toggle
+{
+  width: 100%;
+}
+
+.controls
+{
+  height: 30px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0px;
+  align-items: center;
+}
+
+/*******************************************************************************
+ * Buttons
+ ******************************************************************************/
+pm-button
+{
+  border-radius: 3px;
+}
+pm-button[theme="secondary"]
+{
+  width: 100%;
+  border-radius: 5px;
+}
+
+/*******************************************************************************
+ * Tabs
+ ******************************************************************************/
+
+pm-panel:not([hidden])
+{
+  padding: 10px;
+  display: block;
+}
+
+/*******************************************************************************
+ * Settings list
+ ******************************************************************************/
+.settings-list
+{
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+.settings-list li
+{
+  margin-top: 3px; 
+  display: flex;
+  align-items: center;
+}
+
+/*******************************************************************************
+ * DIALOG
+ ******************************************************************************/
+pm-dialog .fieldset-container
+{
+  display: flex;
+  justify-content: space-between;
+}
+pm-dialog form label
+{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0px 20px;
+}
+pm-dialog form label span
+{
+  padding: 0px 10px;
+}
+pm-dialog form input[type="text"],
+pm-dialog form input[type="date"],
+pm-dialog form input[type="time"]
+{
+  width: 150px;
+}
+pm-dialog form input[type="number"]
+{
+  width: 30px;
+}
+pm-dialog .controls
+{
+  padding: 0px 10px;
+  height: 30px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+pm-dialog.cookies.add #delete-cookie
+{
+  display: none;
+}
+
+/*******************************************************************************
+ * Main
+ ******************************************************************************/
+
+html[lang="de"] #panel-main
+{
+  min-width: 585px;
+}
+
+#panel-main .settings-list-container
+{
+  justify-content: center;
+}
+
+#panel-main section
+{
+  display: flex;
+  flex-direction: column;
+  vertical-align: top;
+  padding-right: 28px;
+}
+
+#panel-main section:last-child
+{
+  padding-right: 0px;
+}
+
+#panel-main section h2
+{
+  font-size: 21px;
+  font-weight: bold;
+  padding-bottom: 8px;
+  color: var(--color-primary);
+  margin: 0px;
+}
+
+#incognito
+{
+  margin-top: auto;
+  width: 100%;
+  display: inline-block;
+	border-radius: 5px;
+	border: 1px solid var(--color-secondary);
+	color: var(--color-primary);
+	font-size: 13px;
+	font-weight: bold;
+	padding: 8px 0px;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+#incognito:hover
+{
+	cursor: pointer;
+	box-shadow: 0px 0px 1px #000;
+}
+
+/*******************************************************************************
+ * Cookies tab
+ ******************************************************************************/
+.settings-list-container
+{
+  display: flex;
+}
+
+.settings-list-container .separator
+{
+  flex-grow: 1;
+}
+
+section h4
+{
+  font-weight: bold;
+  color:var(--color-primary);
+}
+
+#cookiesContainer
+{
+  position: relative;
+}
+
+#search-domain
+{
+  -webkit-appearance: textfield;
+  flex-grow: 1;
+  padding: 5px; 
+  height: 30px;
+  margin: 5px;
+}
