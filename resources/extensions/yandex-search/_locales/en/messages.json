@@ -1,0 +1,44 @@
+{
+	"name": {
+		"message": "Yandex Search"
+	},
+	"description": {
+		"message": "Enter search requests in the address field and get results from Yandex"
+	},
+  "searchName": {
+    "message": "Yandex"
+  },
+  "searchDomain": {
+    "message": ".ru"
+  },
+  "ctxSearchMessageMarket": {
+    "message": "Find on Yandex.Video \"%s\""
+  },
+  "ctxSearchUrlMarket": {
+    "message": "https://yandex.com/video/search?text=__QUERY__&from=searchext"
+  },
+  "ctxSearchMessageVideo": {
+    "message": "Find on Yandex.Video \"%s\""
+  },
+  "ctxSearchUrlVideo": {
+    "message": "https://yandex.com/video/search?text=__QUERY__&from=searchext"
+  },
+  "ctxSearchMessageImage": {
+    "message": "Find similar on Yandex.Image"
+  },
+  "ctxSearchUrlImage": {
+    "message": "https://yandex.com/images/search?&rpt=imageview&url=__SRC_URL__&from=searchext"
+  },
+  "ctxSearchMessageMap": {
+    "message": "Find on Yandex.Map \"%s\""
+  },
+  "ctxSearchUrlMap": {
+    "message": "https://yandex.com/maps/?mode=search&text=__QUERY__&from=searchext"
+  },
+  "ctxSearchMessageQuestion": {
+    "message": "Find on Yandex.Video \"%s\""
+  },
+  "ctxSearchUrlQuestion": {
+    "message": "https://yandex.com/video/search?text=__QUERY__&from=searchext"
+  }
+}

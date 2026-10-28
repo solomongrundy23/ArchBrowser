@@ -1,0 +1,17 @@
+{
+	"extName": {
+		"message": "VK Music Saver — завантажити музику з VK"
+	},
+	"extDescription": {
+		"message": "Завантажуйте треки та плейлисти в один клік. Створено командою VK Next."
+	},
+	"popup_title": {
+		"message": "VK Music Saver"
+	},
+	"popup_donate": {
+		"message": "Підтримати проєкт"
+	},
+	"popup_feedback": {
+		"message": "Повідомити про помилку"
+	}
+}

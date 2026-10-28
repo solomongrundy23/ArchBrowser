@@ -1,0 +1,58 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "default_locale": "en",
+  "version": "1.0.3",
+  "description": "__MSG_extDescription__",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "__MSG_actionTitle__",
+    "default_popup": "popup.html"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "chromeos": "Alt+P",
+        "linux": "Alt+P",
+        "mac": "Alt+P",
+        "windows": "Alt+P"
+      },
+      "description": "__MSG_actionTitle__"
+    },
+    "trigger_play_pause": {
+      "suggested_key": {
+        "default": "Alt+Shift+U"
+      },
+      "description": "__MSG_cmdPlayPause__"
+    },
+    "trigger_rewind": {
+      "suggested_key": {
+        "default": "Alt+Shift+Y"
+      },
+      "description": "__MSG_cmdRewind__"
+    },
+    "toggle_practice_panel": {
+      "suggested_key": {
+        "default": "Alt+Shift+L"
+      },
+      "description": "Open A-B Loop / Practice Mode panel"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

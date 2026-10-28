@@ -1,0 +1,871 @@
+{
+    "name": {
+        "message": "Privacy Badger",
+        "description": ""
+    },
+    "description": {
+        "message": "Automatically learns to block hidden trackers. Made by leading digital rights nonprofit EFF to stop companies from spying on you.",
+        "description": ""
+    },
+    "canvas_fingerprinting": {
+        "message": "canvas fingerprinting",
+        "description": ""
+    },
+    "popup_help_button": {
+        "message": "Súgó",
+        "description": ""
+    },
+    "popup_share_button": {
+        "message": "Megosztás",
+        "description": ""
+    },
+    "popup_options_button": {
+        "message": "Beállítások",
+        "description": ""
+    },
+    "popup_special_page_header": {
+        "message": "Nincs mit tenni ezen az oldalon",
+        "description": ""
+    },
+    "popup_special_page_paragraph": {
+        "message": "A Privacy Badger nem működik az olyan különleges oldalakon, mint amelyen ez is. Próbáljon meg máshol böngészni.",
+        "description": ""
+    },
+    "popup_first_run_header": {
+        "message": "Great job opening the popup!",
+        "description": ""
+    },
+    "popup_disabled_site_header": {
+        "message": "A Privacy Badger le van tiltva ezen az oldalon",
+        "description": ""
+    },
+    "popup_disable_for_site": {
+        "message": "Letiltása ennél az oldalnál",
+        "description": ""
+    },
+    "popup_enable_for_site": {
+        "message": "Engedélyezése ennél az oldalnál",
+        "description": ""
+    },
+    "report_broken_site": {
+        "message": "Report broken site",
+        "description": ""
+    },
+    "popup_donate_to_eff": {
+        "message": "Donate to EFF—a nonprofit defending digital privacy",
+        "description": ""
+    },
+    "popup_review_pb": {
+        "message": "Enjoying Privacy Badger? Leave a review!",
+        "description": ""
+    },
+    "popup_sweatshirt_promo": {
+        "message": "Show your support with a new Privacy Badger sweatshirt!",
+        "description": ""
+    },
+    "popup_effector_signup": {
+        "message": "Get the latest privacy news from EFF",
+        "description": ""
+    },
+    "version": {
+        "message": "verzió: $VERSION_STRING$",
+        "description": "",
+        "placeholders": {
+            "version_string": {
+                "content": "$1",
+                "example": "2018.8.1"
+            }
+        }
+    },
+    "popup_instructions": {
+        "message": "$COUNT$ lehetséges $LINK_START$követő$LINK_END$ tiltva",
+        "description": "",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "15"
+            },
+            "link_start": {
+                "content": "$2",
+                "example": "<a href='https://privacybadger.org/#What-is-a-third-party-tracker'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "popup_instructions_no_trackers": {
+        "message": "Nincsenek $LINK_START$követők$LINK_END$ tiltva",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "$1",
+                "example": "<a href='https://privacybadger.org/#What-is-a-third-party-tracker'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "popup_blocked": {
+        "message": "Nincsenek harmadik féltől származó erőforrások ezen az oldalon. Éljen az adatvédelem!",
+        "description": ""
+    },
+    "tooltip_block": {
+        "message": "Mozgassa a csúszkát balra egy tartomány tiltásához",
+        "description": ""
+    },
+    "tooltip_cookieblock": {
+        "message": "Állítsa középre a csúszkát a sütik tiltásához",
+        "description": ""
+    },
+    "tooltip_allow": {
+        "message": "Mozgassa a csúszkát jobbra egy tartomány engedélyezéséhez",
+        "description": ""
+    },
+    "badger_status_block": {
+        "message": "$DOMAIN$ tiltva",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_cookieblock": {
+        "message": "A(z) $DOMAIN$ tartományból tiltott sütik",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_blocked_scripts": {
+        "message": "Blocked cookies and fingerprinting scripts from $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_allow": {
+        "message": "$DOMAIN$ engedélyezve",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_noaction": {
+        "message": "Nincs követés ennél a tartománynál: $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "dnt_tooltip": {
+        "message": "Ez a tartomány azt ígéri, hogy nem követi Önt",
+        "description": ""
+    },
+    "domain_slider_label": {
+        "message": "Settings for $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "domain_slider_block_tooltip": {
+        "message": "Block entirely",
+        "description": ""
+    },
+    "domain_slider_cookieblock_tooltip": {
+        "message": "Block cookies",
+        "description": ""
+    },
+    "domain_slider_allow_tooltip": {
+        "message": "Allow",
+        "description": ""
+    },
+    "breakage_warning_tooltip": {
+        "message": "A tartomány tiltása köztudottan megakadályozza a weboldalak helyes működését",
+        "description": ""
+    },
+    "google_signin_tooltip": {
+        "message": "To enable logging into websites with your Google account, move this slider right, and reload the page",
+        "description": ""
+    },
+    "feed_the_badger_title": {
+        "message": "Kattintson, hogy visszaadja a tartomány vezérlését a Privacy Badger számára",
+        "description": ""
+    },
+    "not_yet_blocked_header": {
+        "message": "A Privacy Badger még nem döntötte el, hogy ezeket a tartományokat tiltani kell-e",
+        "description": ""
+    },
+    "intro_not_an_adblocker_paragraph": {
+        "message": "A Privacy Badger akkor kezd el tiltani, ha meglátja ugyanazt a követőt három különböző weboldalon. Három csapás és vége!",
+        "description": ""
+    },
+    "non_tracker": {
+        "message": "Az alábbi tartományokról úgy tűnik, hogy nem követik Önt",
+        "description": ""
+    },
+    "non_tracker_tip": {
+        "message": "A Privacy Badger jelenleg csak azt ellenőrzi, hogy a harmadik felek használnak-e sütiket, HTML helyi tárolókat vagy vászon segítségével történő ujjlenyomat-készítést a böngészése nyomon követéséhez. Ezen tartományok némelyike olyan követési módszereket használhat, amelyeket a Privacy Badger nem ismer fel.",
+        "description": ""
+    },
+    "report_input_label": {
+        "message": "Briefly describe the problem:",
+        "description": ""
+    },
+    "error_input": {
+        "message": "Mi a baj?",
+        "description": ""
+    },
+    "report_terms": {
+        "message": "Ez a következő információkat fogja elküldeni automatikusan az EFF-nek: a jelenleg meglátogatott oldalt, a böngészője verzióját, a Privacy Badger verzióját, valamint az ezen az oldalon lévő összes csúszka állapotát.",
+        "description": ""
+    },
+    "report_button": {
+        "message": "Send report",
+        "description": ""
+    },
+    "report_cancel": {
+        "message": "Mégse",
+        "description": ""
+    },
+    "report_close": {
+        "message": "Bezárás",
+        "description": ""
+    },
+    "report_success": {
+        "message": "Köszönjük! Megoldást fogunk találni rá.",
+        "description": ""
+    },
+    "report_fail": {
+        "message": "Hoppá. Valami elromlott.",
+        "description": ""
+    },
+    "share_title": {
+        "message": "Mondja el az ismerőseinek",
+        "description": ""
+    },
+    "share_tracker_header": {
+        "message": "A Privacy Badger $COUNT$ lehetséges követőt tiltott a(z) $DOMAIN$ tartományon:",
+        "description": "",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "15"
+            },
+            "domain": {
+                "content": "$2",
+                "example": "example.com"
+            }
+        }
+    },
+    "share_base_message": {
+        "message": "Privacy Badger (privacybadger.org) is a browser extension that automatically learns to block hidden trackers. Privacy Badger is made by the Electronic Frontier Foundation, a nonprofit that fights for your rights online.",
+        "description": ""
+    },
+    "copy_button_initial": {
+        "message": "Másolás a vágólapra",
+        "description": ""
+    },
+    "copy_button_copied": {
+        "message": "Lemásolva",
+        "description": ""
+    },
+    "popup_info_firstparty_protections": {
+        "message": "Link tracking protection active",
+        "description": ""
+    },
+    "popup_info_firstparty_description": {
+        "message": "Some websites $LINK_START$use link tracking to follow you$LINK_END$ whenever you click a link to leave the website. Privacy Badger removes tracking from such links on this website.",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "<a href='https://privacybadger.org/#What-about-tracking-by-the-sites-I-actively-visit%2c-like-NYTimes.com-or-Facebook.com' target='_blank'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "popup_info_youtube": {
+        "message": "Ads not blocked? YouTube not working? It's probably not because of Privacy Badger.",
+        "description": ""
+    },
+    "extension_error_text": {
+        "message": "$LINK_START$Mondjon el nekünk$LINK_END$ valamit a következő hibáról:",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "$1",
+                "example": "<a href='http://example.com'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "firstRun_title": {
+        "message": "Köszönjük, hogy telepítette a Privacy Badger kiegészítőt!",
+        "description": ""
+    },
+    "intro_logo_alt_text": {
+        "message": "EFF logo",
+        "description": ""
+    },
+    "intro_eff_header": {
+        "message": "A privacy tool by $START_HTML$EFF$END_HTML$, a member-supported nonprofit",
+        "description": "",
+        "placeholders": {
+            "start_html": {
+                "content": "$1",
+                "example": "<b>"
+            },
+            "end_html": {
+                "content": "$2",
+                "example": "</b>"
+            }
+        }
+    },
+    "intro_nag_header": {
+        "message": "Almost done!",
+        "description": ""
+    },
+    "intro_pin_nudge": {
+        "message": "$START_SPAN_TAG$Pin Privacy Badger to your toolbar$END_SPAN_TAG$ for easy access to the \"$DISABLE_FOR_SITE$\" button.",
+        "description": "",
+        "placeholders": {
+            "start_span_tag": {
+                "content": "<b>"
+            },
+            "disable_for_site": {
+                "content": "$1",
+                "example": "Disable for this site"
+            },
+            "end_span_tag": {
+                "content": "</b>"
+            }
+        }
+    },
+    "intro_pin_instructions": {
+        "message": "To pin Privacy Badger's icon, click on the puzzle piece icon in your browser toolbar. Then, click on the pin icon next to Privacy Badger.",
+        "description": ""
+    },
+    "intro_animation_button_stop": {
+        "message": "Stop animation",
+        "description": ""
+    },
+    "intro_animation_button_play": {
+        "message": "Play animation",
+        "description": ""
+    },
+    "intro_disable_header": {
+        "message": "One tip before you enjoy better browsing",
+        "description": ""
+    },
+    "intro_disable_button_context": {
+        "message": "Privacy Badger is all set to protect you from hidden trackers. But blocking trackers sometimes breaks websites.",
+        "description": ""
+    },
+    "intro_disable_button": {
+        "message": "Ha úgy gondolja, hogy a Privacy Badger elront egy oldalt (például egy videó nem játszható le), $START_HTML$akkor rákattinthat a „$DISABLE_FOR_SITE$” gombra a Privacy Badger azon az oldalon való kikapcsolásához.$END_HTML$",
+        "description": "",
+        "placeholders": {
+            "start_html": {
+                "content": "$1",
+                "example": "<b>"
+            },
+            "disable_for_site": {
+                "content": "$2",
+                "example": "Disable for this site"
+            },
+            "end_html": {
+                "content": "$3",
+                "example": "</b>"
+            }
+        }
+    },
+    "intro_features_header": {
+        "message": "Privacy Badger protects your browsing from trackers.",
+        "description": ""
+    },
+    "intro_features_subheader": {
+        "message": "Learn how.",
+        "description": ""
+    },
+    "intro_welcome": {
+        "message": "Privacy Badger automatically learns to block hidden trackers. Take a minute to see how.",
+        "description": ""
+    },
+    "intro_beyond_ads": {
+        "message": "Elkapja az alattomos követőket",
+        "description": ""
+    },
+    "intro_beyond_ads_paragraph": {
+        "message": "A Privacy Badger elküldi a <a href='https://globalprivacycontrol.org/' target='_blank'>globális adatvédelmi szabályozás jelzést</a>, hogy lemondjon az Ön nevében az adatmegosztásról és az adateladásról, valamint a <a href='https://www.eff.org/issues/do-not-track' target='_blank'>ne kövessen jelzést</a>, hogy közölje a vállalatokkal, hogy ne kövessék Önt.",
+        "description": ""
+    },
+    "intro_beyond_ads_paragraph2": {
+        "message": "If they ignore these signals, Privacy Badger will learn to block them—whether they are advertisers or trackers of other kinds.",
+        "description": ""
+    },
+    "intro_not_an_adblocker": {
+        "message": "Nem reklámblokkoló",
+        "description": ""
+    },
+    "intro_learns_paragraph": {
+        "message": "A Privacy Badger automatikusan felfedezi a követőket a viselkedésük alapján.",
+        "description": ""
+    },
+    "intro_not_an_adblocker_paragraph2": {
+        "message": "Hidden tracking happens in all sorts of ways; ads are just the visible tip of the iceberg. Privacy Badger doesn't block ads unless they happen to be tracking you.",
+        "description": ""
+    },
+    "intro_open_popup": {
+        "message": "Try opening Privacy Badger's popup",
+        "description": ""
+    },
+    "intro_open_popup_alt": {
+        "message": "Browser toolbar with the Privacy Badger icon circled",
+        "description": ""
+    },
+    "intro_donate_heading": {
+        "message": "Az adatvédelem csapatsport!",
+        "description": ""
+    },
+    "intro_donate1": {
+        "message": "A Privacy Badger használatakor Ön is csatlakozik az <a href='https://www.eff.org/' target='_blank'>Electronic Frontier Foundationhöz</a> és több millió más felhasználóhoz az adatvédelemért folytatott harcban. Nonprofit alapítványként küzdünk az Ön internetes jogaiért. Köszönjük, hogy csatlakozott hozzánk!",
+        "description": ""
+    },
+    "intro_donate_subheading": {
+        "message": "Segítsen nekünk adományozással",
+        "description": ""
+    },
+    "donate_to_eff": {
+        "message": "Adományozás az EFF-nek",
+        "description": ""
+    },
+    "share_button_title_facebook": {
+        "message": "Megosztás Facebookon",
+        "description": ""
+    },
+    "share_button_title_mastodon": {
+        "message": "Share on Mastodon",
+        "description": ""
+    },
+    "share_button_title_bluesky": {
+        "message": "Share on Bluesky",
+        "description": ""
+    },
+    "intro_link_policy": {
+        "message": "Adatvédelmi irányelv",
+        "description": ""
+    },
+    "options_title": {
+        "message": "Privacy Badger beállításai",
+        "description": ""
+    },
+    "disabled_sites": {
+        "message": "Letiltott oldalak",
+        "description": ""
+    },
+    "options_disable_tip_title": {
+        "message": "How to disable Privacy Badger without leaving the site",
+        "description": ""
+    },
+    "options_disable_tip_alt": {
+        "message": "First, click on Privacy Badger's icon in your browser toolbar. Then, click the \"$DISABLE_FOR_SITE$\" button.",
+        "description": "",
+        "placeholders": {
+            "disable_for_site": {
+                "content": "$1",
+                "example": "Disable for this site"
+            }
+        }
+    },
+    "disabled_for_these_domains": {
+        "message": "A Privacy Badger le van tiltva a következő oldalakon. Ez azt jelenti, hogy a Privacy Badger semmit sem fog tiltani, ha meglátogatja az itt felsorolt oldalakat, és nem fog „ne kövessen” vagy „globális adatvédelmi szabályozás” jelzéseket küldeni.",
+        "description": ""
+    },
+    "add_domain_button": {
+        "message": "Add site",
+        "description": ""
+    },
+    "remove_button": {
+        "message": "Kijelöltek eltávolítása",
+        "description": ""
+    },
+    "invalid_domain": {
+        "message": "Adjon meg egy érvényes tartományt vagy URL-t",
+        "description": ""
+    },
+    "options_general_settings": {
+        "message": "Általános beállítások",
+        "description": ""
+    },
+    "show_counter_checkbox": {
+        "message": "Követők számának megjelenítése",
+        "description": ""
+    },
+    "options_enable_dnt_checkbox": {
+        "message": "A „<a href='https://globalprivacycontrol.org/' target='_blank'>globális adatvédelmi szabályozás</a>” és a „<a href='https://www.eff.org/issues/do-not-track' target='_blank'>ne kövessen</a>” jelzések küldése a weboldalaknak",
+        "description": ""
+    },
+    "options_dnt_policy_setting": {
+        "message": "Annak ellenőrzése, hogy a <a target='_blank' href='https://www.eff.org/privacybadger/faq#What-is-a-third-party-tracker'>harmadik felek tartományai</a> betartják-e az <a target='_blank' href='https://www.eff.org/dnt-policy'>EFF „ne kövessenek” irányelvét</a>",
+        "description": ""
+    },
+    "options_privacy_settings": {
+        "message": "Adatvédelem",
+        "description": ""
+    },
+    "options_disable_hyperlink_auditing": {
+        "message": "Prevent sites from tracking which links you click (\"hyperlink auditing\")",
+        "description": ""
+    },
+    "options_disable_network_prediction": {
+        "message": "Előtöltés letiltása",
+        "description": ""
+    },
+    "options_disable_google_nav_error_service": {
+        "message": "Meglátogatott webcímek küldésének letiltása a Google számára. Ez letiltja a hasonló oldalak javaslatait, ha egy oldal nem található.",
+        "description": ""
+    },
+    "options_disable_floc": {
+        "message": "Disable Google's \"Privacy Sandbox\" ad tracking",
+        "description": ""
+    },
+    "options_advanced_settings": {
+        "message": "Speciális",
+        "description": ""
+    },
+    "options_learn_setting": {
+        "message": "Tanulja meg az új követők tiltását a böngészésétől",
+        "description": ""
+    },
+    "local_learning_warning": {
+        "message": "A tanulás engedélyezése azonosíthatóbbá teheti Önt a weboldalak számára",
+        "description": ""
+    },
+    "options_show_nontracking_domains_checkbox": {
+        "message": "Tartományok megjelenítése, amelyekről úgy tűnik, hogy nem követik Önt",
+        "description": ""
+    },
+    "options_incognito_setting": {
+        "message": "Tanulás privát vagy inkognitó ablakokban",
+        "description": ""
+    },
+    "options_incognito_warning": {
+        "message": "A tanulás engedélyezése a privát vagy inkognitó ablakban nyomokat hagyhat a számítógépén a személyes böngészési előzményeiről. Alapértelmezetten a Privacy Badger tiltani fogja azokat a követőket, amelyek már tudnak a privát vagy inkognitó ablakokról, de nem fogja megtanulni az új követőket. Akkor lehet érdemes engedélyeznie ezt a beállítást, ha a böngészése nagy részét privát vagy inkognitó ablakban végzi.",
+        "description": ""
+    },
+    "options_widget_replacement_tab": {
+        "message": "Felületi elem cseréje",
+        "description": ""
+    },
+    "options_widget_replacement_desc": {
+        "message": "Közösségi gombok és egyéb lehetséges hasznos (videó, hang, hozzászólások) felületi elemek tiltásakor a Privacy Badger ki tudja cserélni azokat kattintásra aktiválódó helykitöltőkre.",
+        "description": ""
+    },
+    "options_widget_exceptions_header": {
+        "message": "Felületi elem kivételek",
+        "description": ""
+    },
+    "options_hide_social_widgets": {
+        "message": "Block but don't replace the following widgets:",
+        "description": ""
+    },
+    "options_widget_site_exceptions_header": {
+        "message": "Oldal kivételek",
+        "description": ""
+    },
+    "options_widget_site_exceptions_label": {
+        "message": "Mindig engedélyezze a felületi elemeket ezeken az oldalakon:",
+        "description": ""
+    },
+    "options_domain_list_tab": {
+        "message": "Követő tartományok",
+        "description": ""
+    },
+    "options_domain_list_trackers": {
+        "message": "A Privacy Badger eddig $COUNT$ lehetséges $TRACKER_LINK_START$követő tartomány$TRACKER_LINK_END$ letiltásáról döntött",
+        "description": "",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "900"
+            },
+            "tracker_link_start": {
+                "content": "$2",
+                "example": "<a href='https://privacybadger.org/#What-is-a-third-party-tracker'>"
+            },
+            "tracker_link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "options_domain_list_no_trackers": {
+        "message": "A Privacy Badger még nem észlelt semmilyen $LINK_START$követő tartományt$LINK_END$ sem. Folytassa a böngészést!",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "$1",
+                "example": "<a href='http://example.com'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "what_is_a_tracker": {
+        "message": "Mi az a követő?",
+        "description": ""
+    },
+    "options_domain_search": {
+        "message": "Tartományok keresése:",
+        "description": ""
+    },
+    "options_domain_search_tooltip": {
+        "message": "Tartományok kizárásához tegyen egy „-” jelet a keresési kifejezés elé. Például a „.co -.com” meg fogja jeleníteni a .co és .co.uk tartományokat, de a .com tartományokat nem.",
+        "description": ""
+    },
+    "options_domain_type_filter": {
+        "message": "Szűrés típus szerint:",
+        "description": ""
+    },
+    "options_domain_filter_all": {
+        "message": "összes",
+        "description": ""
+    },
+    "options_domain_filter_user": {
+        "message": "felhasználó által vezérelt",
+        "description": ""
+    },
+    "options_domain_filter_dnt": {
+        "message": "compliant with EFF's DNT policy",
+        "description": ""
+    },
+    "options_domain_status_filter": {
+        "message": "Szűrés állapot szerint:",
+        "description": ""
+    },
+    "options_domain_filter_block": {
+        "message": "letiltva",
+        "description": ""
+    },
+    "options_domain_filter_cookieblock": {
+        "message": "részlegesen tiltva",
+        "description": ""
+    },
+    "options_domain_filter_allow": {
+        "message": "engedélyezve",
+        "description": ""
+    },
+    "options_show_not_yet_blocked": {
+        "message": "Tartományok megjelenítése, amelyek tiltásáról a Privacy Badger még nem döntött",
+        "description": ""
+    },
+    "options_hide_in_seed": {
+        "message": "Hide domains present in the latest pre-trained list",
+        "description": ""
+    },
+    "options_domain_list_sites": {
+        "message": "$DOMAIN$ was seen tracking on the following sites:",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "options_domain_remove": {
+        "message": "Remove $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "options_remove_origin_confirm": {
+        "message": "Biztosan el szeretné távolítani ezt a tartományt a Privacy Badgerből?",
+        "description": ""
+    },
+    "data_settings": {
+        "message": "Adatok kezelése",
+        "description": ""
+    },
+    "manage_data_intro": {
+        "message": "Felhasználói adatok importálása:<ul><li>Felülírja az általános beállításokat</li><li>Egyesíti a letiltott oldalak listáit</li><li>Egyesíti azokat az információkat, hogy a Privacy Badger milyen követőket látott</li><li>Felülírja a csúszka személyre szabásait</li></ul>",
+        "description": ""
+    },
+    "export_user_data": {
+        "message": "Felhasználói adatok exportálása",
+        "description": ""
+    },
+    "download": {
+        "message": "Letöltés",
+        "description": ""
+    },
+    "import_user_data": {
+        "message": "Felhasználói adatok importálása",
+        "description": ""
+    },
+    "import": {
+        "message": "Importálás",
+        "description": ""
+    },
+    "import_select_file": {
+        "message": "Válasszon egy fájlt az importáláshoz.",
+        "description": ""
+    },
+    "invalid_json": {
+        "message": "Érvénytelen JSON-file.",
+        "description": ""
+    },
+    "import_successful": {
+        "message": "A követőlista és a beállítások sikeresen frissítve!",
+        "description": ""
+    },
+    "sync_intro": {
+        "message": "Felhőszinkronizálás:<ul><li>Firefox vagy Chrome szinkronizálás szükséges hozzá</li><li>A feltöltés felülírja az összes meglévő Privacy Badger adatot a felhőben</li><li>A letöltés egyesíti azon oldalak listáját, ahol a Privacy Badger le van tiltva</li></ul>",
+        "description": ""
+    },
+    "upload_cloud": {
+        "message": "Letiltott oldalak exportálása a felhőbe",
+        "description": ""
+    },
+    "upload": {
+        "message": "Feltöltés",
+        "description": ""
+    },
+    "download_cloud": {
+        "message": "Letiltott oldalak importálása a felhőből",
+        "description": ""
+    },
+    "download_cloud_success": {
+        "message": "A felhőadatok sikeresen importálva.",
+        "description": ""
+    },
+    "download_cloud_failure": {
+        "message": "A felhőadatokat nem sikerült letölteni.",
+        "description": ""
+    },
+    "upload_cloud_success": {
+        "message": "Az adatok sikeresen feltöltve a felhőbe",
+        "description": ""
+    },
+    "upload_cloud_failure": {
+        "message": "Az adatokat nem sikerült feltölteni a felhőbe",
+        "description": ""
+    },
+    "download_cloud_no_data": {
+        "message": "Nincsenek letöltendő felhőadatok.",
+        "description": ""
+    },
+    "reset_data": {
+        "message": "Követő tartományok visszaállítása",
+        "description": ""
+    },
+    "reset": {
+        "message": "Visszaállítás",
+        "description": ""
+    },
+    "reset_data_confirm": {
+        "message": "A követő tartományok visszaállítása a következőket fogja tenni:\n\n  • Az összes adat törlése azzal kapcsolatban, amit a Privacy Badger megtanult a böngészéséről\n  • A követő tartományok listájának visszaállítása a legutolsó előre megtanított listára (látogassa meg a www.eff.org/badger-pretraining oldalt a további részletekért)",
+        "description": ""
+    },
+    "remove_all_data": {
+        "message": "Összes követő tartomány eltávolítása",
+        "description": ""
+    },
+    "remove_all": {
+        "message": "Összes eltávolítása",
+        "description": ""
+    },
+    "remove_all_data_confirm": {
+        "message": "Az összes követő tartomány eltávolítása a következőket fogja tenni:\n\n  • Minden törlése azzal kapcsolatban, amit a Privacy Badger a követőkről tud\n  • Azt okozza, hogy a Privacy Badger nem tilt semmit, amíg nincs lehetősége újra megtanulni a böngészését",
+        "description": ""
+    },
+    "intro_text1": {
+        "message": "Önt mostantól védi a Privacy Badger.",
+        "description": ""
+    },
+    "intro_text2": {
+        "message": "Annak megismeréséhez, hogy a Privacy Badger hogyan működik, kattintson a lenti gyors ismertetőért.",
+        "description": ""
+    },
+    "first_run_text": {
+        "message": "Tudja meg, hogy a Privacy Badger hogyan védi a magánszféráját",
+        "description": ""
+    },
+    "learn_more_link": {
+        "message": "Látogassa meg a $LINK$ oldalt a további részletekért.",
+        "description": "",
+        "placeholders": {
+            "link": {
+                "content": "$1",
+                "example": "<a href='https://example.com'>example.com</a>"
+            }
+        }
+    },
+    "learn_more": {
+        "message": "Learn more",
+        "description": ""
+    },
+    "social_tooltip_pb_has_replaced": {
+        "message": "A Privacy Badger kicserélte az itt lévő $BUTTON$ gombot",
+        "description": "",
+        "placeholders": {
+            "button": {
+                "content": "$1",
+                "example": "Facebook Like"
+            }
+        }
+    },
+    "widget_placeholder_pb_has_replaced": {
+        "message": "A Privacy Badger kicserélte $START_ANCHOR_TAG$az itt lévő $WIDGET$ felületi elemet$END_ANCHOR_TAG$",
+        "description": "",
+        "placeholders": {
+            "widget": {
+                "content": "$1",
+                "example": "Google reCAPTCHA"
+            },
+            "start_anchor_tag": {
+                "content": "$2",
+                "example": "<a href='https://vimeo.com/76979871'>"
+            },
+            "end_anchor_tag": {
+                "content": "$3",
+                "example": "</a>"
+            }
+        }
+    },
+    "allow_once": {
+        "message": "Engedélyezés egyszer",
+        "description": ""
+    },
+    "allow_on_site": {
+        "message": "Mindig engedélyezze ezen az oldalon",
+        "description": ""
+    }
+}

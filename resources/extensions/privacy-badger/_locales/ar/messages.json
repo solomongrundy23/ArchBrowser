@@ -1,0 +1,871 @@
+{
+    "name": {
+        "message": "«بادجر الخصوصية»",
+        "description": ""
+    },
+    "description": {
+        "message": "تعلم بادجر الخصوصية حظر أدوات التتبع الخفية تلقائيًا. صُممته مؤسسة الجبهة الإلكترونية، وهي منظمة غير ربحية تعمل لايقاف تجسس الشركات",
+        "description": ""
+    },
+    "canvas_fingerprinting": {
+        "message": "نسيج البصمة الرقمية",
+        "description": ""
+    },
+    "popup_help_button": {
+        "message": "مساعدة",
+        "description": ""
+    },
+    "popup_share_button": {
+        "message": "شارك/ي",
+        "description": ""
+    },
+    "popup_options_button": {
+        "message": "الخيارات",
+        "description": ""
+    },
+    "popup_special_page_header": {
+        "message": "لا شيء للقيام به في هذه الصفحة",
+        "description": ""
+    },
+    "popup_special_page_paragraph": {
+        "message": "لا يعمل «بادجر الخصوصية» على صفحات خاصة مثل هذه. حاول التصفح في مكان آخر.",
+        "description": ""
+    },
+    "popup_first_run_header": {
+        "message": "أحسنت، الآن النافذة المنبثقة مفتوحة!",
+        "description": ""
+    },
+    "popup_disabled_site_header": {
+        "message": "«بادجر الخصوصية» غير مفعل على هذا الموقع",
+        "description": ""
+    },
+    "popup_disable_for_site": {
+        "message": "عطّل/ي على هذا الموقع",
+        "description": ""
+    },
+    "popup_enable_for_site": {
+        "message": "فعّل/ي على هذا الموقع",
+        "description": ""
+    },
+    "report_broken_site": {
+        "message": "بلغّ/ي عن موقع معطل",
+        "description": ""
+    },
+    "popup_donate_to_eff": {
+        "message": "تبرع/ي لمؤسسة الجبهة الإلكترونية (EFF) - وهي منظمة غير ربحية تدافع عن الخصوصية الرقمية",
+        "description": ""
+    },
+    "popup_review_pb": {
+        "message": "هل تستمتع/ي بـ\"بادجر الخصوصية\"؟ اترك/ي تقييمًا!",
+        "description": ""
+    },
+    "popup_sweatshirt_promo": {
+        "message": "أظهر/ي دعمك بقميص \"بادجر الخصوصية\" الجديد!",
+        "description": ""
+    },
+    "popup_effector_signup": {
+        "message": "احصل/ي على آخر أخبار الخصوصية من مؤسسة الجبهة الإلكترونية (EFF)",
+        "description": ""
+    },
+    "version": {
+        "message": "إصدار $VERSION_STRING$",
+        "description": "",
+        "placeholders": {
+            "version_string": {
+                "content": "$1",
+                "example": "2018.8.1"
+            }
+        }
+    },
+    "popup_instructions": {
+        "message": "$COUNT$ احتمال $LINK_START$متعقبات$LINK_END$ محجوبة",
+        "description": "",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "15"
+            },
+            "link_start": {
+                "content": "$2",
+                "example": "<a href='https://privacybadger.org/#What-is-a-third-party-tracker'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "popup_instructions_no_trackers": {
+        "message": "لا يوجد $LINK_START$متعقبات$LINK_END$ محجوبة",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "$1",
+                "example": "<a href='https://privacybadger.org/#What-is-a-third-party-tracker'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "popup_blocked": {
+        "message": "لا توجد مصادر خارجية على هذه الصفحة. يا أهلا بالخصوصية!",
+        "description": ""
+    },
+    "tooltip_block": {
+        "message": "حرك/ي المؤشر يسارا لحجب الموقع",
+        "description": ""
+    },
+    "tooltip_cookieblock": {
+        "message": "حرك/ي المؤشر الى الوسط لحجب ملفات تعريف الارتباط",
+        "description": ""
+    },
+    "tooltip_allow": {
+        "message": "حرك/ي المؤشر يمينا للسماح للموقع",
+        "description": ""
+    },
+    "badger_status_block": {
+        "message": "$DOMAIN$ محجوب",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_cookieblock": {
+        "message": "ملفات تعريف الارتباط المحجوبة من $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_blocked_scripts": {
+        "message": "ملفات تعريف الارتباط المحظورة ونصوص بصمات الأصابع من $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_allow": {
+        "message": "$DOMAIN$ غير محجوب",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "badger_status_noaction": {
+        "message": "لا تَعقب لـ $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "dnt_tooltip": {
+        "message": "يعِد هذا النطاق بألا يتعقبك",
+        "description": ""
+    },
+    "domain_slider_label": {
+        "message": "الإعدادات لـ $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "domain_slider_block_tooltip": {
+        "message": "حظر كامل",
+        "description": ""
+    },
+    "domain_slider_cookieblock_tooltip": {
+        "message": "حظر ملفات تعريف الارتباط",
+        "description": ""
+    },
+    "domain_slider_allow_tooltip": {
+        "message": "السماح",
+        "description": ""
+    },
+    "breakage_warning_tooltip": {
+        "message": "من المعروف أن حظر هذا الموقع يؤثر على عمل مواقع آخرى",
+        "description": ""
+    },
+    "google_signin_tooltip": {
+        "message": "لتمكين تسجيل الدخول إلى المواقع الالكترونية باستخدام حساب \"غوغل\" الخاص بك، حرك/ي شريط التمرير هذا إلى اليمين، وأعد/يدي تحميل الصفحة",
+        "description": ""
+    },
+    "feed_the_badger_title": {
+        "message": "انقر/ي هنا لإعادة التحكم في هذا الموقع إلى «بادجر الخصوصية»",
+        "description": ""
+    },
+    "not_yet_blocked_header": {
+        "message": "لم يقرر «بادجر» الخاص بك بعد ما إذا كان ينبغي حظر هذه المواقع",
+        "description": ""
+    },
+    "intro_not_an_adblocker_paragraph": {
+        "message": "يبدأ «بادجر الخصوصية» في الحجب ما إن يرى نفس المتعقب على ثلاثة مواقع مختلفة. ثلاث فرص ثم يخرج!",
+        "description": ""
+    },
+    "non_tracker": {
+        "message": "لا يظهر أن النطاقات التالية تتعقبك",
+        "description": ""
+    },
+    "non_tracker_tip": {
+        "message": "حاليا يتحقق «بادجر الخصوصية» فقط مما إذا كانت الجهات الخارجية تستخدم ملفات تعريف الارتباط، أو التخزين المحلي HTML5، أو بصمة Canvas لتتبع تصفحك. قد تستخدم بعض هذه النطاقات أساليب تتبع لا يستطيع بادجر الخصوصية اكتشافها.",
+        "description": ""
+    },
+    "report_input_label": {
+        "message": "اوصف/ي المشكلة بشكل موجز:",
+        "description": ""
+    },
+    "error_input": {
+        "message": "ما المشكلة؟",
+        "description": ""
+    },
+    "report_terms": {
+        "message": "سترسل المعلومات التالية تلقائيًا إلى مؤسسة الجبهة الإلكترونية : الصفحة التي تزورها حاليًا، إصدار المتصفح المستخدم لديك، إصدار «بادجر الخصوصية»، وحالة جميع الخيارات الموجودة على هذه الصفحة.",
+        "description": ""
+    },
+    "report_button": {
+        "message": "ارسل/ي التقرير",
+        "description": ""
+    },
+    "report_cancel": {
+        "message": "إلغاء",
+        "description": ""
+    },
+    "report_close": {
+        "message": "إغلاق",
+        "description": ""
+    },
+    "report_success": {
+        "message": "شكرا، سنفحص الأمر.",
+        "description": ""
+    },
+    "report_fail": {
+        "message": "حدث عطل ما.",
+        "description": ""
+    },
+    "share_title": {
+        "message": "أخبر/ي أصدقائك/ صديقاتك",
+        "description": ""
+    },
+    "share_tracker_header": {
+        "message": "حجب «بادجر الخصوصية» $COUNT$ متعقبات محتملة على $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "15"
+            },
+            "domain": {
+                "content": "$2",
+                "example": "example.com"
+            }
+        }
+    },
+    "share_base_message": {
+        "message": "بادجر الخصوصية (privacybadger.org)  هو امتداد متصفح يتعلم تلقائيًا حظر أدوات التتبع المخفية. صُمم بادجر الخصوصية بواسطة مؤسسة الجبهة الإلكترونية، وهي منظمة غير ربحية تُدافع عن حقوقك على الإنترنت.",
+        "description": ""
+    },
+    "copy_button_initial": {
+        "message": "انسخ/ي إلى الحافظة",
+        "description": ""
+    },
+    "copy_button_copied": {
+        "message": "نُسِخ",
+        "description": ""
+    },
+    "popup_info_firstparty_protections": {
+        "message": "حماية رابط التتبع مفعّل",
+        "description": ""
+    },
+    "popup_info_firstparty_description": {
+        "message": "بعض المواقع $LINK_START$تستخدم روابط تتبع لتتبعك$LINK_END$ عندما تضغط/ين على رابط للخروج من الموقع. «بادجر الخصوصية» يزيل التتبع من هذه الروابط على هذا الموقع.",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "<a href='https://privacybadger.org/#What-about-tracking-by-the-sites-I-actively-visit%2c-like-NYTimes.com-or-Facebook.com' target='_blank'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "popup_info_youtube": {
+        "message": "الإعلانات غير محجوبة؟ يوتيوب لا يعمل؟ ربما ذلك ليس بسبب «بادجر الخصوصية».",
+        "description": ""
+    },
+    "extension_error_text": {
+        "message": "رجاء $LINK_START$أخبرنا/ينا$LINK_END$ بتفاصيل العطل التالي:",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "$1",
+                "example": "<a href='http://example.com'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "firstRun_title": {
+        "message": "شكرا على تنصيب «بادجر الخصوصية»",
+        "description": ""
+    },
+    "intro_logo_alt_text": {
+        "message": "شعار EFF",
+        "description": ""
+    },
+    "intro_eff_header": {
+        "message": "أداة للخصوصية مقدمة من $START_HTML$ مؤسسة الجبهة الإلكترونية $END_HTML$، وهي منظمة غير ربحية تعتمد على دعم الأعضاء والعضوات",
+        "description": "",
+        "placeholders": {
+            "start_html": {
+                "content": "$1",
+                "example": "<b>"
+            },
+            "end_html": {
+                "content": "$2",
+                "example": "</b>"
+            }
+        }
+    },
+    "intro_nag_header": {
+        "message": "تقريبا انتهيت",
+        "description": ""
+    },
+    "intro_pin_nudge": {
+        "message": "$START_SPAN_TAG$قم/ومي بتثبيت ايقونة «بادجر الخصوصية» على شريط الأدوات الخاص بك$END_SPAN_TAG$ لتسهيل الوصول الى زر $DISABLE_FOR_SITE$",
+        "description": "",
+        "placeholders": {
+            "start_span_tag": {
+                "content": "<b>"
+            },
+            "disable_for_site": {
+                "content": "$1",
+                "example": "Disable for this site"
+            },
+            "end_span_tag": {
+                "content": "</b>"
+            }
+        }
+    },
+    "intro_pin_instructions": {
+        "message": "لتثبيت أيقونة «بادجر الخصوصية»، انقر/ي على أيقونة قطعة اللغز في شريط أدوات المتصفح لديك. ثم انقر/ي على أيقونة التثبيت بجوار «بادجر الخصوصية».",
+        "description": ""
+    },
+    "intro_animation_button_stop": {
+        "message": "إيقاف التحريك",
+        "description": ""
+    },
+    "intro_animation_button_play": {
+        "message": "شغّل/ي التحريك",
+        "description": ""
+    },
+    "intro_disable_header": {
+        "message": "نصيحة واحدة قبل الاستمتاع بتجربة تصفح أفضل",
+        "description": ""
+    },
+    "intro_disable_button_context": {
+        "message": "إن «بادجر الخصوصية» جاهز تماماً لحمايتك من أدوات التتبع الخفية، إلا أن حظر أدوات التتبع قد يؤدي أحياناً إلى تعطل المواقع الإلكترونية.",
+        "description": ""
+    },
+    "intro_disable_button": {
+        "message": "إذا كنت تظن/ين أن «بادجر الخصوصية» يفسد إحدى الصفحات (الفيديو لا يعمل مثلا)، $START_HTML$فيمكنك النقر على زر ’$DISABLE_FOR_SITE$‘ لتعطيل «بادجر الخصوصية» على هذا الموقع.$END_HTML$",
+        "description": "",
+        "placeholders": {
+            "start_html": {
+                "content": "$1",
+                "example": "<b>"
+            },
+            "disable_for_site": {
+                "content": "$2",
+                "example": "Disable for this site"
+            },
+            "end_html": {
+                "content": "$3",
+                "example": "</b>"
+            }
+        }
+    },
+    "intro_features_header": {
+        "message": "يحمي \"بادجر الخصوصية\" تصفحك من أدوات التتبع.",
+        "description": ""
+    },
+    "intro_features_subheader": {
+        "message": "تعلم/ي كيف.",
+        "description": ""
+    },
+    "intro_welcome": {
+        "message": "بادجر الخصوصية يتعلم تلقائيًا حظر أدوات التتبع المخفية. خصص/ي دقيقة واحدة لتكتشف/ي كيف.",
+        "description": ""
+    },
+    "intro_beyond_ads": {
+        "message": "يمسك بالمتعقبات المتخفية",
+        "description": ""
+    },
+    "intro_beyond_ads_paragraph": {
+        "message": "يرسل «بادجر الخصوصية» <a href='https://globalprivacycontrol.org/' target='_blank'> إشارة التحكم في الخصوصية العالمية </a>، لإلغاء اشتراكك في مشاركة البيانات وبيعها، و <a href='https://www.eff.org/issues/do-not-track' target='_blank'> إشارة عدم التتبع </a> لإخبار الشركات بعدم تتبعك.",
+        "description": ""
+    },
+    "intro_beyond_ads_paragraph2": {
+        "message": "إذا تجاهلوا/ن هذه الإشارات، فسيتعلم بادجر الخصوصية حظرها - سواءً كانت معلنين/ات أو أدوات تتبع من أنواع أخرى.",
+        "description": ""
+    },
+    "intro_not_an_adblocker": {
+        "message": "ليس حاجبًا للإعلانات",
+        "description": ""
+    },
+    "intro_learns_paragraph": {
+        "message": "«بادجر الخصوصية» يكتشف تلقائيًا أدوات التتبع استنادًا إلى سلوكها.",
+        "description": ""
+    },
+    "intro_not_an_adblocker_paragraph2": {
+        "message": "يحدث التتبع المخفي بطرق مختلفة؛ والإعلانات ليست سوى غيض من فيض. لا يحظر بادجر الخصوصية الإعلانات إلا إذا كانت تتتبعك.",
+        "description": ""
+    },
+    "intro_open_popup": {
+        "message": "حاول/ي فتح نافذة  بادجر الخصوصية المنبثقة",
+        "description": ""
+    },
+    "intro_open_popup_alt": {
+        "message": "شريط أدوات المتصفح مع أيقونة بادجر الخصوصية محاطة بدائرة",
+        "description": ""
+    },
+    "intro_donate_heading": {
+        "message": "الخصوصية رياضة جماعية",
+        "description": ""
+    },
+    "intro_donate1": {
+        "message": "باستخدامك «بادجر الخصوصية» تنضم/ين إلى <a href='https://www.eff.org/' target='_blank'>مؤسسة الجبهة الإلكترونية</a> وملايين المستخدمين/ات في نضالهم/ن من أجل الخصوصية. نحن مؤسسة غير ربحية نناضل لحقوقك على الإنترنت. شكرًا لانضمامك إلينا.",
+        "description": ""
+    },
+    "intro_donate_subheading": {
+        "message": "ساعدنا/ينا بالتبرع",
+        "description": ""
+    },
+    "donate_to_eff": {
+        "message": "تبرع/ي إلى مؤسسة الجبهة الإلكترونية",
+        "description": ""
+    },
+    "share_button_title_facebook": {
+        "message": "شارك/ي على فيسبوك",
+        "description": ""
+    },
+    "share_button_title_mastodon": {
+        "message": "شارك/ي على ماستودون",
+        "description": ""
+    },
+    "share_button_title_bluesky": {
+        "message": "شارك/ي على  بلوسكاي",
+        "description": ""
+    },
+    "intro_link_policy": {
+        "message": "سياسة الخصوصية",
+        "description": ""
+    },
+    "options_title": {
+        "message": "خيارات «بادجر الخصوصية»",
+        "description": ""
+    },
+    "disabled_sites": {
+        "message": "المواقع غير المفعلة",
+        "description": ""
+    },
+    "options_disable_tip_title": {
+        "message": "كيفية تعطيل بادجر الخصوصية دون مغادرة الموقع",
+        "description": ""
+    },
+    "options_disable_tip_alt": {
+        "message": "أولاً، انقر/ي على أيقونة بادجر الخصوصية في شريط أدوات المتصفح. ثم انقر/ي على زر \"$DISABLE_FOR_SITE$\".",
+        "description": "",
+        "placeholders": {
+            "disable_for_site": {
+                "content": "$1",
+                "example": "Disable for this site"
+            }
+        }
+    },
+    "disabled_for_these_domains": {
+        "message": "تم تعطيل «بادجر الخصوصية» على المواقع التالية. هذا يعني أن «بادجر الخصوصية» لن يحظر أي شيء عند زيارتك للمواقع المدرجة هنا، ولن يرسل إشارات عدم التتبع أو التحكم العالمي في الخصوصية.",
+        "description": ""
+    },
+    "add_domain_button": {
+        "message": "إضافة الموقع",
+        "description": ""
+    },
+    "remove_button": {
+        "message": "أزل/يلي المحدد",
+        "description": ""
+    },
+    "invalid_domain": {
+        "message": "رجاء أضف/ي مسارا أو نطاقا صحيحا",
+        "description": ""
+    },
+    "options_general_settings": {
+        "message": "الإعدادات العامة",
+        "description": ""
+    },
+    "show_counter_checkbox": {
+        "message": "إظهار عدد المتتبعين/ات",
+        "description": ""
+    },
+    "options_enable_dnt_checkbox": {
+        "message": "ارسل/ي إلى المواقع إشارات <a href='https://globalprivacycontrol.org/' target='_blank'>\"التحكم العالمي في الخصوصية\"</a> و<a href='https://www.eff.org/issues/do-not-track' target='_blank'>\"عدم التتبع\"</a>",
+        "description": ""
+    },
+    "options_dnt_policy_setting": {
+        "message": "تحقق/ي من كون <a target='_blank' href='https://www.eff.org/privacybadger/faq#What-is-a-third-party-tracker'>نطاقات الأطراف الخارحية</a> تلتزم <a target='_blank' href='https://www.eff.org/dnt-policy'>بسياسة مؤسسة الجبهة الإلكترونية لعدم التعقب</a>",
+        "description": ""
+    },
+    "options_privacy_settings": {
+        "message": "الخصوصية",
+        "description": ""
+    },
+    "options_disable_hyperlink_auditing": {
+        "message": "منع المواقع من تتبع الروابط التي تنقر/ين عليها (\"تدقيق الروابط\")",
+        "description": ""
+    },
+    "options_disable_network_prediction": {
+        "message": "تعطيل الجلب المسبق",
+        "description": ""
+    },
+    "options_disable_google_nav_error_service": {
+        "message": "تعطيل إرسال عناوين المواقع التي تزورها/يها لغوغل. يؤدي هذا إلى تعطيل الاقتراحات الخاصة بالصفحات المشابهة عندما لا يمكن العثور على الصفحة.",
+        "description": ""
+    },
+    "options_disable_floc": {
+        "message": "تعطيل تتبع الإعلانات \"Privacy Sandbox\" من غوغل",
+        "description": ""
+    },
+    "options_advanced_settings": {
+        "message": "متقدم",
+        "description": ""
+    },
+    "options_learn_setting": {
+        "message": "تعلم/ي كيفية حظر أدوات التتبع الجديدة خلال تصفحك",
+        "description": ""
+    },
+    "local_learning_warning": {
+        "message": "قد يؤدي تفعيل التعلم إلى زيادة إمكانية تعرف المواقع عليك",
+        "description": ""
+    },
+    "options_show_nontracking_domains_checkbox": {
+        "message": "إظهار المواقع التي لا يبدو أنها تتبعك",
+        "description": ""
+    },
+    "options_incognito_setting": {
+        "message": "تعلم/ي في نوافذ التصفح الخاص",
+        "description": ""
+    },
+    "options_incognito_warning": {
+        "message": "تفعيل التعلم في نوافذ التصفح الخاص قد يترك آثارا لتأريخ تصفحك الخاص على حاسوبك. مبدئيا سيحجب «بادجر الخصوصية» المتعقبات التي يعرفها من قبل في نوافذ التصفح الخاص، لكنه لن يتعلم أي متعقبات جديدة. قد تريد/ين تفعيل هذا الخيار إن كان الكثير من تصفحك في نوافذ خاصة.",
+        "description": ""
+    },
+    "options_widget_replacement_tab": {
+        "message": "استبدال الأدوات المصغرة",
+        "description": ""
+    },
+    "options_widget_replacement_desc": {
+        "message": "عند حظر الأزرار الاجتماعية والأدوات الأخرى المفيدة المحتملة أدوات (الفيديو، الصوت والتعليقات)، يمكن لـ «بادجر الخصوصية» استبدالها بعناصر يمكن النقر عليها للتفعيلها.",
+        "description": ""
+    },
+    "options_widget_exceptions_header": {
+        "message": "إستثناءات الأدوات المصغرة",
+        "description": ""
+    },
+    "options_hide_social_widgets": {
+        "message": "احظر/ي، ولكن لا تستبدل/ي الأدوات المصغرة التالية:",
+        "description": ""
+    },
+    "options_widget_site_exceptions_header": {
+        "message": "استثناءات المواقع",
+        "description": ""
+    },
+    "options_widget_site_exceptions_label": {
+        "message": "إسمح/ي دائماً للأدوات المصغرة على هذه المواقع:",
+        "description": ""
+    },
+    "options_domain_list_tab": {
+        "message": "النطاقات المتعقِّبة",
+        "description": ""
+    },
+    "options_domain_list_trackers": {
+        "message": "لقد قرر «بادجر الخصوصية» حجب $COUNT$ محتملة $TRACKER_LINK_START$ مواقع متتبعة $TRACKER_LINK_END$ حتى الآن",
+        "description": "",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "900"
+            },
+            "tracker_link_start": {
+                "content": "$2",
+                "example": "<a href='https://privacybadger.org/#What-is-a-third-party-tracker'>"
+            },
+            "tracker_link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "options_domain_list_no_trackers": {
+        "message": "لم يكتشف «بادجر الخصوصية» أي $LINK_START$نطاقات متعقِّبة$LINK_END$ حتى الآن. واصل/ي تصفحك!",
+        "description": "",
+        "placeholders": {
+            "link_start": {
+                "content": "$1",
+                "example": "<a href='http://example.com'>"
+            },
+            "link_end": {
+                "content": "</a>"
+            }
+        }
+    },
+    "what_is_a_tracker": {
+        "message": "ما المتعقب؟",
+        "description": ""
+    },
+    "options_domain_search": {
+        "message": "ابحث/ي في النطاقات:",
+        "description": ""
+    },
+    "options_domain_search_tooltip": {
+        "message": "لاستبعاد النطاقات، ضع/ي ”-“ قبل عبارة البحث. فمثلا، ”‪.co -.com‬“ ستظهر نطاقات ‪.co‬ و ‪.co.uk‬ لكن لن تظهر نطاقات ‪.com‬ في نتائج البحث.",
+        "description": ""
+    },
+    "options_domain_type_filter": {
+        "message": "رشّح/ي بالنوع:",
+        "description": ""
+    },
+    "options_domain_filter_all": {
+        "message": "الكل",
+        "description": ""
+    },
+    "options_domain_filter_user": {
+        "message": "تحت تحكم المستخدم/ة",
+        "description": ""
+    },
+    "options_domain_filter_dnt": {
+        "message": "متوافق مع سياسة DNT الخاصة بمؤسسة الجبهة الإلكترونية",
+        "description": ""
+    },
+    "options_domain_status_filter": {
+        "message": "رشّح/ي بالحالة:",
+        "description": ""
+    },
+    "options_domain_filter_block": {
+        "message": "المحجوب",
+        "description": ""
+    },
+    "options_domain_filter_cookieblock": {
+        "message": "المحجوب جزئيا",
+        "description": ""
+    },
+    "options_domain_filter_allow": {
+        "message": "المسموح به",
+        "description": ""
+    },
+    "options_show_not_yet_blocked": {
+        "message": "أظهر/ي المواقع التي لم يقرر «بادجر» الخاص بك حظرها",
+        "description": ""
+    },
+    "options_hide_in_seed": {
+        "message": "إخفاء المواقع الموجودة في أحدث قائمة مدربة مسبقًاً",
+        "description": ""
+    },
+    "options_domain_list_sites": {
+        "message": "$DOMAIN$ تم رصده وهو يتتبع المواقع التالية:",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "options_domain_remove": {
+        "message": "إزالة $DOMAIN$",
+        "description": "",
+        "placeholders": {
+            "domain": {
+                "content": "$1",
+                "example": "example.com"
+            }
+        }
+    },
+    "options_remove_origin_confirm": {
+        "message": "هل أنت متأكد/ة أنك تريد إزالة النطاق من «بادجر الخصوصية»؟",
+        "description": ""
+    },
+    "data_settings": {
+        "message": "إدارة البيانات",
+        "description": ""
+    },
+    "manage_data_intro": {
+        "message": "استيراد بيانات المستخدم/ة: <ul><li>يكتب فوق قيم الإعدادات العامة</li><li>يدمج قوائم المواقع غير المفعلة</li><li>يدمج معلومات المتعقبات التي رآها «بادجر الخصوصية»</li><li>يكتب فوق إعدادات المواقع</li></ul>",
+        "description": ""
+    },
+    "export_user_data": {
+        "message": "صدّر/ي بيانات المستخدم/ة",
+        "description": ""
+    },
+    "download": {
+        "message": "حمّل/ي",
+        "description": ""
+    },
+    "import_user_data": {
+        "message": "استورد/ي بيانات المستخدم/ة",
+        "description": ""
+    },
+    "import": {
+        "message": "استورد/ي",
+        "description": ""
+    },
+    "import_select_file": {
+        "message": "رجاء اختر/اري ملفاً لاستيراده",
+        "description": ""
+    },
+    "invalid_json": {
+        "message": "ملف JSON غير سليم.",
+        "description": ""
+    },
+    "import_successful": {
+        "message": "حُدثت قائمة المتعقبات و إلاعدادات بنجاح.",
+        "description": ""
+    },
+    "sync_intro": {
+        "message": "مزامنة السحاب:<ul><li>تحتاج إلى مزامنة فايرفوكس\\كروم</li><li>الرفع يكتب فوق أي بيانات ل‍«بادجر الخصوصية» موجودة على السحاب.</li><li>التنزيل يدمج قائمة المواقع التي عطلها «بادجر الخصوصية»</li></ul>",
+        "description": ""
+    },
+    "upload_cloud": {
+        "message": "صدّر/ي المواقع غير المفعلة إلى السحاب",
+        "description": ""
+    },
+    "upload": {
+        "message": "ارفع/ي",
+        "description": ""
+    },
+    "download_cloud": {
+        "message": "استورد/ي المواقع غير المفعلة من السحابة",
+        "description": ""
+    },
+    "download_cloud_success": {
+        "message": "تم استيراد البيانات من السحاب بنجاح.",
+        "description": ""
+    },
+    "download_cloud_failure": {
+        "message": "تعذّر تنزيل البيانات من السحاب.",
+        "description": ""
+    },
+    "upload_cloud_success": {
+        "message": "تم رفع البيانات إلى السحاب بنجاح",
+        "description": ""
+    },
+    "upload_cloud_failure": {
+        "message": "تعذّر رفع البيانات إلى السحاب",
+        "description": ""
+    },
+    "download_cloud_no_data": {
+        "message": "لا يوجد بيانات من السحاب للتحميل.",
+        "description": ""
+    },
+    "reset_data": {
+        "message": "أعِد/يدي المواقع المتعقِّبة إلى أصلها",
+        "description": ""
+    },
+    "reset": {
+        "message": "أعِد/يدي إلى الأصل",
+        "description": ""
+    },
+    "reset_data_confirm": {
+        "message": "إعادة المواقع المتعقِّبة إلى أصلها:\n\n • سيحذف كل البيانات التي تعلمها «بادجر الخصوصية» عن هذه المواقع أثناء تصفحك\n • سيعيد قائمة المواقع المتعقِّبة إلى آخر قائمة قبل التعلم (توجه/ي الى www.eff.org/badger-pretraining لمزيد من المعلومات)",
+        "description": ""
+    },
+    "remove_all_data": {
+        "message": "أزل/يلي كل النطاقات المتعقِّبة",
+        "description": ""
+    },
+    "remove_all": {
+        "message": "أزل/يلي الكل",
+        "description": ""
+    },
+    "remove_all_data_confirm": {
+        "message": "إزالة كل النطاقات المتعقِّبة:\n\n • سيحذف كل ما يعرفه «بادجر الخصوصية» عن المتعقبات\n • سيمنع «بادجر الخصوصية» من حجب أي شيء إلى أن يعيد التعلم من تصفحك",
+        "description": ""
+    },
+    "intro_text1": {
+        "message": "يقدم لك «بادجر الخصوصية» الحماية الآن.",
+        "description": ""
+    },
+    "intro_text2": {
+        "message": "لتتعرف/ي على طريقة عمل «بادجر الخصوصية» انقر/ي أدناه للاطلاع على شرح مختصر.",
+        "description": ""
+    },
+    "first_run_text": {
+        "message": "تعرف/ي كيف يحمي «بادجر الخصوصية» خصوصيتك",
+        "description": ""
+    },
+    "learn_more_link": {
+        "message": "تصفح/ي $LINK$ للمزيد من المعلومات.",
+        "description": "",
+        "placeholders": {
+            "link": {
+                "content": "$1",
+                "example": "<a href='https://example.com'>example.com</a>"
+            }
+        }
+    },
+    "learn_more": {
+        "message": "اعرف/ي المزيد",
+        "description": ""
+    },
+    "social_tooltip_pb_has_replaced": {
+        "message": "استبدل/ي «بادجر الخصوصية» هذا $BUTTON$ الزر ",
+        "description": "",
+        "placeholders": {
+            "button": {
+                "content": "$1",
+                "example": "Facebook Like"
+            }
+        }
+    },
+    "widget_placeholder_pb_has_replaced": {
+        "message": "«بادجر الخصوصية» استبدل $START_ANCHOR_TAG$هذه $WIDGET$ Widget$END_ANCHOR_TAG$",
+        "description": "",
+        "placeholders": {
+            "widget": {
+                "content": "$1",
+                "example": "Google reCAPTCHA"
+            },
+            "start_anchor_tag": {
+                "content": "$2",
+                "example": "<a href='https://vimeo.com/76979871'>"
+            },
+            "end_anchor_tag": {
+                "content": "$3",
+                "example": "</a>"
+            }
+        }
+    },
+    "allow_once": {
+        "message": "السماح مرة واحدة",
+        "description": ""
+    },
+    "allow_on_site": {
+        "message": "السماح دائماً على هذا الموقع",
+        "description": ""
+    }
+}

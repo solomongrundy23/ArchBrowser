@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' https: http: data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'">
+  <title>ArchBrowser</title>
+  <script src="theme-boot.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-tabs="top">
+<svg class="sprite" aria-hidden="true">
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>  <symbol id="i-forward" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
+  <symbol id="i-reload" viewBox="0 0 24 24"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></symbol>
+  <symbol id="i-star-filled" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></symbol>
+  <symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M20.5 11H19V7a2 2 0 0 0-2-2h-4V3.5a2.5 2.5 0 0 0-5 0V5H4a2 2 0 0 0-2 2v4h1.5a2.5 2.5 0 0 1 0 5H2v4a2 2 0 0 0 2 2h4v-1.5a2.5 2.5 0 0 1 5 0V22h4a2 2 0 0 0 2-2v-4h1.5a2.5 2.5 0 0 0 0-5z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.6" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 3v6h6"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l4 2"/></symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-volume" viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14L21 3"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.5 12.5L21 2M16 7l3 3M19 4l3 3"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-globe-2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.6 3.8 9S14.5 18.5 12 21c-2.5-2.5-3.8-5.6-3.8-9S9.5 5.5 12 3z"/></symbol>
+  <symbol id="i-telegram" viewBox="0 0 24 24"><path d="M21.4 3.6L2.9 10.8c-1 .4-1 1.8 0 2.2l4.7 1.7 1.8 5.6c.3.9 1.4 1.1 2 .4l2.5-2.6 4.7 3.5c.8.6 1.9.2 2.1-.8l2.2-15.6c.1-.9-.7-1.6-1.5-1.6z"/><path d="M7.6 14.7l9.8-7.8-7.8 8.6-.2 3.4"/></symbol>
+  <symbol id="i-split" viewBox="0 0 24 24"><rect x="3" y="5" width="7" height="14" rx="1.5"/><rect x="14" y="5" width="7" height="14" rx="1.5"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 16V3M8 7l4-4 4 4"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></symbol>
+  <symbol id="i-fullscreen" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></symbol>
+  <symbol id="i-import" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 8l5 5 5-5M12 3v10"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-timer" viewBox="0 0 24 24"><path d="M10 2h4M12 14l3-3"/><circle cx="12" cy="14" r="8"/></symbol>
+  <symbol id="i-alarm" viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 10v3l2 2M5 3L2 6M19 3l3 3M6 21l-2 1M18 21l2 1"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6M14 4l-4 16"/></symbol>
+  <symbol id="i-folder-plus" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><path d="M12 11v5M9.5 13.5h5"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M7 3v18M17 3v18M2 9h5M2 15h5M17 9h5M17 15h5"/></symbol>
+  <symbol id="i-reader" viewBox="0 0 24 24"><path d="M2 4h7a3 3 0 0 1 3 3v13a2.5 2.5 0 0 0-2.5-2.5H2z"/><path d="M22 4h-7a3 3 0 0 0-3 3v13a2.5 2.5 0 0 1 2.5-2.5H22z"/></symbol>
+  <symbol id="i-torrent" viewBox="0 0 24 24"><path d="M6 4v7a6 6 0 0 0 12 0V4"/><path d="M6 8h4M14 8h4"/><path d="M12 16v5"/><path d="M9.5 18.5L12 21l2.5-2.5"/></symbol>
+  <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 8l5-5 5 5M12 3v12"/></symbol>
+  <symbol id="i-volume-off" viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M23 9l-6 6M17 9l6 6"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="M6 5l9 7-9 7z"/><path d="M18 5v14"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><path d="M18 5l-9 7 9 7z"/><path d="M6 5v14"/></symbol>
+  <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/></symbol>
+  <symbol id="i-repeat-one" viewBox="0 0 24 24"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/><path d="M11 10h2v6"/></symbol>
+  <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+</svg>
+
+<div id="boot" class="boot">
+  <div class="boot-glow"></div>
+  <div class="boot-logo"><img src="../../assets/icon.png" alt="ArchBrowser" draggable="false"></div>
+  <div class="boot-title">ArchBrowser</div>
+  <div class="boot-phase" id="boot-phase">Запуск…</div>
+  <div class="boot-track"><div id="boot-bar"></div></div>
+  <div class="boot-hint">Приватный браузер · расширения и защита загружаются</div>
+</div>
+
+<div id="chrome">
+  <div id="tabstrip">
+    <div id="tabs"></div>
+    <button id="new-tab-btn" class="icon-btn tab-plus" title="Новая вкладка (Ctrl+T)">
+      <svg class="icon"><use href="#i-plus"/></svg>
+    </button>
+    <div class="tabstrip-spacer"></div>
+    <div class="titlebar-controls-space"></div>
+  </div>
+
+  <div id="toolbar">
+    <div class="toolbar-group toolbar-left">
+      <button id="back" class="icon-btn nav" title="Назад (Alt+←)" disabled>
+        <svg class="icon"><use href="#i-back"/></svg>
+      </button>
+      <button id="forward" class="icon-btn nav" title="Вперёд (Alt+→)" disabled>
+        <svg class="icon"><use href="#i-forward"/></svg>
+      </button>
+      <button id="reload" class="icon-btn nav" title="Обновить (Ctrl+R)">
+        <svg class="icon" id="reload-icon"><use href="#i-reload"/></svg>
+      </button>
+    </div>
+
+    <div id="omnibox-wrap">
+      <span id="security-icon" class="security-icon" title="Соединение">
+        <svg class="icon"><use href="#i-shield"/></svg>
+      </span>
+      <input id="omnibox" type="text" autocomplete="off" spellcheck="false"
+             placeholder="Введите адрес или поисковый запрос">
+      <button id="blocked-chip" class="blocked-chip hidden" title="Заблокированные трекеры">
+        <svg class="icon"><use href="#i-shield"/></svg>
+        <span id="blocked-count">0</span>
+      </button>
+      <button id="star" class="icon-btn star" title="Добавить в закладки (Ctrl+D)">
+        <svg class="icon"><use href="#i-star"/></svg>
+      </button>
+      <button id="bookmarks-bar-btn" class="icon-btn bar-toggle" title="Панель закладок">
+        <svg class="icon"><use href="#i-bookmark"/></svg>
+      </button>
+      <button id="reader-btn" class="icon-btn" title="Режим чтения (Alt+R)">
+        <svg class="icon"><use href="#i-reader"/></svg>
+      </button>
+    </div>
+
+    <div class="toolbar-group toolbar-right">
+      <button id="toolbar-collapse" class="icon-btn toolbar-toggle" title="Скрыть кнопки справа">
+        <svg class="icon"><use href="#i-chevron-right"/></svg>
+      </button>
+      <button id="timer-chip" class="timer-chip hidden" title="Таймер">
+        <svg class="icon"><use href="#i-timer"/></svg>
+        <span id="timer-chip-label">00:00</span>
+      </button>
+      <button id="alarm-chip" class="timer-chip alarm hidden" title="Будильник">
+        <svg class="icon"><use href="#i-alarm"/></svg>
+        <span id="alarm-chip-label">07:00</span>
+      </button>
+      <button id="vpn-chip" class="vpn-chip" title="VPN">
+        <span class="vpn-dot"></span>
+        <span id="vpn-chip-label">VPN</span>
+      </button>
+      <button id="telegram-btn" class="icon-btn telegram-btn" title="Telegram (Ctrl+Shift+M)">
+        <svg class="icon"><use href="#i-telegram"/></svg>
+        <span id="telegram-badge" class="badge count hidden"></span>
+      </button>
+      <button id="split-btn" class="icon-btn" title="Разделить экран (Ctrl+Shift+E)">
+        <svg class="icon"><use href="#i-split"/></svg>
+      </button>
+      <button id="share-btn" class="icon-btn" title="Поделиться страницей">
+        <svg class="icon"><use href="#i-share"/></svg>
+      </button>
+      <button id="player-btn" class="icon-btn" title="Плеер (локальные файлы)">
+        <svg class="icon"><use href="#i-music"/></svg>
+      </button>
+      <button id="torrent-btn" class="icon-btn" title="BitTorrent-клиент">
+        <svg class="icon"><use href="#i-torrent"/></svg>
+      </button>
+      <button id="downloads-btn" class="icon-btn" title="Загрузки (Ctrl+J)">
+        <svg class="icon"><use href="#i-download"/></svg>
+        <span id="download-badge" class="badge hidden"></span>
+      </button>
+      <button id="fullscreen-btn" class="icon-btn" title="Полный экран (F11)">
+        <svg class="icon"><use href="#i-fullscreen"/></svg>
+      </button>
+      <button id="extensions-btn" class="icon-btn" title="Расширения">
+        <svg class="icon"><use href="#i-puzzle"/></svg>
+      </button>
+      <button id="toolbar-expand" class="icon-btn toolbar-toggle hidden" title="Показать кнопки справа">
+        <svg class="icon"><use href="#i-chevron-left"/></svg>
+      </button>
+      <button id="menu-btn" class="icon-btn" title="Меню">
+        <svg class="icon"><use href="#i-menu"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="dock" class="hidden"></div>
+  <div id="bookmarks-bar" class="hidden"></div>
+
+  <!-- Пульт управления воспроизведением. -->
+  <div id="media-bar" class="hidden">
+    <button id="media-bar-prev" class="icon-btn" title="Предыдущий">
+      <svg class="icon"><use href="#i-prev"/></svg>
+    </button>
+    <button id="media-bar-toggle" class="icon-btn" title="Играть / пауза">
+      <svg class="icon"><use href="#i-play"/></svg>
+    </button>
+    <button id="media-bar-next" class="icon-btn" title="Следующий">
+      <svg class="icon"><use href="#i-next"/></svg>
+    </button>
+    <button id="media-bar-shuffle" class="icon-btn" title="Перемешивание">
+      <svg class="icon"><use href="#i-shuffle"/></svg>
+    </button>
+    <button id="media-bar-repeat" class="icon-btn" title="Повтор">
+      <svg class="icon"><use href="#i-repeat"/></svg>
+    </button>
+    <div class="media-bar-info">
+      <div id="media-bar-title" class="media-bar-title"></div>
+      <div id="media-bar-time" class="media-bar-time"></div>
+    </div>
+    <input id="media-bar-seek" class="media-bar-seek" type="range" min="0" max="1" step="0.001" value="0">
+    <div id="media-bar-volume-wrap" class="media-bar-volume">
+      <button id="media-bar-mute" class="icon-btn" title="Звук">
+        <svg class="icon"><use href="#i-volume"/></svg>
+      </button>
+      <input id="media-bar-volume" class="media-bar-volume-range" type="range" min="0" max="1" step="0.01" value="1" title="Громкость">
+    </div>
+    <button id="media-bar-close" class="icon-btn" title="Остановить и закрыть плеер">
+      <svg class="icon"><use href="#i-close"/></svg>
+    </button>
+  </div>
+</div>
+
+<div id="panel" class="hidden">
+  <div id="panel-head">
+    <div id="panel-title-wrap">
+      <span id="panel-icon"></span>
+      <h1 id="panel-title">Настройки</h1>
+    </div>
+    <button id="panel-close" class="icon-btn" title="Закрыть (Esc)">
+      <svg class="icon"><use href="#i-close"/></svg>
+    </button>
+  </div>
+  <div id="panel-body"></div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<!-- Невидимый проигрыватель локальных файлов. -->
+<audio id="player-audio" preload="metadata"></audio>
+
+<script src="app.js"></script>
+</body>
+</html>

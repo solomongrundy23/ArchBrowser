@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Picture in Picture</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --text: #1a1a1a;
+  --text-muted: #7e7e7e;
+  --accent: #ff6600;
+  --accent-dark: #e05500;
+  --accent-soft: rgba(255,102,0,0.12);
+  --off: #f2f2f4;
+  --green: #2fae66;
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+  --shadow-md: 0 6px 16px rgba(0,0,0,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  width: 300px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+.app { padding: 16px; }
+
+.header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.brand { display: flex; align-items: center; gap: 9px; }
+.brand-logo { width: 26px; height: 26px; border-radius: 7px; display: block; }
+.brand-name { font-size: 14px; font-weight: 800; }
+.pip-status {
+  font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+  padding: 4px 9px; border-radius: 20px; background: var(--off); color: var(--text-muted);
+}
+.pip-status.live { background: rgba(47,174,102,0.14); color: var(--green); }
+
+.pip-toggle-btn {
+  width: 100%; padding: 12px 0; border: none; border-radius: 12px;
+  background: var(--accent); color: #fff; font-size: 13px; font-weight: 800;
+  cursor: pointer; margin-bottom: 14px; transition: all 0.15s ease;
+  box-shadow: 0 0px 9px rgba(255,102,0,0.3);
+}
+.pip-toggle-btn:hover { background: var(--accent-dark); transform: translateY(-1px); }
+.pip-toggle-btn:disabled { background: var(--off); color: var(--text-muted); cursor: default; box-shadow: none; transform: none; }
+
+.card {
+  background: var(--surface); border: none; border-radius: 14px;
+  padding: 14px; box-shadow: var(--shadow-md); margin-bottom: 12px;
+}
+.card-title {
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--text-muted); margin-bottom: 10px;
+}
+
+.ab-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.ab-btn {
+  flex: 1; padding: 9px 0; border: none; border-radius: 10px;
+  background: var(--bg); color: var(--text); font-weight: 700; font-size: 12px; cursor: pointer;
+  box-shadow: var(--shadow-sm); transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.ab-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.ab-btn .label { display: block; font-size: 10px; font-weight: 600; color: var(--text-muted); margin-top: 2px; }
+
+.loop-btn {
+  width: 100%; padding: 10px 0; border: none; border-radius: 10px;
+  background: #dde0e5; color: #414648; font-weight: 800; font-size: 12.5px;
+  cursor: pointer; margin-bottom: 12px; transition: all 0.15s ease;
+}
+.loop-btn.on { background: var(--green); color: #fff; box-shadow: 0 4px 12px rgba(47,174,102,0.25); }
+.loop-btn:disabled { opacity: 0.5; cursor: default; }
+
+.speed-label { font-size: 10.5px; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; }
+.speed-label span { color: var(--accent); font-weight: 800; }
+
+/* Кастомный красивый слайдер */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 10px;
+  background: var(--off);
+  outline: none;
+  cursor: pointer;
+  margin: 8px 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 10px rgba(255, 102, 0, 0.45);
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 14px rgba(255, 102, 0, 0.65);
+}
+
+.clear-link {
+  display: block; text-align: center; font-size: 10.5px; color: var(--text-muted);
+  margin-top: 10px; cursor: pointer; background: none; border: none; width: 100%;
+}
+.clear-link:hover { color: var(--accent); }
+
+.empty-note {
+  font-size: 11px; color: var(--text-muted); text-align: center; padding: 10px 0;
+}
+
+.settings-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.settings-text { flex: 1; }
+.settings-title { font-size: 12px; font-weight: 700; }
+.settings-sub { font-size: 10px; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
+
+.switch { position: relative; width: 36px; height: 20px; flex-shrink: 0; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.switch-track { position: absolute; inset: 0; background: var(--off); border-radius: 999px; cursor: pointer; transition: 0.2s; }
+.switch-track::before {
+  content: ''; position: absolute; height: 14px; width: 14px; left: 3px; top: 3px;
+  background: #fff; border-radius: 50%; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+.switch input:checked + .switch-track { background: var(--accent); }
+.switch input:checked + .switch-track::before { transform: translateX(16px); }
+
+.footer {
+  margin-top: 12px; padding-top: 8px; border-top: none;
+  font-size: 10px; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center;
+}
+.rate-link { color: var(--accent); text-decoration: none; font-weight: 700; }
+.rate-link:hover { text-decoration: underline; }
+
+/* Rate Us nag modal */
+.rate-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(20,16,12,0.55);
+  align-items: center; justify-content: center;
+  padding: 20px;
+}
+.rate-overlay:not([hidden]) { display: flex; }
+.rate-modal {
+  background: var(--surface); border-radius: 16px; padding: 22px 20px 18px;
+  box-shadow: var(--shadow-md); text-align: center; max-width: 250px;
+}
+.rate-stars { font-size: 22px; color: var(--accent); margin-bottom: 10px; letter-spacing: 3px; }
+.rate-title { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+.rate-sub { font-size: 11.5px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; }
+.rate-now-btn {
+  width: 100%; padding: 10px 0; border: none; border-radius: 10px;
+  background: var(--accent); color: #fff; font-size: 12.5px; font-weight: 800;
+  cursor: pointer; margin-bottom: 8px; box-shadow: 0 4px 12px rgba(255,102,0,0.3);
+}
+.rate-now-btn:hover { background: var(--accent-dark); }
+.rate-later-btn {
+  width: 100%; padding: 8px 0; border: none; background: none;
+  color: var(--text-muted); font-size: 11px; cursor: pointer;
+}
+.rate-later-btn:hover { color: var(--text); }
+</style>
+</head>
+<body>
+  <div class="app">
+    <div class="header">
+      <div class="brand">
+        <img class="brand-logo" src="icons/icon128.png" alt="">
+        <span class="brand-name">Picture in Picture</span>
+      </div>
+      <span class="pip-status" id="pipStatus">Not floating</span>
+    </div>
+
+    <button class="pip-toggle-btn" id="pipToggleBtn">Toggle Picture-in-Picture</button>
+
+    <div class="card">
+      <div class="card-title">A-B Loop / Practice Mode</div>
+      <div id="practiceControls">
+        <div class="ab-row">
+          <button class="ab-btn" id="setA">Set A<span class="label" id="labelA">--:--</span></button>
+          <button class="ab-btn" id="setB">Set B<span class="label" id="labelB">--:--</span></button>
+        </div>
+        <button class="loop-btn" id="loopBtn" disabled>Loop: OFF</button>
+        <div class="speed-label">Speed: <span id="speedValue">1.00x</span></div>
+        <input type="range" id="speedSlider" min="0.25" max="1.5" step="0.05" value="1">
+        <button class="clear-link" id="clearBtn">Clear points</button>
+      </div>
+      <p class="empty-note" id="emptyNote" hidden>No video found on this tab.</p>
+    </div>
+
+    <div class="card">
+      <div class="settings-row">
+        <div class="settings-text">
+          <div class="settings-title">Classic click-to-toggle</div>
+          <div class="settings-sub">Icon click instantly toggles PiP, like before. Use Option+Shift+L to get back in here.</div>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="classicModeToggle">
+          <span class="switch-track"></span>
+        </label>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <span>Works on any tab with video</span>
+      <a id="rateLink" class="rate-link" href="#">★ Rate us</a>
+    </footer>
+  </div>
+
+  <div class="rate-overlay" id="rateOverlay" hidden>
+    <div class="rate-modal">
+      <div class="rate-stars">★★★★★</div>
+      <div class="rate-title">Enjoying the app?</div>
+      <div class="rate-sub">A quick rating helps a lot more than you'd think 🙏</div>
+      <button class="rate-now-btn" id="rateNowBtn">Rate now</button>
+      <button class="rate-later-btn" id="rateLaterBtn">Maybe later</button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

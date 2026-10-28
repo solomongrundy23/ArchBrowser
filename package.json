@@ -1,0 +1,113 @@
+{
+  "name": "archbrowser",
+  "productName": "ArchBrowser",
+  "version": "0.2.9",
+  "description": "Приватный браузер на Chromium: защита от слежки, встроенный VPN (Xray), uBlock Origin, Telegram и расширения",
+  "main": "src/main.js",
+  "author": "ArchBrowser",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "postinstall": "node scripts/patch-electron-icon.js",
+    "start": "electron .",
+    "smoke": "electron . --smoke-test",
+    "vpn-test": "electron test/vpn-e2e.js",
+    "ublock-test": "electron test/ublock-block.js",
+    "ublock-lite-test": "electron test/ublock-lite-block.js",
+    "dist": "electron-builder --win portable",
+    "dist:fast": "set ELECTRON_BUILDER_COMPRESSION_LEVEL=5&& electron-builder --win portable",
+    "dist:mac": "electron-builder --mac --arm64"
+  },
+  "devDependencies": {
+    "electron": "^44.9.2",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.archbrowser.app",
+    "productName": "ArchBrowser",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "resources",
+        "to": "resources"
+      }
+    ],
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.utilities",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "file"
+        }
+      ],
+      "window": {
+        "width": 540,
+        "height": 380
+      }
+    },
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "portable": {
+      "artifactName": "ArchBrowser-${version}-portable.exe"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.png",
+      "category": "Network",
+      "description": "Приватный браузер на Chromium: защита от слежки, встроенный VPN (Xray), uBlock Origin, Telegram и расширения",
+      "artifactName": "ArchBrowser-${version}-${arch}.${ext}"
+    },
+    "compression": "normal"
+  },
+  "dependencies": {
+    "bittorrent-dht": "^6.4.2",
+    "music-metadata": "^7.14.0",
+    "parse-torrent": "^4.1.0",
+    "torrent-stream": "^1.2.1"
+  }
+}

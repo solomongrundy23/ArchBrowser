@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
+<title>Уведомление</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    overflow: hidden;
+    font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+    -webkit-user-select: none;
+    cursor: default;
+  }
+  #wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  .toast {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    max-width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: rgba(24, 26, 32, .96);
+    border: 1px solid rgba(255, 255, 255, .14);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, .5);
+    color: #eef1f7;
+    font-size: 13.5px;
+    line-height: 1.45;
+    opacity: 0;
+    transform: translateY(8px) scale(.99);
+    transition: opacity .16s ease, transform .16s ease;
+    box-sizing: border-box;
+  }
+  .toast.in { opacity: 1; transform: translateY(0) scale(1); }
+  .toast .mark {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #0b0d11;
+    background: #7f8aa3;
+  }
+  .toast .text {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+  }
+  .toast.info .mark { background: #6ea8fe; }
+  .toast.success .mark { background: #58cc91; }
+  .toast.warning .mark { background: #f0b657; }
+  .toast.error {
+    background: rgba(40, 20, 22, .97);
+    border-color: rgba(255, 120, 120, .48);
+    color: #ffd9d9;
+  }
+  .toast.error .mark { background: #ff7a7a; }
+</style>
+</head>
+<body>
+  <div id="wrap">
+    <div id="toast" class="toast">
+      <span class="mark" id="mark">i</span>
+      <span class="text" id="text"></span>
+    </div>
+  </div>
+<script>
+  const wrap = document.getElementById('toast');
+  const mark = document.getElementById('mark');
+  const text = document.getElementById('text');
+  const MARKS = { info: 'i', success: '✓', warning: '!', error: '!' };
+  let hideTimer = null;
+
+  function show(data) {
+    const type = ['info', 'success', 'warning', 'error'].includes(data.type) ? data.type : 'info';
+    const message = String(data.message || '').trim();
+    if (!message) return;
+    wrap.className = 'toast';
+    mark.textContent = MARKS[type] || 'i';
+    text.textContent = message;
+    // Класс типа ставим после сброса — так анимация проигрывается заново.
+    void wrap.offsetWidth;
+    wrap.classList.add(type, 'in');
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => wrap.classList.remove('in'), 100000);
+  }
+
+  if (window.archToast && window.archToast.onData) {
+    window.archToast.onData(show);
+  }
+</script>
+</body>
+</html>

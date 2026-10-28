@@ -1,0 +1,44 @@
+{
+  "name": {
+		"message": "Пошук Яндекса"
+	},
+	"description": {
+		"message": "Вводьте запити в адресний рядок і отримуйте відповіді від Яндекса"
+	},
+  "searchName": {
+    "message": "Яндекс"
+  },
+  "searchDomain": {
+    "message": ".ru"
+  },
+  "ctxSearchMessageMarket": {
+    "message": "Найти на Яндекс.Видео \"%s\""
+  },
+  "ctxSearchUrlMarket": {
+    "message": "https://yandex.ua/video/search?text=__QUERY__&from=searchext"
+  },
+  "ctxSearchMessageVideo": {
+    "message": "Найти на Яндекс.Видео \"%s\""
+  },
+  "ctxSearchUrlVideo": {
+    "message": "https://yandex.ua/video/search?text=__QUERY__&from=searchext"
+  },
+  "ctxSearchMessageImage": {
+    "message": "Найти на Яндекс.Картинки"
+  },
+  "ctxSearchUrlImage": {
+    "message": "https://yandex.ua/images/search?&rpt=imageview&url=__SRC_URL__&from=searchext"
+  },
+  "ctxSearchMessageMap": {
+    "message": "Найти на Яндекс.Карты \"%s\""
+  },
+  "ctxSearchUrlMap": {
+    "message": "https://yandex.ua/maps/?mode=search&text=__QUERY__&from=searchext"
+  },
+  "ctxSearchMessageQuestion": {
+    "message": "Найти на Яндекс.Видео \"%s\""
+  },
+  "ctxSearchUrlQuestion": {
+    "message": "https://yandex.ua/video/search?text=__QUERY__&from=searchext"
+  }
+}
