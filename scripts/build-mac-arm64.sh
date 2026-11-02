@@ -23,8 +23,11 @@ fi
 if [ ! -f resources/xray/xray ]; then
   echo "Скачиваю Xray-core для macOS arm64…"
   tmpdir="$(mktemp -d)"
+  # Закреплена v26.6.27: начиная с v26.7.11 Xray запрещает VLESS без TLS
+  # на публичный адрес («vless without TLS ... is prohibited unless ... private
+  # IP or domain»), что ломает серверы вида vless+httpupgrade/ws без TLS.
   curl -L --fail -o "$tmpdir/xray.zip" \
-    "https://github.com/XTLS/Xray-core/releases/latest/download/Xray-macos-arm64-v8a.zip"
+    "https://github.com/XTLS/Xray-core/releases/download/v26.6.27/Xray-macos-arm64-v8a.zip"
   unzip -o "$tmpdir/xray.zip" -d "$tmpdir/xray"
   cp "$tmpdir/xray/xray" resources/xray/xray
   rm -rf "$tmpdir"

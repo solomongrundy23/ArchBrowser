@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 const { dialog } = require('electron');
+const mm = require('music-metadata');
 
 // Плейлист локального плеера.
 //
@@ -259,6 +260,33 @@ class PlayerService {
 
   track(id) {
     return this.tracks().find((track) => track.id === id) || null;
+  }
+
+  // Читает теги artist/title из аудиофайла. Результат кэшируется в треке и
+  // сохраняется в плейлисте, чтобы не перечитывать файл при каждом запуске.
+  async readMetadata(id) {
+    const track = this.track(id);
+    if (!track) return { artist: '', title: '' };
+    if ('artist' in track || 'title' in track) {
+      return { artist: track.artist || '', title: track.title || '' };
+    }
+    let artist = '';
+    let title = '';
+    try {
+      const meta = await mm.parseFile(track.path, { duration: false, skipCovers: true });
+      artist = String(meta.common.artist || '').trim();
+      title = String(meta.common.title || '').trim();
+    } catch {
+      // Файл может быть недоступен или не содержать тегов — это не ошибка.
+    }
+    const current = this.track(id);
+    if (current) {
+      current.artist = artist;
+      current.title = title;
+      this.saveSoon();
+      this.onChange();
+    }
+    return { artist, title };
   }
 
   next(id, { shuffle = false, direction = 1, wrap = false } = {}) {

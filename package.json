@@ -88,10 +88,25 @@
     "portable": {
       "artifactName": "ArchBrowser-${version}-portable.exe"
     },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.png",
+      "category": "Network",
+      "description": "Приватный браузер на Chromium: защита от слежки, встроенный VPN (Xray), uBlock Origin, Telegram и расширения",
+      "artifactName": "ArchBrowser-${version}-${arch}.${ext}"
+    },
     "compression": "normal"
   },
   "dependencies": {
     "bittorrent-dht": "^6.4.2",
+    "music-metadata": "^7.14.0",
     "parse-torrent": "^4.1.0",
     "torrent-stream": "^1.2.1"
   }

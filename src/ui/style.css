@@ -1411,6 +1411,28 @@ body.toolbar-collapsed .toolbar-right > :not(#toolbar-expand):not(#menu-btn) { d
 body.toolbar-collapsed #toolbar-expand { display: inline-flex; order: 1; }
 body.toolbar-collapsed #menu-btn { order: 2; }
 
+/* Плавное скрытие/раскрытие кнопок правой панели инструментов. */
+.toolbar-right > button:not(#toolbar-collapse):not(#toolbar-expand):not(#menu-btn) {
+  transition:
+    background .13s ease,
+    color .13s ease,
+    border-color .13s ease,
+    box-shadow .13s ease,
+    opacity .16s ease,
+    transform .16s cubic-bezier(.18,.9,.22,1),
+    display .16s allow-discrete;
+}
+body.toolbar-collapsed .toolbar-right > button:not(#toolbar-collapse):not(#toolbar-expand):not(#menu-btn) {
+  opacity: 0;
+  transform: translateX(10px) scale(.9);
+}
+@starting-style {
+  body:not(.toolbar-collapsed) .toolbar-right > button:not(#toolbar-collapse):not(#toolbar-expand):not(#menu-btn) {
+    opacity: 0;
+    transform: translateX(10px) scale(.9);
+  }
+}
+
 .icon-btn {
   width: 34px;
   height: 34px;
@@ -1647,58 +1669,17 @@ body.toolbar-collapsed #menu-btn { order: 2; }
 /* Вкладки доступны и в полноэкранном режиме: они появляются вместе с
    верхней панелью после задержки курсора у верхнего края. */
 body.browser-fullscreen #tabstrip {
-  /* В полноэкранном режиме не скрываем панели: вкладки, адресная строка
-     и закладки остаются на месте. Это одинаково предсказуемо работает
-     на Windows, macOS и Linux. */
-  display: flex;
+  /* В полноэкранном режиме не скрываем панели: вкладки остаются на своём
+     месте (положение задаётся настройкой), адресная строка — сверху. */
   pointer-events: auto;
-  position: static;
-  top: auto; left: auto; right: auto; bottom: auto;
-  width: auto;
-  height: 40px;
-  flex-direction: row;
-  align-items: flex-end;
-  padding: 6px 8px 0;
   border: 0;
   background: color-mix(in srgb, var(--chrome-2) 82%, transparent);
   backdrop-filter: blur(18px) saturate(1.35);
   -webkit-backdrop-filter: blur(18px) saturate(1.35);
 }
-body.browser-fullscreen #tabs {
-  order: 0;
-  flex: 0 1 auto;
-  flex-direction: row;
-  align-items: flex-end;
-  min-height: 0;
-  gap: 3px;
-  overflow: hidden;
-}
-body.browser-fullscreen .tab {
-  flex: 1 1 190px;
-  width: auto;
-  height: 34px;
-  min-width: 64px;
-  max-width: 250px;
-  border-radius: 9px 9px 0 0;
-  padding: 0 6px 0 11px;
-}
-body.browser-fullscreen .tab-plus {
-  order: 0;
-  width: 30px;
-  height: 30px;
-  margin: 0 2px 0 0;
-}
-body.browser-fullscreen .tabstrip-spacer {
-  display: block;
-  flex: 1 1 auto;
-  order: 0;
-}
-body.browser-fullscreen .titlebar-controls-space { display: none; }
-/* В полноэкранной верхней панели вертикальные вкладки уже перенесены
-   наверх, поэтому отступы под них у панели инструментов не нужны. */
-body.browser-fullscreen #toolbar { margin-left: 0; margin-right: 0; padding: 5px 12px; }
-body.browser-fullscreen #media-bar { margin-left: 0; margin-right: 0; }
 body.browser-fullscreen #tabstrip { padding-left: 8px; }
+body.browser-fullscreen .titlebar-controls-space { display: none; }
+body.browser-fullscreen #toolbar { padding: 5px 12px; }
 /* В полноэкранном режиме «светофоры» macOS скрыты, поэтому отступ под них
    не нужен. */
 body.platform-mac.browser-fullscreen #tabstrip { padding-left: 8px; }
@@ -1753,8 +1734,6 @@ body.browser-fullscreen #dock { display: none; }
 body.browser-fullscreen #bookmarks-bar { pointer-events: auto; }
 body.browser-fullscreen #panel {
   top: var(--panel-top, 124px);
-  left: 0;
-  right: 0;
   bottom: 0;
   border-radius: 0;
 }
@@ -1833,6 +1812,7 @@ body.browser-fullscreen #panel-head { padding: 18px 22px 14px; }
 .bb-item > span { overflow: hidden; text-overflow: ellipsis; max-width: 190px; }
 .bb-item:hover { background: var(--surface-3); color: var(--text-strong); }
 .bb-item .icon { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.bb-item .bb-favicon { width: 15px; height: 15px; border-radius: 3px; object-fit: contain; flex: none; }
 .bb-empty-bar { color: var(--muted-2); font-size: 11.5px; padding: 0 4px; }
 .bb-folder { position: relative; display: inline-flex; flex: 0 0 auto; min-width: 0; max-width: 220px; }
 .bb-more {
@@ -1945,8 +1925,6 @@ body.browser-fullscreen #panel-head { padding: 18px 22px 14px; }
 .ctx-sep { height: 1px; margin: 4px 7px; background: var(--border-soft); }
 
 .bar-toggle.active { color: var(--accent); background: var(--accent-dim); }
-#opencode-btn.active { color: var(--accent); background: var(--accent-dim); }
-#opencode-btn.busy .icon { opacity: .4; animation: pulse 1s infinite; }
 
 /* ---------- Пульт медиа ---------- */
 #media-bar {
@@ -2322,7 +2300,7 @@ body.media-bar-bottom:not([data-tabs="bottom"]):has(#media-bar:not(.hidden)) #pa
 }
 .player-filter:focus { border-color: var(--focus-border); }
 .player-list { margin-bottom: 16px; }
-.player-row { cursor: pointer; }
+.player-row { cursor: pointer; padding-left: 10px; padding-right: 10px; }
 .player-row .list-title { display: flex; align-items: center; gap: 8px; }
 .player-row.playing .list-title { color: var(--accent); }
 .player-row .player-eq { width: 11px; height: 11px; border-radius: 2px; background: var(--accent); flex: none; }
@@ -2540,42 +2518,46 @@ body.platform-mac[data-tabs="bottom"] #toolbar { padding-left: 88px; }
 body.platform-mac[data-tabs="right"] #toolbar { padding-left: 88px; }
 body.platform-mac[data-tabs="left"] #tabstrip { padding-top: 34px; }
 
-/* Liquid Glass: полупрозрачные панели поверх нативного размытия macOS. */
-html.liquid-glass,
-html.liquid-glass body { background: transparent; }
-:root body.liquid-glass #chrome {
-  background: transparent;
-  border-bottom-color: color-mix(in srgb, var(--chrome-border) 55%, transparent);
+/* Быстрые плавные анимации появления/скрытия панелей.                 */
+/* display:none переключается дискретно (allow-discrete), а opacity и   */
+/* transform анимируются; @starting-style задаёт исходное состояние при */
+/* раскрытии.                                                          */
+/* ------------------------------------------------------------------ */
+
+/* Боковая панель (настройки, VPN, загрузки и т.п.). */
+#panel {
+  transition: opacity .18s ease, transform .18s cubic-bezier(.16,.9,.25,1), display .18s allow-discrete;
 }
-:root body.liquid-glass #tabstrip,
-:root body.liquid-glass #toolbar {
-  background: color-mix(in srgb, var(--chrome) 46%, transparent);
-  backdrop-filter: blur(28px) saturate(1.7);
-  -webkit-backdrop-filter: blur(28px) saturate(1.7);
-  border-color: color-mix(in srgb, var(--chrome-border) 55%, transparent);
+#panel.hidden { opacity: 0; transform: translateY(-8px); }
+
+/* Панель закладок под адресной строкой. */
+#bookmarks-bar {
+  transition: opacity .18s ease, transform .18s cubic-bezier(.16,.9,.25,1), display .18s allow-discrete;
 }
-:root body.liquid-glass #bookmarks-bar {
-  background: color-mix(in srgb, var(--chrome) 38%, transparent);
-  backdrop-filter: blur(26px) saturate(1.6);
-  -webkit-backdrop-filter: blur(26px) saturate(1.6);
-  border-bottom-color: color-mix(in srgb, var(--chrome-border) 55%, transparent);
+#bookmarks-bar.hidden { opacity: 0; transform: translateY(-8px); }
+
+/* Пульт управления воспроизведением. */
+#media-bar {
+  transition: opacity .16s ease, transform .16s cubic-bezier(.16,.9,.25,1), display .16s allow-discrete;
 }
-:root body.liquid-glass #media-bar {
-  background: color-mix(in srgb, var(--chrome-2) 44%, transparent);
-  backdrop-filter: blur(26px) saturate(1.6);
-  -webkit-backdrop-filter: blur(26px) saturate(1.6);
+#media-bar.hidden { opacity: 0; transform: scale(.985); }
+
+/* Выпадающий слой под адресной строкой (подсказки, Telegram). */
+#dock {
+  transition: opacity .16s ease, transform .16s cubic-bezier(.16,.9,.25,1), display .16s allow-discrete;
 }
-:root body.liquid-glass #panel {
-  background: color-mix(in srgb, var(--bg-2) 66%, transparent);
-  backdrop-filter: blur(30px) saturate(1.45);
-  -webkit-backdrop-filter: blur(30px) saturate(1.45);
+#dock.hidden { opacity: 0; transform: translateY(-8px); }
+
+@starting-style {
+  #panel { opacity: 0; transform: translateY(-8px); }
+  #bookmarks-bar { opacity: 0; transform: translateY(-8px); }
+  #media-bar { opacity: 0; transform: scale(.985); }
+  #dock { opacity: 0; transform: translateY(-8px); }
 }
-:root body.liquid-glass .import-modal-card,
-:root body.liquid-glass .torrent-modal-card,
-:root body.liquid-glass .menu-popover {
-  background: color-mix(in srgb, var(--card-solid) 64%, transparent);
-  backdrop-filter: blur(32px) saturate(1.7);
-  -webkit-backdrop-filter: blur(32px) saturate(1.7);
-  border-color: color-mix(in srgb, #ffffff 18%, var(--border));
-  box-shadow: 0 28px 80px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .24);
+
+@media (prefers-reduced-motion: reduce) {
+  #panel, #bookmarks-bar, #media-bar, #dock,
+  .toolbar-right > button:not(#toolbar-collapse):not(#toolbar-expand):not(#menu-btn) {
+    transition-duration: .01ms;
+  }
 }

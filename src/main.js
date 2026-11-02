@@ -108,16 +108,6 @@ const { JsonStore } = require('./core/store');
 const { PasswordStore } = require('./core/passwords');
 const { TelegramProxyService } = require('./core/telegram-proxies');
 const { MediaManager, isVideoHost, isMusicHost } = require('./core/media');
-// OpenCode — необязательная функция. Если модуль отсутствует или повреждён,
-// браузер всё равно должен запуститься: раньше ошибка в этом require
-// останавливала весь процесс ещё до появления окна.
-let OpenCodeService = null;
-try {
-  ({ OpenCodeService } = require('./core/opencode'));
-} catch (err) {
-  console.warn('[opencode] модуль недоступен:', err.message);
-  logStartup('opencode require:', err);
-}
 const { RssService } = require('./core/rss');
 const { PlayerService } = require('./core/player');
 const { TorrentService } = require('./core/torrent');
@@ -153,7 +143,6 @@ const telegramProxies = new TelegramProxyService({ userDataDir: USER_DATA_DIR })
 passwords.setAutoLockMinutes(settings.get('passwordAutoLockMinutes'));
 
 let mediaManager = null;
-let openCodeService = null;
 let rssService = null;
 let playerService = null;
 let torrentService = null;
@@ -209,7 +198,11 @@ function currentTheme() {
 
   let systemAccent = '#60cdff';
   try {
-    if (process.platform === 'win32') systemAccent = normalizeAccent(systemPreferences.getAccentColor());
+    // Акцент системы берём и на Windows, и на macOS: в macOS в разделе
+    // «Оформление» несколько вариантов акцента (синий, фиолетовый, розовый…).
+    if (process.platform === 'win32' || process.platform === 'darwin') {
+      systemAccent = normalizeAccent(systemPreferences.getAccentColor());
+    }
   } catch {}
 
   // «Оригинальная» сохраняет нейтральный фон, но элементы получают акцент
@@ -609,6 +602,27 @@ class BookmarksStore {
 const history = new HistoryStore(path.join(USER_DATA_DIR, 'history.json'));
 const bookmarks = new BookmarksStore(path.join(USER_DATA_DIR, 'bookmarks.json'));
 
+// Кэш иконок сайтов по хосту — для панели закладок и новых вкладок.
+const faviconStore = new JsonStore(path.join(USER_DATA_DIR, 'favicons.json'), { byHost: {} });
+function recordFavicon(url, faviconUrl) {
+  try {
+    const host = new URL(url).hostname;
+    if (!host || !faviconUrl) return;
+    const byHost = faviconStore.get('byHost') || {};
+    if (byHost[host] === faviconUrl) return;
+    byHost[host] = faviconUrl;
+    faviconStore.set({ byHost });
+  } catch {}
+}
+function faviconFor(url) {
+  try {
+    const host = new URL(url).hostname;
+    return (faviconStore.get('byHost') || {})[host] || '';
+  } catch {
+    return '';
+  }
+}
+
 const downloads = [];
 const downloadItems = new Map();
 const downloadSessions = new WeakSet();
@@ -671,6 +685,17 @@ function downloadNotification(title, body, onClick) {
         } catch {}
       });
     }
+    note.show();
+  } catch {}
+}
+
+// Системное уведомление о новой композиции (все платформы: macOS/Windows/Linux).
+function trackNotification(title, body) {
+  if (!settings.get('trackNotify')) return;
+  try {
+    if (!Notification.isSupported()) return;
+    const icon = path.join(ctx.assetsDir, 'icon.png');
+    const note = new Notification({ title: title || 'Сейчас играет', body: body || '', icon, silent: true });
     note.show();
   } catch {}
 }
@@ -1107,14 +1132,6 @@ mediaManager = new MediaManager({
   onChange: () => scheduleBroadcastAll(),
 });
 
-// ------------------------------------------------------------------ opencode
-if (OpenCodeService) {
-  openCodeService = new OpenCodeService({
-    resourcesDir: RESOURCES_DIR,
-    getSettings: () => settings.all,
-    onChange: () => scheduleBroadcastAll(),
-  });
-}
 
 // ------------------------------------------------------------------ rss
 rssService = new RssService({
@@ -1260,9 +1277,6 @@ const ctx = {
   get media() {
     return mediaManager;
   },
-  get opencode() {
-    return openCodeService;
-  },
   get playerService() {
     return playerService;
   },
@@ -1279,6 +1293,8 @@ const ctx = {
   isQuitting: () => quitting,
   recordHistory: (url, title) => history.add(url, title),
   updateHistoryTitle: (url, title) => history.updateTitle(url, title),
+  recordFavicon,
+  faviconFor,
   removeWindow: (ctrl) => {
     controllers.delete(ctrl);
     windows.delete(ctrl);
@@ -1601,15 +1617,6 @@ function registerIpc() {
     controllerOf(e)?.toggleTelegram(typeof open === 'boolean' ? open : undefined);
     return true;
   });
-  ipcMain.handle('opencode:toggle', (e) => {
-    controllerOf(e)?.toggleOpenCode();
-    return true;
-  });
-  ipcMain.handle('opencode:load', async (e, { url, pairLink } = {}) => {
-    const ctrl = controllerOf(e);
-    if (!ctrl || !url) return false;
-    return ctrl.loadOpenCode(url, pairLink);
-  });
   ipcMain.handle('window:new-private', () => {
     createWindow({ isPrivate: true });
     return true;
@@ -1625,13 +1632,6 @@ function registerIpc() {
     return true;
   });
   ipcMain.handle('window:fullscreen', (e) => controllerOf(e)?.toggleBrowserFullscreen());
-  ipcMain.handle('window:set-glass', (e, { enabled } = {}) => {
-    for (const ctrl of controllers) {
-      try { ctrl.setLiquidGlass(!!enabled); } catch {}
-    }
-    broadcastAll();
-    return true;
-  });
   ipcMain.handle('telegram:context-menu', (e) => controllerOf(e)?.popupTelegramMenu());
   ipcMain.handle('telegram:import-proxies', async (e, { limit = 200 } = {}) => {
     const result = await telegramProxies.importAll({ limit });
@@ -1804,6 +1804,7 @@ function registerIpc() {
 
   ipcMain.handle('bookmarks:list', () => bookmarks.items);
   ipcMain.handle('bookmarks:tree', () => bookmarks.tree());
+  ipcMain.handle('favicons:get', () => faviconStore.get('byHost') || {});
   ipcMain.handle('bookmarks:add', (e, payload = {}) => {
     const result = bookmarks.add(payload);
     broadcastAll();
@@ -1865,45 +1866,6 @@ function registerIpc() {
     };
   });
 
-  // ------------------------------------------------------------------ opencode
-  ipcMain.handle('opencode:status', () => (
-    openCodeService
-      ? openCodeService.status()
-      : { state: 'missing', url: '', directory: '', error: 'Модуль OpenCode не загружен', version: '', available: false }
-  ));
-  ipcMain.handle('opencode:start', async (e, { directory } = {}) => {
-    if (!openCodeService) throw new Error('OpenCode недоступен: модуль не загружен');
-    const ctrl = controllerOf(e);
-    const dir = directory || settings.get('opencodeDirectory') || process.cwd();
-    const status = await openCodeService.start(dir);
-    if (ctrl) {
-      ctrl.openOpenCode();
-      // Вход по коду подключения выполняется уже в открытом интерфейсе.
-      await ctrl.loadOpenCode(status.url, openCodeService.connectLink());
-    }
-    broadcastAll();
-    return status;
-  });
-  ipcMain.handle('opencode:stop', () => {
-    if (openCodeService) openCodeService.stop();
-    for (const ctrl of controllers) ctrl.closeOpenCode();
-    broadcastAll();
-    return true;
-  });
-  ipcMain.handle('opencode:pick-directory', async (e) => {
-    const ctrl = controllerOf(e);
-    const win = ctrl && ctrl.window && !ctrl.window.isDestroyed() ? ctrl.window : null;
-    const options = {
-      title: 'Выберите папку проекта для OpenCode',
-      properties: ['openDirectory', 'createDirectory'],
-    };
-    const res = win ? await dialog.showOpenDialog(win, options) : await dialog.showOpenDialog(options);
-    if (res.canceled || !res.filePaths.length) return { canceled: true };
-    settings.set({ opencodeDirectory: res.filePaths[0] });
-    broadcastAll();
-    return { canceled: false, directory: res.filePaths[0] };
-  });
-
   // ------------------------------------------------------------------ плеер
   ipcMain.on('media:page-state', (e, state = {}) => {
     playerService.setPageState(state);
@@ -1935,6 +1897,8 @@ function registerIpc() {
   ipcMain.handle('player:start', (e, { shuffle } = {}) => playerService.start({ shuffle }));
   ipcMain.handle('player:previous', (e, { id } = {}) => playerService.previous(id));
   ipcMain.handle('player:remember', (e, { id } = {}) => playerService.remember(id));
+  ipcMain.handle('player:notify-track', (e, { title, body } = {}) => trackNotification(title, body));
+  ipcMain.handle('player:metadata', (e, { id } = {}) => playerService.readMetadata(id));
   ipcMain.handle('player:remove', (e, { id } = {}) => {
     playerService.remove(id);
     return true;
@@ -2567,40 +2531,6 @@ if (!gotLock) {
             console.log(`[SMOKE] bookmarks-bar-error=${err.message}`);
           }
 
-          // OpenCode: сервер и встроенный веб-интерфейс.
-          try {
-            const status = await openCodeService.start(os.homedir());
-            console.log(`[SMOKE] opencode=${status.state} version=${status.version} url=${status.url}`);
-            if (status.state === 'running') {
-              // Открываем панель и загружаем в неё интерфейс.
-              ctrl.openOpenCode();
-              await sleep(400);
-              // Закрываем выпадающий список подсказок, чтобы он не перекрывал панель.
-              await ctrl.window.webContents.executeJavaScript(
-                "(() => { const o = document.getElementById('omnibox'); o.value = ''; o.blur(); return true; })()",
-              );
-              await sleep(300);
-              const embedded = await ctrl.loadOpenCode(status.url, openCodeService.connectLink());
-              console.log(`[SMOKE] opencode-embed=${embedded}`);
-              await sleep(4500);
-              // Панель OpenCode — нативный view, снимаем его отдельно.
-              try {
-                const ocShot = await ctrl.opencode.wc.capturePage();
-                fs.mkdirSync(shotDir, { recursive: true });
-                fs.writeFileSync(path.join(shotDir, 'opencode.png'), ocShot.toPNG());
-                console.log(`[SMOKE] shot=opencode.png ${ocShot.getSize().width}x${ocShot.getSize().height}`);
-              } catch (err) {
-                console.log(`[SMOKE] opencode-shot-error=${err.message}`);
-              }
-              await capture('opencode-host.png', ctrl.window.webContents);
-              openCodeService.stop();
-              ctrl.closeOpenCode();
-              await sleep(300);
-            }
-          } catch (err) {
-            console.log(`[SMOKE] opencode-error=${err.message}`);
-          }
-
           const sample = parseLink(
             'vless://11111111-1111-1111-1111-111111111111@example.com:443?security=tls&type=ws&path=%2Fws#Test',
           );
@@ -2654,7 +2584,7 @@ if (!gotLock) {
           await sleep(500);
           await capture('settings.png', ctrl.window.webContents);
 
-          // Новые разделы настроек: пароли, загрузки, OpenCode.
+          // Новые разделы настроек: пароли, загрузки.
           try {
             await ctrl.window.webContents.executeJavaScript(
               "(() => { const labels = [...document.querySelectorAll('.section-label')];"
@@ -2734,7 +2664,7 @@ if (!gotLock) {
           // Кнопки панели инструментов: перетаскивание не должно мешать клику.
           try {
             const regions = await ctrl.window.webContents.executeJavaScript(
-              "(() => { const ids = ['share-btn','downloads-btn','extensions-btn','vpn-chip','opencode-btn','timer-chip'];"
+              "(() => { const ids = ['share-btn','downloads-btn','extensions-btn','vpn-chip','timer-chip'];"
               + " return JSON.stringify(ids.map((id) => { const el = document.getElementById(id);"
               + " return id + '=' + (el ? (getComputedStyle(el).webkitAppRegion || 'none') : 'нет'); })); })()",
             );
@@ -2978,12 +2908,11 @@ if (!gotLock) {
     quitting = true;
     event.preventDefault();
     (async () => {
-      // Страховка: если Xray или OpenCode зависнут, приложение всё равно
+      // Страховка: если Xray зависнет, приложение всё равно
       // должно завершиться, а не остаться висеть в фоне.
       const force = setTimeout(() => app.exit(0), 4000);
       try {
         await vpn.shutdown();
-        if (openCodeService) openCodeService.stop();
         if (playerService) playerService.flush();
         if (torrentService) await torrentService.stopAll();
         if (rssService) rssService.stop();
@@ -3005,4 +2934,4 @@ if (!gotLock) {
 }
 
 // Экспорт для тестов и встраивания.
-module.exports = { ctx, createWindow, get settings() { return settings; }, get bookmarks() { return bookmarks; }, get passwords() { return passwords; }, get media() { return mediaManager; }, get opencode() { return openCodeService; } };
+module.exports = { ctx, createWindow, get settings() { return settings; }, get bookmarks() { return bookmarks; }, get passwords() { return passwords; }, get media() { return mediaManager; } };

@@ -68,8 +68,6 @@ const DEFAULTS = {
   holidayBaseAppearance: '',
   // Где показывать мини-плеер: сверху (под панелью) или снизу окна.
   mediaBarPosition: 'top',
-  // Полупрозрачные панели с размытием фона (Liquid Glass) на macOS.
-  liquidGlass: true,
 
   // RSS-ленты
   rssEnabled: false,
@@ -91,6 +89,8 @@ const DEFAULTS = {
 
   // Медиа
   mediaAutoDetect: true,
+  // Системное уведомление при начале новой композиции.
+  trackNotify: true,
 
   // BitTorrent (встроенный клиент)
   torrentDir: '',
@@ -102,9 +102,6 @@ const DEFAULTS = {
   torrentSeedRatio: 2,
   torrentResumeOnStart: true,
   torrentStartPaused: false,
-
-  // OpenCode
-  opencodeDirectory: '',
 
   // VPN
   vpnAutoConnect: false,

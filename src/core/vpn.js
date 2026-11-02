@@ -749,6 +749,10 @@ class VpnManager extends EventEmitter {
 
       proc = spawn(this.xrayExe, ['run', '-c', configPath], {
         cwd: this.xrayDir,
+        // Xray ищет geoip.dat/geosite.dat рядом со своим исполняемым файлом,
+        // а не в cwd. Явно указываем папку ассетов, чтобы правило geoip:private
+        // и geosite-фильтры всегда находили базы данных.
+        env: { ...process.env, XRAY_LOCATION_ASSET: this.xrayDir },
         windowsHide: true,
         stdio: ['ignore', 'pipe', 'pipe'],
       });
@@ -771,9 +775,21 @@ class VpnManager extends EventEmitter {
         }
       });
 
+      let xrayOutput = '';
+      let exitCode = null;
+      let exitSignal = null;
+      proc.once('exit', (code, signal) => {
+        exitCode = code;
+        exitSignal = signal;
+      });
+
       const exited = new Promise((_, reject) => {
-        proc.once('exit', (code, signal) => {
-          reject(new Error(`Xray завершился (код ${code ?? signal ?? '?'})`));
+        // Ждём 'close', а не 'exit': к этому моменту stdout/stderr уже вычитаны,
+        // поэтому в ошибку попадает реальный вывод Xray («failed to load config…»),
+        // а не только «код 23».
+        proc.once('close', () => {
+          const out = xrayOutput.trim();
+          reject(new Error(`Xray завершился (код ${exitCode ?? exitSignal ?? '?'})${out ? '\n' + out : ''}`));
         });
         proc.once('error', (err) => {
           reject(new Error(`Не удалось запустить Xray: ${err.message}`));
@@ -781,8 +797,8 @@ class VpnManager extends EventEmitter {
       });
       exited.catch(() => {});
 
-      proc.stdout.on('data', (d) => this._log(d));
-      proc.stderr.on('data', (d) => this._log(d));
+      proc.stdout.on('data', (d) => { xrayOutput += d; this._log(d); });
+      proc.stderr.on('data', (d) => { xrayOutput += d; this._log(d); });
 
       await Promise.race([waitPort(ports.socks, 12000), exited]);
 
@@ -796,6 +812,12 @@ class VpnManager extends EventEmitter {
       return this.status();
     } catch (err) {
       let message = err.message;
+      // Если причина ещё не содержит вывод Xray (например, таймаут waitPort),
+      // добавим последние строки журнала — иначе пользователь видит только «код 23».
+      if (!/Xray [0-9]/.test(message)) {
+        const tail = this.logs.slice(-6).join(' | ');
+        if (tail) message += ` · ${tail}`;
+      }
       if (process.platform === 'darwin') {
         message += ' · Проверьте, что resources/xray/xray собран для arm64, имеет права на запуск и не заблокирован карантином (xattr -dr com.apple.quarantine /Applications/ArchBrowser.app).';
       }

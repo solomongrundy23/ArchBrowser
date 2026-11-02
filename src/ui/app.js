@@ -358,18 +358,18 @@ document.addEventListener('DOMContentLoaded', () => {
         right: 0,
         bottom: 0,
       };
-      if (fullscreen) {
-        // В fullscreen вкладки всегда сверху, панели не скрываются.
-        // Резервируем место только под видимый нижний пульт.
-        if (mediaBar && !mediaBar.classList.contains('hidden')) {
-          rect.bottom = Math.round(mediaBar.getBoundingClientRect().height || 44);
-        }
-      } else if (position === 'left') {
+      if (position === 'left') {
         rect.left = tabstripRect.width;
       } else if (position === 'right') {
         rect.right = tabstripRect.width;
       } else if (position === 'bottom') {
         rect.bottom = tabstripRect.height;
+      }
+      if (fullscreen) {
+        // В полноэкранном режиме нижний пульт тоже резервирует место.
+        if (mediaBar && !mediaBar.classList.contains('hidden')) {
+          rect.bottom = Math.max(rect.bottom, Math.round(mediaBar.getBoundingClientRect().height || 44));
+        }
       }
       // Пульт снизу — отдельный фиксированный слой поверх страницы.
       const mediaBottom = document.body.classList.contains('media-bar-bottom') &&
@@ -435,9 +435,6 @@ function onState(data) {
   // Скрытая панель кнопок справа от адресной строки.
   const compactToolbar = !!(data.settings && data.settings.compactToolbar);
   document.body.classList.toggle('toolbar-collapsed', compactToolbar);
-  const glassOn = IS_MAC && !!(data.settings && data.settings.liquidGlass !== false);
-  document.documentElement.classList.toggle('liquid-glass', glassOn);
-  document.body.classList.toggle('liquid-glass', glassOn);
   const collapseBtn = $('#toolbar-collapse');
   const expandBtn = $('#toolbar-expand');
   if (collapseBtn) collapseBtn.classList.toggle('hidden', compactToolbar);
@@ -450,15 +447,6 @@ function onState(data) {
   for (const [selector, shown] of featureButtons) {
     const btn = $(selector);
     if (btn) btn.classList.toggle('hidden', !shown);
-  }
-  const ocBtn = $('#opencode-btn');
-  if (ocBtn) {
-    // Без установленного CLI кнопка только вводила бы в заблуждение.
-    ocBtn.classList.toggle('hidden', data.opencodeAvailable === false);
-    ocBtn.classList.toggle('active', !!data.opencodeOpen);
-    ocBtn.title = data.opencodeOpen
-      ? 'Закрыть OpenCode'
-      : 'OpenCode — ИИ-агент в браузере';
   }
   scheduleChromeLayout();
 
@@ -619,7 +607,10 @@ function renderTabs() {
       if (index !== splitIndex) return;
       splitPlaced = true;
       entries.push({
-        id: `split:${leftTab.id}:${rightTab.id}`,
+        // Стабильный id, а не составной: при замене половины разделённого
+        // экрана вкладка переиспользуется, а не пересоздаётся — иначе
+        // анимация «схлопывается» и «раскрывается» заново.
+        id: 'split',
         split: true,
         parts: [leftTab, rightTab],
         partIds: [leftTab.id, rightTab.id],
@@ -721,6 +712,10 @@ function renderTabs() {
         data.activeTabId === entry.parts[0].id || data.activeTabId === entry.parts[1].id);
       el.draggable = false;
       const segs = el.querySelectorAll('.tab-seg');
+      // При переиспользовании вкладки обновляем data-part под новые половины,
+      // иначе клик по половине выбирал бы не ту вкладку.
+      segs[0].dataset.part = entry.partIds[0];
+      segs[1].dataset.part = entry.partIds[1];
       updatePart(segs[0], entry.parts[0], entry.parts[0].id === data.activeTabId);
       updatePart(segs[1], entry.parts[1], entry.parts[1].id === data.activeTabId);
       el.title = entry.parts.map((p) => p.title || hostOf(p.url)).join(' — ');
@@ -762,7 +757,10 @@ function renderTabs() {
       prev = el;
     }
 
-    // Плавно раздвигаем оставшиеся вкладки при открытии/закрытии соседней.
+    // Плавно раздвигаем/сжимаем оставшиеся вкладки при открытии/закрытии соседней.
+    // Анимируем и позицию (translate), и размер (scale): иначе при перераспределении
+    // flex-ширины вкладки «скачут» по ширине. Так же делает Chrome/Firefox — ширина
+    // меняется плавно, а не мгновенно.
     for (const entry of entries) {
       const el = S.tabEls.get(entry.id);
       const old = before.get(entry.id);
@@ -770,9 +768,14 @@ function renderTabs() {
       const now = el.getBoundingClientRect();
       const dx = old.left - now.left;
       const dy = old.top - now.top;
-      if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+      const sx = now.width > 1 ? old.width / now.width : 1;
+      const sy = now.height > 1 ? old.height / now.height : 1;
+      if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5 || Math.abs(sx - 1) > 0.02 || Math.abs(sy - 1) > 0.02) {
         el.animate(
-          [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'translate(0, 0)' }],
+          [
+            { transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`, transformOrigin: '0 0' },
+            { transform: 'translate(0, 0) scale(1, 1)', transformOrigin: '0 0' },
+          ],
           { duration: 210, easing: 'cubic-bezier(.2,.8,.2,1)' },
         );
       }
@@ -951,7 +954,6 @@ function menuTemplate() {
     ['downloads', 'Загрузки', 'Ctrl+J', 'download'],
     ...(s.featureLocalPlayer === false ? [] : [['player', 'Плеер', '', 'music']]),
     ...(s.featureBittorrent === false ? [] : [['torrent', 'Загрузки torrent', '', 'torrent']]),
-    ...(S.data && S.data.opencodeAvailable === false ? [] : [['opencode', 'OpenCode', '', 'code']]),
     ['extensions', 'Расширения', '', 'puzzle'],
     ['vpn', 'VPN', '', 'shield'],
     ['telegram', 'Telegram', 'Ctrl+Shift+M', 'telegram'],
@@ -1020,9 +1022,6 @@ async function menuAction(action) {
         break;
       case 'telegram':
         await invoke('telegram:toggle', {});
-        break;
-      case 'opencode':
-        $('#opencode-btn').click();
         break;
       case 'split':
         await invoke('tabs:split-toggle');
@@ -1247,7 +1246,6 @@ function renderSettings(body) {
         ['top', 'Сверху, под адресной строкой'],
         ['bottom', 'Снизу окна'],
       ])}
-      ${IS_MAC ? settingSwitch('liquidGlass', 'Liquid Glass', 'Полупрозрачные панели с нативным размытием фона macOS.') : ''}
       <div class="setting">
         <div class="setting-text">
           <div class="setting-title">${icon('info')} Как выбрать тему</div>
@@ -1285,6 +1283,7 @@ function renderSettings(body) {
       ${settingSwitch('featureTimerPresets', 'Пресеты таймера', 'Показывать на новой вкладке готовые пресеты 10, 45 и 60 минут.')}
       ${settingSwitch('featureLocalPlayer', 'Локальный плеер', 'Встроенный проигрыватель аудиофайлов с компьютера.')}
       ${settingSwitch('featureMediaController', 'Пульт медиа', 'Панель управления воспроизведением в панели инструментов.')}
+      ${settingSwitch('trackNotify', 'Уведомление о композиции', 'Показывать системное уведомление при начале новой композиции.')}
       ${settingSwitch('featureBittorrent', 'BitTorrent-клиент', 'Скачивание .torrent и magnet-ссылок.')}
       ${settingSwitch('featureNotifications', 'Всплывающие сообщения', 'Разрешить сайтам показывать уведомления (список сайтов — ниже).')}
     </div>
@@ -1347,29 +1346,6 @@ function renderSettings(body) {
         </div>
         <div class="setting-control">
           <button class="btn" data-action="downloads-panel">${icon('download')} Открыть</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-label">OpenCode</div>
-    <div class="card">
-      ${S.data.opencodeAvailable === false ? `<div class="info-box warn">${icon('alert')}<div>OpenCode CLI не найден. Установите настольное приложение OpenCode или CLI — без него ИИ-агент недоступен. На запуск браузера это не влияет.</div></div>` : ''}
-      <div class="setting">
-        <div class="setting-text">
-          <div class="setting-title">${icon('code')} ИИ-агент OpenCode</div>
-          <div class="setting-desc">Веб-интерфейс OpenCode открывается прямо в браузере. Укажите папку проекта — агент будет работать с ней.</div>
-        </div>
-        <div class="setting-control">
-          <button class="btn" data-action="opencode-dir">${icon('folder')} Выбрать папку</button>
-        </div>
-      </div>
-      <div class="setting">
-        <div class="setting-text">
-          <div class="setting-title">Папка проекта</div>
-          <div class="setting-desc" id="opencode-dir-value">${esc(s.opencodeDirectory || 'Не выбрана — используется текущая папка')}</div>
-        </div>
-        <div class="setting-control">
-          <button class="btn primary" data-action="opencode-open">${icon('code')} Открыть OpenCode</button>
         </div>
       </div>
     </div>
@@ -1500,25 +1476,6 @@ function renderSettings(body) {
   $('[data-action="telegram-proxies"]', body)?.addEventListener('click', () => importTelegramProxies());
   $('[data-action="telegram-copy"]', body)?.addEventListener('click', () => copyTelegramProxies());
   $('[data-action="import-open"]', body)?.addEventListener('click', () => openImportModal());
-  $('[data-action="opencode-dir"]', body)?.addEventListener('click', async () => {
-    const res = await invoke('opencode:pick-directory');
-    if (res && res.canceled) return;
-    toast(`Папка проекта: ${res.directory}`);
-    await refreshState();
-  });
-  $('[data-action="opencode-open"]', body)?.addEventListener('click', async () => {
-    const btn = $('[data-action="opencode-open"]', body);
-    if (btn) btn.disabled = true;
-    try {
-      toast('Запускаем OpenCode…');
-      await invoke('opencode:start', {});
-      toast('OpenCode готов');
-    } catch (err) {
-      toast(cleanError(err), 'error');
-    } finally {
-      if (btn) btn.disabled = false;
-    }
-  });
   $('[data-action="password-master"]', body)?.addEventListener('click', async () => {
     await setupMasterPassword(body);
   });
@@ -2085,12 +2042,6 @@ async function applySetting(key, value) {
       if (collapse) collapse.classList.toggle('hidden', compact);
       if (expand) expand.classList.toggle('hidden', !compact);
       scheduleChromeLayout();
-    }
-    if (key === 'liquidGlass') {
-      const glassOn = IS_MAC && !!value;
-      document.documentElement.classList.toggle('liquid-glass', glassOn);
-      document.body.classList.toggle('liquid-glass', glassOn);
-      invoke('window:set-glass', { enabled: !!value }).catch(() => {});
     }
     if (key === 'downloadDir') {
       const label = document.getElementById('download-dir-value');
@@ -3656,6 +3607,19 @@ function playTrack(track, { remember = true } = {}) {
     playerHandleMissing();
   });
   if (remember) invoke('player:remember', { id: track.id }).catch(() => {});
+  // Системное уведомление о новой композиции (включается в настройках).
+  invoke('player:notify-track', {
+    title: track.name || 'Новая композиция',
+    body: track.folder || 'Локальный плеер',
+  }).catch(() => {});
+  // Подгружаем теги (artist/title), чтобы мини-плеер показал «Artist - Title».
+  invoke('player:metadata', { id: track.id }).then((meta) => {
+    if (!meta || !PLAYER.current || PLAYER.current.id !== track.id) return;
+    track.artist = meta.artist || '';
+    track.title = meta.title || '';
+    updateMediaBar();
+    updatePlayerPanel();
+  }).catch(() => {});
   updateMediaBar();
   updatePlayerPanel();
 }
@@ -3783,6 +3747,21 @@ function notifyMediaBarVisibility(visible) {
   invoke('ui:media-bar', { visible: next }).catch(() => {});
 }
 
+// Формат отображения в мини-плеере: «Artist - Title». Если оба тега пустые —
+// название файла без расширения; пустой artist → «Неизвестный»; пустой title →
+// название файла без расширения.
+function mediaTrackLabel(artist, title, filename) {
+  const a = String(artist || '').trim();
+  const t = String(title || '').trim();
+  const f = String(filename || '').trim();
+  if (!a && !t) return f || 'Медиа на странице';
+  return `${a || 'Неизвестный'} - ${t || f || 'Медиа на странице'}`;
+}
+
+function stripExt(name) {
+  return String(name || '').replace(/\.[^.]+$/, '');
+}
+
 function updateMediaBar() {
   const bar = $('#media-bar');
   if (!bar) return;
@@ -3798,15 +3777,14 @@ function updateMediaBar() {
   }
   bar.classList.remove('hidden');
   notifyMediaBarVisibility(true);
-  const title = local ? PLAYER.current.name : (page.title || 'Медиа на странице');
-  const subtitle = local
-    ? (PLAYER.current.folder || '')
-    : (page.artist || '');
+  const artist = local ? (PLAYER.current.artist || '') : (page.artist || '');
+  const trackTitle = local ? (PLAYER.current.title || '') : (page.title || '');
+  const filename = local ? stripExt(PLAYER.current.name) : '';
   const playing = local ? !!(el && !el.paused) : !!page.playing;
   const position = local ? (el ? el.currentTime : 0) : (page.position || 0);
   const duration = local ? (el ? el.duration : 0) : (page.duration || 0);
   const titleEl = $('#media-bar-title');
-  const titleText = subtitle ? `${title} · ${subtitle}` : title;
+  const titleText = mediaTrackLabel(artist, trackTitle, filename);
   if (titleEl.textContent !== titleText) titleEl.textContent = titleText;
   const timeText = duration
     ? `${formatTime(position)} / ${formatTime(duration)}`
@@ -4178,6 +4156,17 @@ let bookmarkBarSignature = '';
 let bookmarkBarLastTree = { folders: [], bookmarks: [] };
 let bookmarkBarHovered = false;
 let bookmarkBarPending = false;
+let faviconCache = null;
+
+// Иконка закладки: favicon сайта, если он известен, иначе значок закладки.
+function bookmarkIcon(url) {
+  try {
+    const host = new URL(url).hostname;
+    const src = faviconCache ? faviconCache[host] : '';
+    if (src) return `<img class="bb-favicon" src="${esc(src)}" alt="" loading="lazy">`;
+  } catch {}
+  return icon('bookmark');
+}
 
 // Кнопка «…» появляется только если закладки не помещаются в панель.
 // Место под неё зарезервировано всегда (см. CSS), поэтому ширина списка не
@@ -4230,6 +4219,9 @@ async function renderBookmarksBar(force = false) {
     bookmarkBarPending = false;
     return;
   }
+  if (!faviconCache) {
+    try { faviconCache = await invoke('favicons:get') || {}; } catch { faviconCache = {}; }
+  }
   let tree = { folders: [], bookmarks: [] };
   try {
     tree = await invoke('bookmarks:tree');
@@ -4265,7 +4257,7 @@ async function renderBookmarksBar(force = false) {
       ${tree.folders.map(folderHtml).join('')}
       ${tree.bookmarks.map((b) => `
         <span class="bb-item" data-bb-url="${esc(b.url)}" data-bb-id="${esc(b.id)}" title="${esc(b.url)}">
-          ${icon('bookmark')}<span>${esc(b.title || b.url)}</span>
+          ${bookmarkIcon(b.url)}<span>${esc(b.title || b.url)}</span>
         </span>`).join('')}
       ${tree.folders.length || tree.bookmarks.length ? '' : '<span class="bb-empty-bar">Закладок пока нет</span>'}
     </div>
@@ -4377,6 +4369,13 @@ async function renderBookmarksBar(force = false) {
         renderBookmarksBar(true);
       }
     });
+    // Если favicon не загрузился — заменяем его значком закладки.
+    bar.addEventListener('error', (event) => {
+      const img = event.target;
+      if (img && img.classList && img.classList.contains('bb-favicon')) {
+        img.outerHTML = icon('bookmark');
+      }
+    }, true);
     window.addEventListener('resize', () => {
       updateBookmarkOverflow();
     });
@@ -4737,9 +4736,6 @@ function onCommand(command) {
       PLAYER.scan = command.payload || null;
       updatePlayerScan();
       break;
-    case 'opencode-toggle':
-      $('#opencode-btn').click();
-      break;
     case 'reader-toggle':
       $('#reader-btn').click();
       break;
@@ -4869,8 +4865,8 @@ function bindChrome() {
     const tabEl = event.target.closest('.tab');
     if (!tabEl) return;
     event.preventDefault();
-    // У разделённого экрана в data-id составной идентификатор
-    // «split:<левая>:<правая>», которого нет в списке вкладок. Меню строим
+    // У разделённого экрана data-id равен 'split' (которого нет в списке
+    // вкладок), а реальные половины лежат в data-split-ids. Меню строим
     // по той половине, на которой нажали.
     const splitIds = (tabEl.dataset.splitIds || '').split(',').filter(Boolean);
     const seg = event.target.closest('.tab-seg');
@@ -4894,7 +4890,15 @@ function bindChrome() {
       renderTabs();
       return;
     }
-    const ids = $$('.tab:not(.tab-closing)', container).map((el) => el.dataset.id);
+    // Разделённый экран — это одна вкладка в DOM, но две вкладки в списке
+    // главного процесса. Разворачиваем её обратно в два id, иначе длина списка
+    // не сойдётся и порядок молча не применится.
+    const ids = [];
+    for (const el of $$('.tab:not(.tab-closing)', container)) {
+      const splitIds = (el.dataset.splitIds || '').split(',').filter(Boolean);
+      if (splitIds.length === 2) ids.push(...splitIds);
+      else ids.push(el.dataset.id);
+    }
     invoke('tabs:reorder', { ids }).catch((e) => toast(cleanError(e), 'error'));
   };
   $('#tabs').addEventListener('dragstart', (event) => {
@@ -5080,24 +5084,6 @@ function bindChrome() {
     if (PLAYER.current && el) {
       el.currentTime = value * duration;
       updatePlayerPanel();
-    }
-  });
-  $('#opencode-btn').addEventListener('click', async () => {
-    const btn = $('#opencode-btn');
-    btn.classList.add('busy');
-    try {
-      const status = await invoke('opencode:status');
-      if (status.state === 'running' && S.data && S.data.opencodeOpen) {
-        await invoke('opencode:toggle');
-        return;
-      }
-      toast('Запускаем OpenCode…');
-      await invoke('opencode:start', {});
-      toast('OpenCode готов');
-    } catch (err) {
-      toast(cleanError(err), 'error');
-    } finally {
-      btn.classList.remove('busy');
     }
   });
   $('#telegram-btn').addEventListener('click', () => {

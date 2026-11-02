@@ -103,8 +103,6 @@ class BrowserWindowController {
     this.chromeHeight = CHROME_BASE;
     this.pageInsets = { top: CHROME_BASE, left: 0, right: 0, bottom: 0 };
     this.timerState = { running: false, left: 0, label: '', alarm: '' };
-    this.opencodeOpen = false;
-    this.opencode = null;
     this.htmlFullscreen = false;
     this.browserFullscreen = false;
     this._fsBarVisible = false;
@@ -149,17 +147,9 @@ class BrowserWindowController {
       process.platform === 'win32' ? 'icon.ico' : 'icon.png',
     );
     const isMac = process.platform === 'darwin';
-    const glass = isMac && this.ctx.settings.get('liquidGlass') !== false;
-    this._glass = glass;
     const macOptions = isMac
       ? {
           titleBarStyle: 'hiddenInset',
-          ...(glass ? {
-            vibrancy: 'under-window',
-            visualEffectState: 'active',
-            transparent: true,
-            backgroundColor: '#00000000',
-          } : {}),
         }
       : {
           titleBarStyle: 'hidden',
@@ -173,7 +163,7 @@ class BrowserWindowController {
       minWidth: 960,
       minHeight: 640,
       show: false,
-      backgroundColor: glass ? '#00000000' : (theme ? theme.background : '#1a1a1a'),
+      backgroundColor: theme ? theme.background : '#1a1a1a',
       title: this.isPrivate ? 'ArchBrowser — Приватное окно' : 'ArchBrowser',
       autoHideMenuBar: true,
       ...macOptions,
@@ -305,6 +295,8 @@ class BrowserWindowController {
       progressTimer: null,
       // Таймер «страница вообще не отвечает».
       loadTimer: null,
+      // Таймер отложенного показа индикатора загрузки (анти-мерцание).
+      loadingTimer: null,
       watchUrl: '',
       errorPage: false,
       proxyRetryUrl: '',
@@ -395,13 +387,19 @@ class BrowserWindowController {
     });
 
     wc.on('did-start-loading', () => {
-      tab.loading = true;
-      if (!tab.errorPage) tab.error = null;
-      if (tab.challengeTimer) {
-        clearTimeout(tab.challengeTimer);
-        tab.challengeTimer = null;
-      }
-      this._scheduleBroadcast();
+      // Индикатор загрузки показываем с задержкой: если страница (или её
+      // фоновые опросы) перезагружается быстрее, спиннер не мерцает.
+      if (tab.loadingTimer) clearTimeout(tab.loadingTimer);
+      tab.loadingTimer = setTimeout(() => {
+        tab.loadingTimer = null;
+        tab.loading = true;
+        if (!tab.errorPage) tab.error = null;
+        if (tab.challengeTimer) {
+          clearTimeout(tab.challengeTimer);
+          tab.challengeTimer = null;
+        }
+        this._scheduleBroadcast();
+      }, 180);
     });
 
     // Главный документ пришёл — страница «ответила», таймаут больше не нужен.
@@ -414,6 +412,7 @@ class BrowserWindowController {
     });
 
     wc.on('did-stop-loading', () => {
+      if (tab.loadingTimer) { clearTimeout(tab.loadingTimer); tab.loadingTimer = null; }
       tab.loading = false;
       this._clearLoadWatch(tab);
       this._finishTabProgress(tab);
@@ -451,6 +450,11 @@ class BrowserWindowController {
     wc.on('page-favicon-updated', (_e, favicons) => {
       if (Array.isArray(favicons) && favicons.length) {
         tab.favicon = favicons[0];
+        // Сохраняем иконку по хосту, чтобы показывать её в панели закладок
+        // и в новых вкладках без повторного визита на сайт.
+        if (tab.url && /^https?:/i.test(tab.url)) {
+          this.ctx.recordFavicon(tab.url, favicons[0]);
+        }
         this._scheduleBroadcast();
       }
     });
@@ -459,6 +463,7 @@ class BrowserWindowController {
       if (!isMainFrame || code === -3) return;
       if (tab.errorPage || String(validatedURL || '').startsWith('arch://error')) return;
       console.error('[tab] load failed:', code, description, validatedURL);
+      if (tab.loadingTimer) { clearTimeout(tab.loadingTimer); tab.loadingTimer = null; }
       tab.loading = false;
       tab.error = `${description || 'Ошибка загрузки'} (${code})`;
       tab.url = validatedURL || tab.url;
@@ -511,6 +516,7 @@ class BrowserWindowController {
     });
 
     wc.on('render-process-gone', (_e, details) => {
+      if (tab.loadingTimer) { clearTimeout(tab.loadingTimer); tab.loadingTimer = null; }
       tab.loading = false;
       tab.error = `Процесс страницы завершился: ${details.reason}`;
       this._clearLoadWatch(tab);
@@ -620,8 +626,15 @@ class BrowserWindowController {
     const tab = this.tabs.get(id);
     if (!tab) return;
     if (this.tabs.size <= 1) {
-      this._window.close();
-      return;
+      // Закрывается последняя вкладка. Если это служебная вкладка (плеер,
+      // настройки, торрент) — не закрываем окно, а открываем стартовую
+      // страницу, иначе после закрытия обычной вкладки браузер бы закрылся.
+      if (tab.service) {
+        this.createTab(this.ctx.settings.get('newTabPage') || 'arch://newtab', { active: false });
+      } else {
+        this._window.close();
+        return;
+      }
     }
     const index = this.order.indexOf(id);
     if (tab.id === this.settingsTabId) this.settingsTabId = null;
@@ -685,6 +698,8 @@ class BrowserWindowController {
   }
 
   _applySplit(leftId, rightId, focusedId = leftId) {
+    // Служебные вкладки показывают панель, а не страницу — разделять их нельзя.
+    if ((this.tabs.get(leftId) || {}).service || (this.tabs.get(rightId) || {}).service) return;
     this.splitLeftId = leftId;
     this.splitRightId = rightId;
     this.activeId = focusedId;
@@ -710,7 +725,9 @@ class BrowserWindowController {
       this._scheduleBroadcast();
       return;
     }
-    const other = this.order.find((id) => id !== this.activeId);
+    // Нельзя разделить экран, если активна служебная вкладка (панель).
+    if ((this.tabs.get(this.activeId) || {}).service) return;
+    const other = this.order.find((id) => id !== this.activeId && !(this.tabs.get(id) || {}).service);
     if (other) {
       this._applySplit(this.activeId, other, this.activeId);
       return;
@@ -730,7 +747,7 @@ class BrowserWindowController {
     const others = this.order
       .filter((id) => id !== this.activeId)
       .map((id) => this.tabs.get(id))
-      .filter(Boolean);
+      .filter((tab) => tab && !tab.service);
     const items = others.map((tab) => ({
       label: tab.title || this._hostOf(tab.url) || tab.url || 'Без названия',
       click: () => this.splitWith(tab.id),
@@ -748,6 +765,9 @@ class BrowserWindowController {
 
   splitWith(id) {
     if (!this.tabs.has(id)) return;
+    // Служебные вкладки (настройки, плеер, VPN и т.п.) показывают панель,
+    // а не страницу — их нельзя объединять в разделённый экран.
+    if ((this.tabs.get(id) || {}).service) return;
     if (this.splitLeftId && this.splitRightId) {
       if (id === this.splitLeftId || id === this.splitRightId) {
         // Повторный выбор уже открытой половины закрывает разделённый экран.
@@ -765,7 +785,7 @@ class BrowserWindowController {
       return;
     }
     if (id === this.activeId) {
-      const other = this.order.find((tabId) => tabId !== this.activeId);
+      const other = this.order.find((tabId) => tabId !== this.activeId && !(this.tabs.get(tabId) || {}).service);
       if (!other) return;
       this._applySplit(this.activeId, other, this.activeId);
       return;
@@ -812,7 +832,7 @@ class BrowserWindowController {
       { type: 'separator' },
       {
         label: splitOpen ? 'Закрыть разделённый экран' : 'Открыть в разделённом экране',
-        enabled: this.order.length > 1 || splitOpen,
+        enabled: !tab.service && (this.order.length > 1 || splitOpen),
         click: () => (splitOpen ? this.toggleSplit() : this.splitWith(id)),
       },
       { type: 'separator' },
@@ -865,10 +885,6 @@ class BrowserWindowController {
         label: 'BitTorrent',
         click: () => this.setUIMode('torrent'),
       }]),
-      ...(this.ctx.opencode && this.ctx.opencode.available() ? [{
-        label: 'OpenCode',
-        click: () => this.sendCommand('opencode-toggle'),
-      }] : []),
       { type: 'separator' },
       { label: 'Разделить экран…', accelerator: 'CmdOrCtrl+Shift+E', click: () => this.popupSplitMenu() },
       { label: 'Поделиться страницей…', click: () => this.shareCurrentTab() },
@@ -1324,25 +1340,19 @@ class BrowserWindowController {
   selectTab(id, { keepPanel = false } = {}) {
     if (!this.tabs.has(id)) return;
     const targetTab = this.tabs.get(id);
-    if (targetTab.service && this.splitLeftId && this.splitRightId) {
-      this.splitLeftId = null;
-      this.splitRightId = null;
-      this.splitId = null;
-    }
     if (this.splitLeftId && this.splitRightId) {
       if (id === this.splitLeftId || id === this.splitRightId) {
-        // Клик по видимой половине только переносит фокус.
+        // Клик по видимой половине только переносит фокус, разделённый
+        // экран остаётся.
         this.activeId = id;
         this.splitId = id === this.splitLeftId ? this.splitRightId : this.splitLeftId;
-      } else if (this.activeId === this.splitLeftId) {
-        // Новая вкладка заменяет ту половину, которая сейчас в фокусе.
-        this.splitLeftId = id;
-        this.activeId = id;
-        this.splitId = this.splitRightId;
       } else {
-        this.splitRightId = id;
+        // Клик по другой вкладке выходит из разделённого экрана (как в Chrome):
+        // половины НЕ заменяются, выбранная вкладка открывается во весь экран.
+        this.splitLeftId = null;
+        this.splitRightId = null;
+        this.splitId = null;
         this.activeId = id;
-        this.splitId = this.splitLeftId;
       }
     } else {
       this.activeId = id;
@@ -1798,8 +1808,7 @@ class BrowserWindowController {
     const contentWidth = Math.max(0, width - left - insets.right);
     const contentHeight = Math.max(0, height - top - insets.bottom);
     const panelWidth = this._telegramVisibleWidth();
-    const ocVisible = !!(this.opencode && this.opencodeOpen && !this.htmlFullscreen && !this.browserFullscreen && !this.bootOverlay);
-    const pageWidth = ocVisible ? 0 : Math.max(0, contentWidth - panelWidth);
+    const pageWidth = Math.max(0, contentWidth - panelWidth);
     const split = !!(this.splitLeftId && this.splitRightId &&
       this.tabs.has(this.splitLeftId) && this.tabs.has(this.splitRightId));
     const gap = 4;
@@ -1826,21 +1835,9 @@ class BrowserWindowController {
         // настроек (или другой раздел), она не должна закрывать её собой.
         this._attachView(
           tab.view,
-          !ocVisible && this.uiMode === 'web' && !this.bootOverlay &&
+          this.uiMode === 'web' && !this.bootOverlay &&
             (id === this.activeId || id === this.splitLeftId || id === this.splitRightId),
         );
-      } catch {}
-    }
-
-    if (this.opencode) {
-      try {
-        this.opencode.view.setBounds({
-          x: left,
-          y: top,
-          width: ocVisible ? contentWidth : 0,
-          height: contentHeight,
-        });
-        this._attachView(this.opencode.view, ocVisible);
       } catch {}
     }
 
@@ -1885,7 +1882,7 @@ class BrowserWindowController {
         } catch {}
       }
       try {
-        this._window.setBackgroundColor(this._glass ? '#00000000' : theme.background);
+        this._window.setBackgroundColor(theme.background);
       } catch {}
     }
     for (const tab of this.tabs.values()) {
@@ -1893,20 +1890,6 @@ class BrowserWindowController {
         tab.wc.send('arch-theme', theme);
       } catch {}
     }
-  }
-
-  // Liquid Glass на macOS: нативное размытие фона под полупрозрачными
-  // панелями. На других платформах ничего не делает.
-  setLiquidGlass(on) {
-    if (process.platform !== 'darwin' || !this._window || this._window.isDestroyed()) return;
-    this._glass = !!on;
-    try {
-      this._window.setVibrancy(this._glass ? 'under-window' : null);
-    } catch {}
-    try {
-      const theme = this.ctx.theme ? this.ctx.theme() : null;
-      this._window.setBackgroundColor(this._glass ? '#00000000' : (theme ? theme.background : '#1a1a1a'));
-    } catch {}
   }
 
   // Сообщение только страницам новой вкладки (arch://newtab).
@@ -2158,135 +2141,6 @@ class BrowserWindowController {
     }
 
     Menu.buildFromTemplate(items).popup({ window: this._window });
-  }
-
-  // ---------------- OpenCode ----------------
-
-  _createOpenCode() {
-    if (this.opencode) return;
-    const view = new WebContentsView({
-      webPreferences: {
-        contextIsolation: true,
-        nodeIntegration: false,
-        sandbox: true,
-        session: this.ses,
-        spellcheck: false,
-        backgroundThrottling: false,
-      },
-    });
-    const wc = view.webContents;
-    this.opencode = { view, wc, ready: false };
-    this._attachView(view, false);
-    wc.setWindowOpenHandler(({ url }) => {
-      if (/^https?:/i.test(url)) this.createTab(url, { active: true });
-      return { action: 'deny' };
-    });
-  }
-
-  // Веб-интерфейс OpenCode показывает предупреждение о незащищённом
-  // http-соединении. Сервер локальный, поэтому предупреждение лишнее.
-  _hideOpenCodeWarning() {
-    const wc = this.opencode && this.opencode.wc;
-    if (!wc || wc.isDestroyed()) return;
-    wc.executeJavaScript(`
-      (() => {
-        if (window.__archNoInsecureWarning) return;
-        window.__archNoInsecureWarning = true;
-        const hide = () => {
-          const nodes = document.querySelectorAll('body *');
-          for (const el of nodes) {
-            if (el.children.length) continue;
-            const text = (el.textContent || '');
-            if (!/not loaded over HTTPS|may not be secure/i.test(text)) continue;
-            let node = el;
-            for (let i = 0; i < 5 && node.parentElement && node.parentElement !== document.body; i++) {
-              node = node.parentElement;
-            }
-            node.style.setProperty('display', 'none', 'important');
-          }
-        };
-        hide();
-        try {
-          new MutationObserver(hide).observe(document.documentElement, {
-            childList: true, subtree: true, characterData: true,
-          });
-        } catch (e) {}
-      })()
-    `).catch(() => {});
-  }
-
-  // Открывает веб-интерфейс OpenCode и выполняет вход по коду подключения.
-  async loadOpenCode(url, pairLink) {
-    this._createOpenCode();
-    const wc = this.opencode.wc;
-    try {
-      await wc.loadURL(`${url}/`);
-    } catch (err) {
-      console.error('[opencode] load failed:', err.message);
-      return false;
-    }
-    this._hideOpenCodeWarning();
-    // Веб-интерфейс просит вставить ссылку подключения — делаем это за него.
-    for (let attempt = 0; attempt < 30; attempt++) {
-      await new Promise((r) => setTimeout(r, 400));
-      try {
-        const done = await wc.executeJavaScript(`
-          (() => {
-            const input = document.getElementById('server-connect-link')
-              || document.querySelector('input[name="link"]');
-            if (!input) return false;
-            const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
-            setter.call(input, ${JSON.stringify(pairLink)});
-            input.dispatchEvent(new Event('input', { bubbles: true }));
-            const form = input.closest('form');
-            if (form) { form.requestSubmit ? form.requestSubmit() : form.submit(); return true; }
-            const button = [...document.querySelectorAll('button')]
-              .find((b) => /connect|подключ/i.test(b.innerText || ''));
-            if (button) { button.click(); return true; }
-            return false;
-          })()
-        `);
-        if (done) {
-          this.opencode.ready = true;
-          this._hideOpenCodeWarning();
-          return true;
-        }
-      } catch {}
-    }
-    return false;
-  }
-
-  openOpenCode() {
-    this._createOpenCode();
-    this.opencodeOpen = true;
-    this.uiMode = 'web';
-    this.sendCommand('close-dock');
-    this._updateVisibility();
-    this.layout();
-    this._scheduleBroadcast();
-    setTimeout(() => {
-      if (this.opencode && !this.opencode.wc.isDestroyed()) this.opencode.wc.focus();
-    }, 250);
-  }
-
-  closeOpenCode() {
-    if (!this.opencodeOpen) return;
-    this.opencodeOpen = false;
-    if (this.opencode) this._attachView(this.opencode.view, false);
-    this._updateVisibility();
-    this.layout();
-    const tab = this.tabs.get(this.activeId);
-    if (tab) {
-      try {
-        tab.wc.focus();
-      } catch {}
-    }
-    this._scheduleBroadcast();
-  }
-
-  toggleOpenCode() {
-    if (this.opencodeOpen) this.closeOpenCode();
-    else this.openOpenCode();
   }
 
   // ---------------- Подсказки адресной строки ----------------
@@ -2553,8 +2407,6 @@ class BrowserWindowController {
       })(),
       vpn,
       timer: this.timerState,
-      opencodeOpen: this.opencodeOpen,
-      opencodeAvailable: !!(this.ctx.opencode && this.ctx.opencode.available()),
       player: {
         page: this.ctx.playerService ? this.ctx.playerService.pageState : { active: false },
       },
