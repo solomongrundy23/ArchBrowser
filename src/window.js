@@ -87,9 +87,6 @@ class BrowserWindowController {
     this.tabs = new Map();
     this.order = [];
     this.activeId = null;
-    this.splitId = null;
-    this.splitLeftId = null;
-    this.splitRightId = null;
     this.uiMode = 'web';
     this.settingsTabId = null;
     this.playerTabId = null;
@@ -307,7 +304,7 @@ class BrowserWindowController {
     };
     this.tabs.set(id, tab);
     this.order.push(id);
-    this._attachView(view, !this.bootOverlay && this.uiMode === 'web' && (active || this.splitId === id));
+    this._attachView(view, !this.bootOverlay && this.uiMode === 'web' && active);
 
     try {
       wc.setWebRTCIPHandlingPolicy(
@@ -549,18 +546,6 @@ class BrowserWindowController {
 
     wc.on('context-menu', (_e, params) => this._showContextMenu(tab, params));
 
-    // В разделённом экране фокус переключает активную половину, но сами
-    // половины остаются на своих местах: левая не должна перескакивать вправо.
-    wc.on('focus', () => {
-      if (!this.splitLeftId || !this.splitRightId) return;
-      if (id !== this.splitLeftId && id !== this.splitRightId) return;
-      if (this.activeId === id) return;
-      this.activeId = id;
-      this.splitId = id === this.splitLeftId ? this.splitRightId : this.splitLeftId;
-      this._setWindowTitle();
-      this._scheduleBroadcast();
-    });
-
     wc.on('found-in-page', (_e, result) => {
       if (this._window && !this._window.isDestroyed()) {
         this._window.webContents.send('find-result', {
@@ -640,16 +625,9 @@ class BrowserWindowController {
     if (tab.id === this.settingsTabId) this.settingsTabId = null;
     if (tab.id === this.playerTabId) this.playerTabId = null;
     if (tab.id === this.torrentTabId) this.torrentTabId = null;
-    const inSplit = this.splitLeftId === id || this.splitRightId === id;
     let promote = null;
 
-    if (inSplit) {
-      const other = id === this.splitLeftId ? this.splitRightId : this.splitLeftId;
-      this.splitLeftId = null;
-      this.splitRightId = null;
-      this.splitId = null;
-      if (this.activeId === id) promote = other;
-    } else if (this.activeId === id) {
+    if (this.activeId === id) {
       promote = this.order[Math.min(index, this.order.length - 1)];
     }
 
@@ -697,109 +675,12 @@ class BrowserWindowController {
     this._scheduleBroadcast();
   }
 
-  _applySplit(leftId, rightId, focusedId = leftId) {
-    // Служебные вкладки показывают панель, а не страницу — разделять их нельзя.
-    if ((this.tabs.get(leftId) || {}).service || (this.tabs.get(rightId) || {}).service) return;
-    this.splitLeftId = leftId;
-    this.splitRightId = rightId;
-    this.activeId = focusedId;
-    this.splitId = focusedId === leftId ? rightId : leftId;
-    this.uiMode = 'web';
-    this._updateVisibility();
-    this.layout();
-    this._setWindowTitle();
-    this._scheduleBroadcast();
-    try {
-      this.tabs.get(focusedId).wc.focus();
-    } catch {}
-  }
-
-  toggleSplit() {
-    if (this.splitLeftId && this.splitRightId) {
-      this.splitLeftId = null;
-      this.splitRightId = null;
-      this.splitId = null;
-      this.uiMode = 'web';
-      this._updateVisibility();
-      this.layout();
-      this._scheduleBroadcast();
-      return;
-    }
-    // Нельзя разделить экран, если активна служебная вкладка (панель).
-    if ((this.tabs.get(this.activeId) || {}).service) return;
-    const other = this.order.find((id) => id !== this.activeId && !(this.tabs.get(id) || {}).service);
-    if (other) {
-      this._applySplit(this.activeId, other, this.activeId);
-      return;
-    }
-    const created = this.createTab(this.ctx.settings.get('newTabPage') || 'arch://newtab', { active: false });
-    if (created) this._applySplit(this.activeId, created.id, this.activeId);
-  }
-
-  // Кнопка разделённого экрана сначала спрашивает, какую вкладку открыть
-  // справа (как в Chrome), и только потом делит окно.
-  popupSplitMenu() {
-    if (!this._window || this._window.isDestroyed()) return;
-    if (this.splitLeftId && this.splitRightId) {
-      this.toggleSplit();
-      return;
-    }
-    const others = this.order
-      .filter((id) => id !== this.activeId)
-      .map((id) => this.tabs.get(id))
-      .filter((tab) => tab && !tab.service);
-    const items = others.map((tab) => ({
-      label: tab.title || this._hostOf(tab.url) || tab.url || 'Без названия',
-      click: () => this.splitWith(tab.id),
-    }));
-    if (items.length) items.push({ type: 'separator' });
-    items.push({
-      label: 'Новая вкладка справа',
-      click: () => {
-        const created = this.createTab(this.ctx.settings.get('newTabPage') || 'arch://newtab', { active: false });
-        if (created) this._applySplit(this.activeId, created.id, this.activeId);
-      },
-    });
-    Menu.buildFromTemplate(items).popup({ window: this._window });
-  }
-
-  splitWith(id) {
-    if (!this.tabs.has(id)) return;
-    // Служебные вкладки (настройки, плеер, VPN и т.п.) показывают панель,
-    // а не страницу — их нельзя объединять в разделённый экран.
-    if ((this.tabs.get(id) || {}).service) return;
-    if (this.splitLeftId && this.splitRightId) {
-      if (id === this.splitLeftId || id === this.splitRightId) {
-        // Повторный выбор уже открытой половины закрывает разделённый экран.
-        this.splitLeftId = null;
-        this.splitRightId = null;
-        this.splitId = null;
-        this._updateVisibility();
-        this.layout();
-        this._scheduleBroadcast();
-        return;
-      }
-      // Заменяем только активную половину, вторая остаётся на месте.
-      if (this.activeId === this.splitLeftId) this._applySplit(id, this.splitRightId, id);
-      else this._applySplit(this.splitLeftId, id, id);
-      return;
-    }
-    if (id === this.activeId) {
-      const other = this.order.find((tabId) => tabId !== this.activeId && !(this.tabs.get(tabId) || {}).service);
-      if (!other) return;
-      this._applySplit(this.activeId, other, this.activeId);
-      return;
-    }
-    this._applySplit(this.activeId, id, this.activeId);
-  }
-
   _showTabContextMenu(id) {
     const tab = this.tabs.get(id);
     if (!tab || !this._window || this._window.isDestroyed()) return;
     const index = this.order.indexOf(id);
     const canCloseRight = index >= 0 && index < this.order.length - 1;
     const canCloseOthers = this.order.length > 1;
-    const splitOpen = this.splitLeftId === id || this.splitRightId === id;
     const items = [
       {
         label: 'Новая вкладка',
@@ -831,12 +712,6 @@ class BrowserWindowController {
       },
       { type: 'separator' },
       {
-        label: splitOpen ? 'Закрыть разделённый экран' : 'Открыть в разделённом экране',
-        enabled: !tab.service && (this.order.length > 1 || splitOpen),
-        click: () => (splitOpen ? this.toggleSplit() : this.splitWith(id)),
-      },
-      { type: 'separator' },
-      {
         label: 'Закрыть вкладку',
         accelerator: 'Ctrl+W',
         click: () => this.closeTab(id),
@@ -856,7 +731,7 @@ class BrowserWindowController {
   }
 
   // Главное меню рисуем нативным popup: DOM-док оказывается под
-  // WebContentsView при вертикальных/нижних вкладках и разделённом экране.
+  // WebContentsView при вертикальных/нижних вкладках.
   popupMainMenu() {
     if (!this._window || this._window.isDestroyed()) return;
     const items = [
@@ -886,7 +761,6 @@ class BrowserWindowController {
         click: () => this.setUIMode('torrent'),
       }]),
       { type: 'separator' },
-      { label: 'Разделить экран…', accelerator: 'CmdOrCtrl+Shift+E', click: () => this.popupSplitMenu() },
       { label: 'Поделиться страницей…', click: () => this.shareCurrentTab() },
       { label: 'Таймер и будильник…', click: () => this.createTab('arch://newtab') },
       { label: 'Полный экран', accelerator: 'F11', click: () => this.toggleBrowserFullscreen() },
@@ -941,10 +815,6 @@ class BrowserWindowController {
       {
         label: 'Новая вкладка',
         click: () => this.createTab(this.ctx.settings.get('newTabPage') || 'arch://newtab'),
-      },
-      {
-        label: 'Разделить экран…',
-        click: () => this.popupSplitMenu(),
       },
       { type: 'separator' },
       {
@@ -1340,23 +1210,7 @@ class BrowserWindowController {
   selectTab(id, { keepPanel = false } = {}) {
     if (!this.tabs.has(id)) return;
     const targetTab = this.tabs.get(id);
-    if (this.splitLeftId && this.splitRightId) {
-      if (id === this.splitLeftId || id === this.splitRightId) {
-        // Клик по видимой половине только переносит фокус, разделённый
-        // экран остаётся.
-        this.activeId = id;
-        this.splitId = id === this.splitLeftId ? this.splitRightId : this.splitLeftId;
-      } else {
-        // Клик по другой вкладке выходит из разделённого экрана (как в Chrome):
-        // половины НЕ заменяются, выбранная вкладка открывается во весь экран.
-        this.splitLeftId = null;
-        this.splitRightId = null;
-        this.splitId = null;
-        this.activeId = id;
-      }
-    } else {
-      this.activeId = id;
-    }
+    this.activeId = id;
     this.uiMode = targetTab.service || 'web';
     this._updateVisibility();
     this.layout();
@@ -1387,11 +1241,6 @@ class BrowserWindowController {
     tab.title = SERVICE_TITLES[mode];
     tab.url = `arch://${mode}`;
     this.activeId = tab.id;
-    // Служебный раздел занимает всё окно, поэтому разделённый экран
-    // сбрасываем — иначе после закрытия вкладки половины «перепутаются».
-    this.splitLeftId = null;
-    this.splitRightId = null;
-    this.splitId = null;
     this.uiMode = mode;
     this._updateVisibility();
     this.layout();
@@ -1676,7 +1525,7 @@ class BrowserWindowController {
         const visible = !this.bootOverlay &&
           !overlayOpen &&
           this.uiMode === 'web' &&
-          (id === this.activeId || id === this.splitLeftId || id === this.splitRightId);
+          id === this.activeId;
         this._attachView(tab.view, visible);
       } catch {}
     }
@@ -1809,34 +1658,16 @@ class BrowserWindowController {
     const contentHeight = Math.max(0, height - top - insets.bottom);
     const panelWidth = this._telegramVisibleWidth();
     const pageWidth = Math.max(0, contentWidth - panelWidth);
-    const split = !!(this.splitLeftId && this.splitRightId &&
-      this.tabs.has(this.splitLeftId) && this.tabs.has(this.splitRightId));
-    const gap = 4;
-    const leftWidth = Math.max(0, Math.floor((pageWidth - gap) / 2));
-    const rightWidth = Math.max(0, pageWidth - leftWidth - gap);
 
     for (const [id, tab] of this.tabs) {
-      let bounds;
-      if (split && id === this.splitLeftId) {
-        bounds = { x: left, y: top, width: leftWidth, height: contentHeight };
-      } else if (split && id === this.splitRightId) {
-        bounds = {
-          x: left + leftWidth + gap,
-          y: top,
-          width: rightWidth,
-          height: contentHeight,
-        };
-      } else {
-        bounds = { x: left, y: top, width: pageWidth, height: contentHeight };
-      }
+      const bounds = { x: left, y: top, width: pageWidth, height: contentHeight };
       try {
         tab.view.setBounds(bounds);
         // Страница показывается только в обычном режиме: когда открыта панель
         // настроек (или другой раздел), она не должна закрывать её собой.
         this._attachView(
           tab.view,
-          this.uiMode === 'web' && !this.bootOverlay &&
-            (id === this.activeId || id === this.splitLeftId || id === this.splitRightId),
+          this.uiMode === 'web' && !this.bootOverlay && id === this.activeId,
         );
       } catch {}
     }
@@ -2355,9 +2186,6 @@ class BrowserWindowController {
       windowId: this.id,
       isPrivate: this.isPrivate,
       activeTabId: this.activeId,
-      splitId: this.splitId,
-      splitLeftId: this.splitLeftId,
-      splitRightId: this.splitRightId,
       uiMode: this.uiMode,
       chromeHeight: this.chromeHeight,
       browserFullscreen: this.browserFullscreen,

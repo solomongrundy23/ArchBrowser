@@ -1379,7 +1379,6 @@ function buildMenu() {
         { label: 'Уменьшить', accelerator: 'CmdOrCtrl+-', click: withCtrl((c) => c.zoom(-0.1)) },
         { label: 'Обычный масштаб', accelerator: 'CmdOrCtrl+0', click: withCtrl((c) => c.zoom(0)) },
         { type: 'separator' },
-        { label: 'Разделить экран', accelerator: 'CmdOrCtrl+Shift+E', click: withCtrl((c) => c.popupSplitMenu()) },
         { label: 'Инструменты разработчика', accelerator: 'CmdOrCtrl+Shift+I', click: withCtrl((c) => c.toggleDevTools()) },
         { type: 'separator' },
         { label: 'Полный экран', accelerator: 'F11', click: withCtrl((c) => c.toggleBrowserFullscreen()) },
@@ -1527,8 +1526,6 @@ function registerIpc() {
   ipcMain.handle('tabs:select', (e, { id }) => controllerOf(e)?.selectTab(id));
   ipcMain.handle('tabs:reorder', (e, { ids }) => controllerOf(e)?.reorderTabs(ids));
   ipcMain.handle('tabs:context-menu', (e, { id }) => controllerOf(e)?._showTabContextMenu(id));
-  ipcMain.handle('tabs:split-toggle', (e) => controllerOf(e)?.popupSplitMenu());
-  ipcMain.handle('tabs:split-close', (e) => controllerOf(e)?.toggleSplit());
   ipcMain.handle('menu:popup', (e) => controllerOf(e)?.popupMainMenu());
   ipcMain.handle('menu:titlebar', (e) => controllerOf(e)?.popupTitlebarMenu());
   ipcMain.handle('tabs:share-menu', (e) => controllerOf(e)?.shareCurrentTab());
@@ -2806,47 +2803,6 @@ if (!gotLock) {
           });
           console.log(`[SMOKE] example=${tab2.wc.getURL()} title=${tab2.wc.getTitle()}`);
           await capture('example.png', tab2.wc);
-
-          // ---- разделённый экран: половины не должны меняться местами ----
-          ctrl.toggleSplit();
-          await sleep(350);
-          const split1 = ctrl.snapshot();
-          const bounds1 = {
-            left: split1.splitLeftId ? ctrl.tabs.get(split1.splitLeftId).view.getBounds() : null,
-            right: split1.splitRightId ? ctrl.tabs.get(split1.splitRightId).view.getBounds() : null,
-          };
-          console.log(`[SMOKE] split-open=${!!(split1.splitLeftId && split1.splitRightId)} active=${split1.activeTabId} left=${split1.splitLeftId} right=${split1.splitRightId}`);
-          console.log(`[SMOKE] split-bounds=${JSON.stringify(bounds1)}`);
-
-          if (split1.splitRightId) ctrl.selectTab(split1.splitRightId);
-          await sleep(300);
-          const split2 = ctrl.snapshot();
-          const bounds2 = {
-            left: split2.splitLeftId ? ctrl.tabs.get(split2.splitLeftId).view.getBounds() : null,
-            right: split2.splitRightId ? ctrl.tabs.get(split2.splitRightId).view.getBounds() : null,
-          };
-          console.log(`[SMOKE] split-focus active=${split2.activeTabId} left=${split2.splitLeftId} right=${split2.splitRightId} stable=${JSON.stringify(bounds1) === JSON.stringify(bounds2)}`);
-
-          const splitTab = ctrl.createTab('arch://newtab', { active: true });
-          await sleep(300);
-          const split3 = ctrl.snapshot();
-          console.log(`[SMOKE] split-replace=${split3.splitLeftId === split1.splitLeftId && split3.splitRightId === splitTab.id} active=${split3.activeTabId}`);
-
-          // В разделённом режиме вкладки объединены в одну с двумя под-вкладками.
-          await sleep(500);
-          const splitUi = await ctrl.window.webContents.executeJavaScript(
-            "(() => { const tabs = [...document.querySelectorAll('#tabs .tab')];"
-            + " const combined = tabs.find((t) => t.classList.contains('tab-split'));"
-            + " return JSON.stringify({ tabs: tabs.length, combined: !!combined,"
-            + " segs: combined ? combined.querySelectorAll('.tab-seg').length : 0,"
-            + " parts: combined ? (combined.dataset.splitIds || '').split(',').length : 0 }); })()",
-          );
-          console.log(`[SMOKE] split-ui=${splitUi}`);
-          await capture('split-tab.png', ctrl.window.webContents);
-
-          ctrl.toggleSplit();
-          await sleep(200);
-          console.log(`[SMOKE] split-closed=${!ctrl.snapshot().splitLeftId}`);
 
           // Подсказки адресной строки показываются отдельным окном поверх страницы.
           try {

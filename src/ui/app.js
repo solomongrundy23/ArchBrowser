@@ -586,39 +586,8 @@ function renderTabs() {
     if (el.isConnected) before.set(id, el.getBoundingClientRect());
   }
 
-  // В разделённом режиме две вкладки показываются одной вкладкой с двумя
-  // под-вкладками. Закрытие любой из них завершает разделённый просмотр.
-  const splitActive = !!(data.splitLeftId && data.splitRightId
-    && data.tabs.some((t) => t.id === data.splitLeftId)
-    && data.tabs.some((t) => t.id === data.splitRightId));
-  const leftTab = splitActive ? data.tabs.find((t) => t.id === data.splitLeftId) : null;
-  const rightTab = splitActive ? data.tabs.find((t) => t.id === data.splitRightId) : null;
-  // Разделённый экран — такая же вкладка, как остальные: она показывается
-  // одной объединённой вкладкой на месте левой части, а все остальные
-  // вкладки остаются рядом и не перекрываются.
-  const entries = [];
-  let splitPlaced = false;
-  const leftIndex = splitActive ? data.tabs.findIndex((t) => t.id === leftTab.id) : -1;
-  const rightIndex = splitActive ? data.tabs.findIndex((t) => t.id === rightTab.id) : -1;
-  const splitIndex = splitActive ? Math.min(leftIndex, rightIndex) : -1;
-  data.tabs.forEach((tab, index) => {
-    if (splitActive && (tab.id === leftTab.id || tab.id === rightTab.id)) {
-      if (splitPlaced) return;
-      if (index !== splitIndex) return;
-      splitPlaced = true;
-      entries.push({
-        // Стабильный id, а не составной: при замене половины разделённого
-        // экрана вкладка переиспользуется, а не пересоздаётся — иначе
-        // анимация «схлопывается» и «раскрывается» заново.
-        id: 'split',
-        split: true,
-        parts: [leftTab, rightTab],
-        partIds: [leftTab.id, rightTab.id],
-      });
-      return;
-    }
-    entries.push({ id: tab.id, split: false, parts: null, partIds: [tab.id] });
-  });
+  // Список вкладок — каждая вкладка отдельным элементом.
+  const entries = data.tabs.map((tab) => ({ id: tab.id }));
 
   // Обновление одной вкладки или одной под-вкладки.
   const updatePart = (partEl, tab, isActive) => {
@@ -678,56 +647,23 @@ function renderTabs() {
     let isNew = false;
     if (!el) {
       el = document.createElement('div');
-      el.className = entry.split ? 'tab tab-split tab-new' : 'tab tab-new';
+      el.className = 'tab tab-new';
       el.dataset.id = entry.id;
-      if (entry.split) {
-        el.innerHTML =
-          `<span class="tab-seg" data-part="${entry.partIds[0]}">`
-          + '<span class="tab-icon-slot"></span><span class="tab-title"></span>'
-          + `<span class="tab-audio hidden">${icon('volume')}</span>`
-          + '<span class="tab-progress"><i></i></span>'
-          + `<button class="tab-seg-close" title="Закрыть вкладку">${icon('close')}</button></span>`
-          + `<span class="tab-seg" data-part="${entry.partIds[1]}">`
-          + '<span class="tab-icon-slot"></span><span class="tab-title"></span>'
-          + `<span class="tab-audio hidden">${icon('volume')}</span>`
-          + '<span class="tab-progress"><i></i></span>'
-          + `<button class="tab-seg-close" title="Закрыть вкладку">${icon('close')}</button></span>`
-          + `<button class="tab-close" title="Закрыть разделённый экран">${icon('close')}</button>`;
-      } else {
-        el.innerHTML =
-          '<span class="tab-icon-slot"></span>' +
-          '<span class="tab-title"></span>' +
-          `<span class="tab-audio hidden">${icon('volume')}</span>` +
-          '<span class="tab-progress"><i></i></span>' +
-          `<button class="tab-close" title="Закрыть вкладку">${icon('close')}</button>`;
-      }
+      el.innerHTML =
+        '<span class="tab-icon-slot"></span>' +
+        '<span class="tab-title"></span>' +
+        `<span class="tab-audio hidden">${icon('volume')}</span>` +
+        '<span class="tab-progress"><i></i></span>' +
+        `<button class="tab-close" title="Закрыть вкладку">${icon('close')}</button>`;
       S.tabEls.set(entry.id, el);
       container.appendChild(el);
       isNew = true;
     }
 
-    if (entry.split) {
-      el.classList.add('split');
-      el.classList.toggle('active',
-        data.activeTabId === entry.parts[0].id || data.activeTabId === entry.parts[1].id);
-      el.draggable = false;
-      const segs = el.querySelectorAll('.tab-seg');
-      // При переиспользовании вкладки обновляем data-part под новые половины,
-      // иначе клик по половине выбирал бы не ту вкладку.
-      segs[0].dataset.part = entry.partIds[0];
-      segs[1].dataset.part = entry.partIds[1];
-      updatePart(segs[0], entry.parts[0], entry.parts[0].id === data.activeTabId);
-      updatePart(segs[1], entry.parts[1], entry.parts[1].id === data.activeTabId);
-      el.title = entry.parts.map((p) => p.title || hostOf(p.url)).join(' — ');
-      el.dataset.splitIds = entry.partIds.join(',');
-    } else {
-      const tab = entry.parts ? null : data.tabs.find((t) => t.id === entry.id);
-      el.classList.remove('split');
-      el.classList.toggle('active', tab.id === data.activeTabId);
-      el.draggable = true;
-      el.removeAttribute('data-split-ids');
-      updatePart(el, tab, tab.id === data.activeTabId);
-    }
+    const tab = data.tabs.find((t) => t.id === entry.id);
+    el.classList.toggle('active', tab.id === data.activeTabId);
+    el.draggable = true;
+    updatePart(el, tab, tab.id === data.activeTabId);
 
     if (isNew) {
       el.addEventListener('animationend', (event) => {
@@ -798,12 +734,6 @@ function renderToolbar() {
   const reloadUse = $('#reload-icon use');
   if (reloadUse) reloadUse.setAttribute('href', loading ? '#i-close' : '#i-reload');
   $('#reload').title = loading ? 'Остановить загрузку' : 'Обновить (Ctrl+R)';
-  const splitBtn = $('#split-btn');
-  if (splitBtn) {
-    const splitOpen = !!(data.splitLeftId && data.splitRightId);
-    splitBtn.classList.toggle('active', splitOpen);
-    splitBtn.title = splitOpen ? 'Закрыть разделённый экран (Ctrl+Shift+E)' : 'Разделить экран (Ctrl+Shift+E)';
-  }
 
   const omnibox = $('#omnibox');
   if (document.activeElement !== omnibox && S.dock !== 'suggest') {
@@ -958,7 +888,6 @@ function menuTemplate() {
     ['vpn', 'VPN', '', 'shield'],
     ['telegram', 'Telegram', 'Ctrl+Shift+M', 'telegram'],
     ['sep'],
-    ['split', 'Разделить экран…', 'Ctrl+Shift+E', 'split'],
     ['share', 'Поделиться страницей…', '', 'share'],
     ['timer', 'Таймер и будильник…', '', 'timer'],
     ['fullscreen', 'Полный экран', 'F11', 'fullscreen'],
@@ -1022,9 +951,6 @@ async function menuAction(action) {
         break;
       case 'telegram':
         await invoke('telegram:toggle', {});
-        break;
-      case 'split':
-        await invoke('tabs:split-toggle');
         break;
       case 'share':
         await invoke('tabs:share-menu');
@@ -4766,7 +4692,6 @@ function bindChrome() {
   $('#tabstrip').addEventListener('dblclick', (event) => {
     if (!event.target.closest('.tab')) invoke('tabs:create', {}).catch(() => {});
   });
-  $('#split-btn').addEventListener('click', () => invoke('tabs:split-toggle').catch((e) => toast(cleanError(e), 'error')));
   $('#share-btn').addEventListener('click', async () => {
     try {
       await invoke('tabs:share-menu');
@@ -4819,28 +4744,6 @@ function bindChrome() {
     const closeBtn = event.target.closest('.tab-close');
     const tabEl = event.target.closest('.tab');
     if (!tabEl) return;
-    // Разделённый экран: одна вкладка с двумя под-вкладками.
-    const splitIds = (tabEl.dataset.splitIds || '').split(',').filter(Boolean);
-    if (splitIds.length === 2) {
-      const segClose = event.target.closest('.tab-seg-close');
-      if (segClose) {
-        event.stopPropagation();
-        const seg = segClose.closest('.tab-seg');
-        const id = seg && seg.dataset.part ? seg.dataset.part : splitIds[0];
-        // Закрытие половины завершает разделённый просмотр.
-        invoke('tabs:close', { id }).catch(() => {});
-        return;
-      }
-      if (closeBtn) {
-        event.stopPropagation();
-        invoke('tabs:split-close').catch(() => {});
-        return;
-      }
-      const seg = event.target.closest('.tab-seg');
-      const id = seg && seg.dataset.part ? seg.dataset.part : splitIds[0];
-      invoke('tabs:select', { id }).catch(() => {});
-      return;
-    }
     if (closeBtn) {
       event.stopPropagation();
       invoke('tabs:close', { id: tabEl.dataset.id }).catch(() => {});
@@ -4852,11 +4755,6 @@ function bindChrome() {
     if (event.button !== 1) return;
     const tabEl = event.target.closest('.tab');
     if (!tabEl) return;
-    const splitIds = (tabEl.dataset.splitIds || '').split(',').filter(Boolean);
-    if (splitIds.length === 2) {
-      invoke('tabs:split-close').catch(() => {});
-      return;
-    }
     invoke('tabs:close', { id: tabEl.dataset.id }).catch(() => {});
   });
 
@@ -4865,15 +4763,7 @@ function bindChrome() {
     const tabEl = event.target.closest('.tab');
     if (!tabEl) return;
     event.preventDefault();
-    // У разделённого экрана data-id равен 'split' (которого нет в списке
-    // вкладок), а реальные половины лежат в data-split-ids. Меню строим
-    // по той половине, на которой нажали.
-    const splitIds = (tabEl.dataset.splitIds || '').split(',').filter(Boolean);
-    const seg = event.target.closest('.tab-seg');
-    const id = splitIds.length === 2
-      ? (seg && seg.dataset.part ? seg.dataset.part : splitIds[0])
-      : tabEl.dataset.id;
-    invoke('tabs:context-menu', { id }).catch(() => {});
+    invoke('tabs:context-menu', { id: tabEl.dataset.id }).catch(() => {});
   });
 
   // Перетаскивание вкладок: порядок меняется сразу в DOM, а в главный
@@ -4890,15 +4780,7 @@ function bindChrome() {
       renderTabs();
       return;
     }
-    // Разделённый экран — это одна вкладка в DOM, но две вкладки в списке
-    // главного процесса. Разворачиваем её обратно в два id, иначе длина списка
-    // не сойдётся и порядок молча не применится.
-    const ids = [];
-    for (const el of $$('.tab:not(.tab-closing)', container)) {
-      const splitIds = (el.dataset.splitIds || '').split(',').filter(Boolean);
-      if (splitIds.length === 2) ids.push(...splitIds);
-      else ids.push(el.dataset.id);
-    }
+    const ids = $$('.tab:not(.tab-closing)', container).map((el) => el.dataset.id);
     invoke('tabs:reorder', { ids }).catch((e) => toast(cleanError(e), 'error'));
   };
   $('#tabs').addEventListener('dragstart', (event) => {
@@ -5128,7 +5010,7 @@ function bindChrome() {
   $('#menu-btn').addEventListener('click', () => {
     closeDock();
     // Нативное меню всегда рисуется поверх WebContentsView и корректно
-    // работает при любом положении вкладок и в разделённом экране.
+    // работает при любом положении вкладок.
     invoke('menu:popup').catch(() => {
       openDock('menu', menuTemplate());
       $$('[data-action]', $('#dock')).forEach((row) => {
