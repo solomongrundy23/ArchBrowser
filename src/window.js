@@ -121,6 +121,7 @@ class BrowserWindowController {
     this._telegramCurrentWidth = 0;
     this._telegramAnim = null;
     this.telegram = null;
+    this._telegramFailCount = 0;
 
     this.ses = isPrivate
       ? ctx.session.fromPartition('arch-private-' + crypto.randomUUID())
@@ -1125,9 +1126,71 @@ class BrowserWindowController {
       }
     });
 
+    // Ошибка загрузки Telegram Web: сначала автоповтор, а если сеть так и не
+    // отвечает — показываем страницу с текстом ошибки и кнопкой «Перезагрузить»,
+    // чтобы панель не оставалась молча пустой.
+    wc.on('did-fail-load', (_e, errorCode, errorDescription, _url, isMainFrame) => {
+      if (!isMainFrame) return;
+      const count = (this._telegramFailCount = (this._telegramFailCount || 0) + 1);
+      if (count === 1) {
+        setTimeout(() => {
+          if (!this.telegramOpen || !this.telegram || this.telegram.wc !== wc || wc.isDestroyed()) return;
+          wc.loadURL('https://web.telegram.org/a/').catch(() => {});
+        }, 2500);
+      } else {
+        this._showTelegramError(errorDescription || `код ${errorCode}`);
+      }
+    });
+    wc.on('did-finish-load', () => {
+      this._telegramFailCount = 0;
+    });
+
     wc.loadURL('https://web.telegram.org/a/').catch((err) => {
       console.error('[telegram] load failed:', err.message);
     });
+  }
+
+  _showTelegramError(description) {
+    if (!this.telegram || this.telegram.wc.isDestroyed()) return;
+    const message = String(description || '')
+      .replace(/[<>&"']/g, (ch) => (
+        { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#39;' }[ch]
+      ));
+    const html = `<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: #17181c; color: #e8eaed;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 24px;
+  }
+  .icon { font-size: 42px; margin-bottom: 14px; }
+  h1 { font-size: 17px; font-weight: 600; margin-bottom: 10px; }
+  .err { font-size: 12.5px; color: #9aa0a6; margin-bottom: 22px; line-height: 1.5; word-break: break-all; }
+  a.btn {
+    display: inline-block; text-decoration: none;
+    background: #2aabee; color: #fff; font-size: 14px; font-weight: 500;
+    padding: 10px 24px; border-radius: 10px;
+  }
+  a.btn:hover { background: #239bd8; }
+</style>
+</head>
+<body>
+  <div>
+    <div class="icon">⚠️</div>
+    <h1>Не удалось открыть Telegram</h1>
+    <div class="err">${message}</div>
+    <a class="btn" href="https://web.telegram.org/a/">Перезагрузить</a>
+  </div>
+</body>
+</html>`;
+    this.telegram.wc.loadURL('data:text/html;charset=utf-8,' + encodeURIComponent(html)).catch(() => {});
   }
 
   toggleTelegram(force) {
