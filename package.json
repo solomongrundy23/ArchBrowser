@@ -14,8 +14,10 @@
     "vpn-test": "electron test/vpn-e2e.js",
     "ublock-test": "electron test/ublock-block.js",
     "ublock-lite-test": "electron test/ublock-lite-block.js",
-    "dist": "electron-builder --win portable",
-    "dist:fast": "set ELECTRON_BUILDER_COMPRESSION_LEVEL=5&& electron-builder --win portable",
+    "dist": "electron-builder --win",
+    "dist:fast": "set ELECTRON_BUILDER_COMPRESSION_LEVEL=5&& electron-builder --win",
+    "dist:portable": "electron-builder --win portable",
+    "dist:installer": "electron-builder --win nsis",
     "dist:mac": "electron-builder --mac --arm64"
   },
   "devDependencies": {
@@ -86,9 +88,33 @@
           "arch": [
             "x64"
           ]
+        },
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
         }
       ],
       "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false,
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "installerHeaderIcon": "assets/icon.ico",
+      "installerLanguages": [
+        "ru_RU",
+        "en_US"
+      ],
+      "language": "1049",
+      "artifactName": "ArchBrowser-${buildVersion}-setup.${ext}"
     },
     "portable": {
       "artifactName": "ArchBrowser-${buildVersion}-portable.exe"

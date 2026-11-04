@@ -9,6 +9,7 @@ Xray-core и поддержкой расширений Chrome.
   Если `node_modules` нет, скрипт запускает готовый portable из `dist`.
 - `ArchBrowser.vbs` — тихий запуск без консоли (тоже умеет запускать portable).
 - `npm start` — запуск из терминала.
+- `dist\ArchBrowser-1.0.0.0-setup.exe` — установщик Windows (ярлык в меню «Пуск», удаление через «Приложения»).
 
 Требуется Windows 10/11 x64. Node.js и другие зависимости для запуска **не нужны**:
 Electron и Xray уже лежат в папке проекта.
@@ -347,7 +348,9 @@ npm run smoke               :: смоук-тест + скриншоты в shots
 npm run vpn-test            :: сквозной тест VPN-цепочки
 npm run ublock-test         :: проверка блокировки запроса через uBlock Origin
 npm run ublock-lite-test    :: проверка блокировки через uBlock Origin Lite (DNR)
-npm run dist                :: portable .exe (electron-builder)
+npm run dist                :: portable .exe + установщик NSIS (electron-builder)
+npm run dist:portable       :: только portable .exe
+npm run dist:installer      :: только установщик NSIS
 npm run dist:fast           :: то же, но со сжатием 5 — заметно быстрее (7 мин вместо 11)
 npm run dist:mac            :: .dmg для Apple Silicon (arm64)
 ```
