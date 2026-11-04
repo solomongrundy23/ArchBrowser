@@ -24,6 +24,17 @@ const crypto = require('crypto');
 const { pathToFileURL } = require('url');
 
 app.setName('ArchBrowser');
+// Версия приложения для интерфейса. В package.json остаётся корректная
+// semver-версия (1.0.0), а четырёхчастная 1.0.0.0 задаётся в buildVersion
+// и попадает в FileVersion Windows.
+const APP_VERSION = (() => {
+  try {
+    const pkg = require('../package.json');
+    return pkg.buildVersion || (pkg.build && pkg.build.buildVersion) || app.getVersion();
+  } catch {
+    return app.getVersion();
+  }
+})();
 // Отдельный AppUserModelID для исходников и собранной версии. Это не только
 // разделяет группы на панели задач, но и сбрасывает старый кеш иконки,
 // из-за которого Windows могла держать иконку Electron.
@@ -1285,7 +1296,7 @@ const ctx = {
   },
   get torrentService() {
     return torrentService;
-  },  appVersion: app.getVersion(),
+  }, appVersion: APP_VERSION,
   chromeVersion: CHROME_VERSION,
   theme: currentTheme,
   createWindow: (options) => createWindow(options),
@@ -2152,7 +2163,7 @@ function registerIpc() {
   });
 
   ipcMain.handle('app:info', () => ({
-    app: app.getVersion(),
+    app: APP_VERSION,
     chrome: CHROME_VERSION,
     electron: process.versions.electron,
     xray: vpn.coreAvailable(),

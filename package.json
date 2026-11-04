@@ -1,7 +1,7 @@
 {
   "name": "archbrowser",
   "productName": "ArchBrowser",
-  "version": "0.2.9",
+  "version": "1.0.0",
   "description": "Приватный браузер на Chromium: защита от слежки, встроенный VPN (Xray), uBlock Origin, Telegram и расширения",
   "main": "src/main.js",
   "author": "ArchBrowser",
@@ -25,6 +25,10 @@
   "build": {
     "appId": "com.archbrowser.app",
     "productName": "ArchBrowser",
+    "buildVersion": "1.0.0.0",
+    "extraMetadata": {
+      "buildVersion": "1.0.0.0"
+    },
     "directories": {
       "output": "dist"
     },
@@ -48,6 +52,7 @@
           ]
         }
       ],
+      "artifactName": "ArchBrowser-${buildVersion}-${arch}.${ext}",
       "icon": "assets/icon.icns",
       "category": "public.app-category.utilities",
       "hardenedRuntime": true,
@@ -86,7 +91,7 @@
       "icon": "assets/icon.ico"
     },
     "portable": {
-      "artifactName": "ArchBrowser-${version}-portable.exe"
+      "artifactName": "ArchBrowser-${buildVersion}-portable.exe"
     },
     "linux": {
       "target": [

@@ -1197,21 +1197,24 @@ class BrowserWindowController {
     const open =
       typeof force === 'boolean'
         ? force
-        : !(this.telegramOpen && this.uiMode === 'web');
+        : !this.telegramOpen;
     if (open) this.openTelegram();
     else this.closeTelegram();
   }
 
   openTelegram() {
     this._createTelegram();
-    if (this.telegramOpen && this.uiMode === 'web') {
+    if (this.telegramOpen) {
       try {
         this.telegram.wc.focus();
       } catch {}
       return;
     }
     this.telegramOpen = true;
-    this.uiMode = 'web';
+    // Telegram — боковая панель. Она может открываться и поверх раздела
+    // (VPN/настройки): сам раздел остаётся видимым слева, а не превращается
+    // в серый экран. UI получает состояние telegramOpen и освобождает справа
+    // место под панель.
     this.sendCommand('close-dock');
     this._updateVisibility();
     this._animateTelegram(this.telegramWidth);
@@ -1236,6 +1239,10 @@ class BrowserWindowController {
           tab.wc.focus();
         } catch {}
       }
+    } else {
+      try {
+        this._window.webContents.focus();
+      } catch {}
     }
     this._scheduleBroadcast();
   }
@@ -1266,7 +1273,7 @@ class BrowserWindowController {
   }
 
   _telegramVisibleWidth() {
-    if (!this.telegramOpen || this.uiMode !== 'web' || this.htmlFullscreen || this.browserFullscreen) return 0;
+    if (!this.telegramOpen || this.htmlFullscreen || this.browserFullscreen || this.bootOverlay) return 0;
     return Math.max(0, Math.round(this._telegramCurrentWidth));
   }
 
@@ -1598,7 +1605,6 @@ class BrowserWindowController {
           this.telegram.view,
           this.telegramOpen &&
             !overlayOpen &&
-            this.uiMode === 'web' &&
             !this.htmlFullscreen &&
             !this.browserFullscreen &&
             !this.bootOverlay &&
@@ -1746,7 +1752,6 @@ class BrowserWindowController {
         this._attachView(
           this.telegram.view,
           this.telegramOpen &&
-            this.uiMode === 'web' &&
             !this.htmlFullscreen &&
             !this.browserFullscreen &&
             !this.bootOverlay &&

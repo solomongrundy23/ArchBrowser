@@ -421,6 +421,7 @@ function onState(data) {
   document.body.classList.toggle('browser-fullscreen', S.fullscreen);
   document.body.classList.toggle('fs-bar', S.fullscreen && !!data.fullscreenBar);
   document.body.classList.toggle('fs-media', S.fullscreen && !!data.fullscreenMedia);
+  document.body.classList.toggle('telegram-open', !!data.telegramOpen);
   applyMediaBarPosition(data.settings && data.settings.mediaBarPosition);
   applyTabPosition(data.settings && data.settings.tabPosition);
 
