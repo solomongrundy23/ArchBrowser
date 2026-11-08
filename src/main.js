@@ -2295,9 +2295,19 @@ if (!gotLock) {
   app.whenReady().then(async () => {
     nativeTheme.themeSource = ['light', 'dark', 'system'].includes(THEME_ARG) ? THEME_ARG : 'system';
     // Праздничная тема и её возврат после праздника.
+    // Автотема проверяется при старте и сразу после полуночи: праздничная
+    // тема выключается на следующий день, а не через случайный час.
     checkHolidayTheme();
-    const holidayTimer = setInterval(checkHolidayTheme, 60 * 60 * 1000);
-    if (holidayTimer.unref) holidayTimer.unref();
+    const scheduleHolidayCheck = () => {
+      const now = new Date();
+      const next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 2);
+      const timer = setTimeout(() => {
+        checkHolidayTheme();
+        scheduleHolidayCheck();
+      }, Math.max(1000, next.getTime() - now.getTime()));
+      if (timer.unref) timer.unref();
+    };
+    scheduleHolidayCheck();
 
     mainSession = session.fromPartition('persist:arch');
     ctx.mainSession = mainSession;
