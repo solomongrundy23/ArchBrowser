@@ -35,7 +35,7 @@ const THEMES = {
     accent: '#e63946',
     accent2: '#37b24d',
     festive: true,
-    holiday: { month: 1, day: 1, title: 'Новый год' },
+    holiday: { month: 1, day: 1, afterDays: 6, title: 'Новый год' },
   },
   christmas: {
     id: 'christmas',
@@ -105,8 +105,8 @@ const THEMES = {
     accent: '#a8b5a2',
     accent2: '#c0503a',
   },
-  // Праздники России и календарные праздники. Для них работает
-  // автоматическое включение за 7 дней до даты и выключение через 7 дней.
+  // Праздники России и календарные праздники. Тема включается за 7 дней
+  // до даты и выключается на следующий день после праздника.
   feb14: {
     id: 'feb14',
     title: 'День всех влюблённых',
@@ -205,9 +205,10 @@ function daysUntilNewYear(now = new Date()) {
   return Math.max(0, Math.ceil((next.getTime() - start.getTime()) / 86400000));
 }
 
-// Тема праздника, который сейчас в окне «7 дней до … 7 дней после».
-// Если окна пересекаются (Новый год и Рождество), побеждает тот праздник,
-// чей период начался позже: так Рождество закрывает новогоднюю тему 31 декабря.
+// Тема праздника, который сейчас в окне «7 дней до … праздник».
+// Новый год остаётся до 6 января. Если окна пересекаются (Новый год
+// и Рождество), берём праздник, который заканчивается раньше: так
+// новогодняя тема не пропадает 31 декабря и 1–6 января.
 function activeHolidayTheme(now = new Date()) {
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   let best = null;
@@ -215,12 +216,26 @@ function activeHolidayTheme(now = new Date()) {
     for (let delta = -1; delta <= 1; delta++) {
       const year = today.getFullYear() + delta;
       const date = new Date(year, holiday.month - 1, holiday.day);
-      const start = date.getTime() - HOLIDAY_WINDOW_DAYS * 86400000;
-      const end = date.getTime() + HOLIDAY_WINDOW_DAYS * 86400000 + 86399999;
+      // Праздничная тема включается за 7 дней до праздника и действует
+      // включительно по сам праздник. На следующий день она выключается.
+      // Исключение — Новый год: он остаётся ещё 6 дней (по 6 января).
+      const start = new Date(year, holiday.month - 1, holiday.day - HOLIDAY_WINDOW_DAYS);
+      const afterDays = Number.isFinite(holiday.afterDays) ? holiday.afterDays : 1;
+      const end = new Date(year, holiday.month - 1, holiday.day + afterDays);
       const time = today.getTime();
-      if (time < start || time > end) continue;
-      if (!best || start > best.start) {
-        best = { id: holiday.id, start, end, date, title: holiday.title };
+      if (time < start.getTime() || time >= end.getTime()) continue;
+      const distance = Math.abs(time - date.getTime());
+      const endTime = end.getTime();
+      if (!best || endTime < best.end ||
+        (endTime === best.end && distance < best.distance)) {
+        best = {
+          id: holiday.id,
+          start: start.getTime(),
+          end: endTime,
+          date,
+          distance,
+          title: holiday.title,
+        };
       }
     }
   }
