@@ -1804,7 +1804,13 @@
       if (!link) return;
       openCtxMenu(event.clientX, event.clientY, [
         { label: 'Открыть', run: () => { window.location.href = link.url; } },
-        { label: 'Открыть в новой вкладке', run: () => window.open(link.url, '_blank', 'noopener') },
+        { label: 'Открыть в новой вкладке', run: () => {
+          if (window.archHost && typeof window.archHost.openInBackground === 'function') {
+            window.archHost.openInBackground(link.url).catch(() => {});
+          } else {
+            window.open(link.url, '_blank', 'noopener');
+          }
+        } },
         { sep: true },
         { label: 'Редактировать…', run: () => openLinkModal(link, index) },
         { label: 'Удалить', danger: true, run: () => removeLink(link) },

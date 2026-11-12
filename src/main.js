@@ -1529,8 +1529,11 @@ function registerIpc() {
   ipcMain.handle('tabs:create', (e, payload = {}) => {
     const c = controllerOf(e);
     if (!c) return false;
-    c.createTab(payload.url || settings.get('newTabPage') || 'arch://newtab');
-    return true;
+    const tab = c.createTab(
+      payload.url || settings.get('newTabPage') || 'arch://newtab',
+      { active: payload.active !== false },
+    );
+    return tab ? tab.id : false;
   });
   ipcMain.handle('tabs:close', (e, { id }) => controllerOf(e)?.closeTab(id));
   ipcMain.handle('settings:open-tab', (e) => controllerOf(e)?.openSettingsTab());

@@ -315,12 +315,12 @@ class BrowserWindowController {
 
     wc.setZoomFactor(1);
 
-    wc.setWindowOpenHandler(({ url: target }) => {
+    wc.setWindowOpenHandler(({ url: target, disposition }) => {
       if (!target || target === 'about:blank') return { action: 'deny' };
       if (/^(https?|arch|vless|vmess|trojan|ss):/i.test(target)) {
         this.createTab(
           this.ctx.settings.get('stripTrackingParams') ? cleanTrackingParams(target) : target,
-          { active: true },
+          { active: disposition !== 'background-tab' },
         );
       } else if (/^magnet:/i.test(target)) {
         // Ссылку из target="_blank" забирает встроенный клиент, а не ОС.
@@ -873,7 +873,7 @@ class BrowserWindowController {
       {
         label: 'Открыть ссылку в новой вкладке',
         enabled: shareable,
-        click: () => this.createTab(url, { active: true }),
+        click: () => this.createTab(url, { active: false }),
       },
     ];
     if (!shareable) {
@@ -1981,7 +1981,7 @@ class BrowserWindowController {
     if (params.linkURL) {
       items.push({
         label: 'Открыть ссылку в новой вкладке',
-        click: () => this.createTab(cleanTrackingParams(params.linkURL), { active: true }),
+        click: () => this.createTab(cleanTrackingParams(params.linkURL), { active: false }),
       });
       items.push({
         label: 'Копировать адрес ссылки',
@@ -1993,7 +1993,7 @@ class BrowserWindowController {
     if (params.mediaType === 'image' && params.srcURL) {
       items.push({
         label: 'Открыть изображение в новой вкладке',
-        click: () => this.createTab(params.srcURL, { active: true }),
+        click: () => this.createTab(params.srcURL, { active: false }),
       });
       items.push({
         label: 'Копировать адрес изображения',

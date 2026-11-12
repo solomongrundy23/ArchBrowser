@@ -315,6 +315,8 @@ if (location.protocol === 'arch:') {
       // Кнопка «Открыть через VPN» на странице ошибки: направляем сайт
       // через туннель и повторяем загрузку.
       retryThroughVpn: (url) => ipcRenderer.invoke('tab:retry-vpn', { url }),
+      // Открыть ссылку в новой вкладке без переключения на неё.
+      openInBackground: (url) => ipcRenderer.invoke('tabs:create', { url, active: false }),
     });
   } catch (e) {}
 }

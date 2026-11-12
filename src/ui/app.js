@@ -4216,7 +4216,7 @@ async function renderBookmarksBar(force = false) {
       const picked = await showNativeMenu(event, items);
       if (!picked) return;
       if (picked === 'open') await navigate(entry.dataset.bbUrl);
-      else if (picked === 'new') invoke('tabs:create', { url: entry.dataset.bbUrl }).catch(() => {});
+      else if (picked === 'new') invoke('tabs:create', { url: entry.dataset.bbUrl, active: false }).catch(() => {});
       else if (picked === 'edit' && b) await editBookmark(b.id);
       else if (picked === 'remove' && b) {
         await invoke('bookmarks:remove', { id: b.id });
