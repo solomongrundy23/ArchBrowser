@@ -354,6 +354,7 @@ npm run dist:portable       :: только portable .exe
 npm run dist:installer      :: только установщик NSIS
 npm run dist:fast           :: то же, но со сжатием 5 — заметно быстрее (7 мин вместо 11)
 npm run dist:mac            :: .dmg для Apple Silicon (arm64)
+npm run dist:linux          :: AppImage + .deb для Ubuntu x64
 ```
 
 Структура:

@@ -1,6 +1,7 @@
 {
   "name": "archbrowser",
   "productName": "ArchBrowser",
+  "desktopName": "archbrowser",
   "version": "1.0.0",
   "description": "Приватный браузер на Chromium: защита от слежки, встроенный VPN (Xray), uBlock Origin, Telegram и расширения",
   "main": "src/main.js",
@@ -18,6 +19,7 @@
     "dist:fast": "set ELECTRON_BUILDER_COMPRESSION_LEVEL=5&& electron-builder --win",
     "dist:portable": "electron-builder --win portable",
     "dist:installer": "electron-builder --win nsis",
+    "dist:linux": "electron-builder --linux AppImage deb --x64",
     "dist:mac": "electron-builder --mac --arm64"
   },
   "devDependencies": {
@@ -126,12 +128,20 @@
           "arch": [
             "x64"
           ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
         }
       ],
       "icon": "assets/icon.png",
       "category": "Network",
       "description": "Приватный браузер на Chromium: защита от слежки, встроенный VPN (Xray), uBlock Origin, Telegram и расширения",
-      "artifactName": "ArchBrowser-${version}-${arch}.${ext}"
+      "maintainer": "ArchBrowser <33454121+solomongrundy23@users.noreply.github.com>",
+      "syncDesktopName": true,
+      "artifactName": "ArchBrowser-${buildVersion}-${arch}.${ext}"
     },
     "compression": "normal"
   },
