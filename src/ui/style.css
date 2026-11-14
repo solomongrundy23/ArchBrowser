@@ -2220,6 +2220,13 @@ body.media-bar-bottom:not([data-tabs="bottom"]):has(#media-bar:not(.hidden)) #pa
   background: var(--accent);
 }
 .player-controls .icon-btn.active { color: var(--accent); background: var(--accent-dim); }
+.player-keyhint {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 10.5px;
+  color: var(--muted-2);
+  letter-spacing: .1px;
+}
 .player-volume-wrap {
   display: flex;
   align-items: center;

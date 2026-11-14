@@ -220,6 +220,7 @@ class BrowserWindowController {
 
     win.webContents.on('before-input-event', (event, input) => {
       if (input.type !== 'keyDown') return;
+      if (this._handleMediaKey(event, input)) return;
       if (input.key === 'F12' || (input.control && input.shift && input.key.toLowerCase() === 'i')) {
         this.toggleDevTools();
         event.preventDefault();
@@ -251,6 +252,30 @@ class BrowserWindowController {
     if (this._window && !this._window.isDestroyed()) {
       this._window.webContents.send('command', { type, payload });
     }
+  }
+
+  // F7/F8/F9/F10 и мультимедийные клавиши управляют плеером независимо
+  // от того, что сейчас в фокусе: адресная строка, страница или Telegram.
+  _handleMediaKey(event, input) {
+    const key = String(input.key || '');
+    const code = String(input.code || '');
+    const vk = Number(input.keyCode) || 0;
+    const noModifiers = !input.control && !input.alt && !input.meta && !input.shift;
+    let action = '';
+    if (key === 'MediaPlayPause' || key === 'MediaPlay' || key === 'MediaPause' || code === 'MediaPlayPause' || vk === 179) action = 'toggle';
+    else if (key === 'MediaNextTrack' || key === 'MediaTrackNext' || key === 'MediaNext' ||
+      code === 'MediaNextTrack' || code === 'MediaTrackNext' || vk === 176) action = 'next';
+    else if (key === 'MediaPreviousTrack' || key === 'MediaTrackPrevious' || key === 'MediaPrevTrack' ||
+      code === 'MediaPreviousTrack' || code === 'MediaTrackPrevious' || vk === 177) action = 'prev';
+    else if (key === 'MediaStop' || code === 'MediaStop' || vk === 178) action = 'stop';
+    else if (noModifiers && key === 'F7') action = 'prev';
+    else if (noModifiers && key === 'F8') action = 'toggle';
+    else if (noModifiers && key === 'F9') action = 'next';
+    else if (noModifiers && key === 'F10') action = 'stop';
+    if (!action) return false;
+    event.preventDefault();
+    this.sendCommand('media-action', { action });
+    return true;
   }
 
   // ---------------- Tabs ----------------
@@ -559,6 +584,7 @@ class BrowserWindowController {
 
     wc.on('before-input-event', (event, input) => {
       if (input.type !== 'keyDown') return;
+      if (this._handleMediaKey(event, input)) return;
       const key = input.key;
       if (key === 'F12' || (input.control && input.shift && key.toLowerCase() === 'i')) {
         this.toggleDevTools();
@@ -1118,6 +1144,7 @@ class BrowserWindowController {
 
     wc.on('before-input-event', (event, input) => {
       if (input.type !== 'keyDown') return;
+      if (this._handleMediaKey(event, input)) return;
       if (input.control && input.key.toLowerCase() === 'l') {
         this.sendCommand('focus-omnibox');
         event.preventDefault();

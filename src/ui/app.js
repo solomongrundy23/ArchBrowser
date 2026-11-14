@@ -3553,7 +3553,13 @@ function playTrack(track, { remember = true } = {}) {
 
 async function playerNext(direction = 1, { wrap = PLAYER.repeat === 'all' } = {}) {
   const el = PLAYER.element;
-  if (!PLAYER.current) return;
+  const page = (S.data && S.data.player && S.data.player.page) || {};
+  if (!PLAYER.current) {
+    if (page.active) {
+      await invoke('player:control', { action: direction > 0 ? 'next' : 'prev' }).catch(() => {});
+    }
+    return;
+  }
   try {
     const track = await invoke('player:next', {
       id: PLAYER.current.id,
@@ -3592,6 +3598,11 @@ function playerHandleEnded() {
 
 async function playerPrev() {
   const el = PLAYER.element;
+  const page = (S.data && S.data.player && S.data.player.page) || {};
+  if (!PLAYER.current && page.active) {
+    await invoke('player:control', { action: 'prev' }).catch(() => {});
+    return;
+  }
   if (PLAYER.current && el && el.currentTime > 3) {
     el.currentTime = 0;
     updateMediaBar();
@@ -3640,6 +3651,24 @@ function playerHandleMissing() {
   if (!PLAYER.current) return;
   // Ошибку не показываем: пользователь мог просто удалить файл с диска.
   playerRemoveCurrent().catch(() => {});
+}
+
+async function stopMediaPlayback() {
+  const el = PLAYER.element;
+  if (PLAYER.current && el) {
+    try {
+      el.pause();
+      el.currentTime = 0;
+    } catch {}
+    PLAYER.closed = true;
+    updateMediaBar();
+    updatePlayerPanel();
+    return;
+  }
+  const page = (S.data && S.data.player && S.data.player.page) || {};
+  if (page.active) {
+    await invoke('player:control', { action: 'stop' }).catch(() => {});
+  }
 }
 
 async function toggleMediaPlayback() {
@@ -3778,14 +3807,15 @@ function playerNowMarkup() {
       <div class="player-controls">
         <button class="icon-btn" id="player-shuffle" title="Перемешивание">${icon('shuffle')}</button>
         <button class="icon-btn" id="player-repeat" title="Повтор">${playerRepeatIcon()}</button>
-        <button class="icon-btn" id="player-prev" title="Предыдущий">${icon('prev')}</button>
-        <button class="icon-btn primary" id="player-play" title="Играть / пауза">${icon('play')}</button>
-        <button class="icon-btn" id="player-next" title="Следующий">${icon('next')}</button>
+        <button class="icon-btn" id="player-prev" title="Предыдущий (F7)">${icon('prev')}</button>
+        <button class="icon-btn primary" id="player-play" title="Плей/пауза (F8)">${icon('play')}</button>
+        <button class="icon-btn" id="player-next" title="Следующий (F9)">${icon('next')}</button>
         <div class="player-volume-wrap">
           <button class="icon-btn" id="player-mute" title="Звук">${icon('volume')}</button>
           <input class="player-volume" id="player-volume" type="range" min="0" max="1" step="0.01" value="${PLAYER.volume}" title="Громкость">
         </div>
       </div>
+      <div class="player-keyhint">F7 — предыдущий · F8 — плей/пауза · F9 — следующий · F10 — стоп</div>
     </div>`;
 }
 
@@ -4663,6 +4693,14 @@ function onCommand(command) {
       PLAYER.scan = command.payload || null;
       updatePlayerScan();
       break;
+    case 'media-action': {
+      const action = command.payload && command.payload.action;
+      if (action === 'toggle') toggleMediaPlayback().catch(() => {});
+      else if (action === 'next') playerNext(1).catch(() => {});
+      else if (action === 'prev') playerPrev().catch(() => {});
+      else if (action === 'stop') stopMediaPlayback().catch(() => {});
+      break;
+    }
     case 'reader-toggle':
       $('#reader-btn').click();
       break;

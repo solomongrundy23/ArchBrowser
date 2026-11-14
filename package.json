@@ -29,9 +29,9 @@
   "build": {
     "appId": "com.archbrowser.app",
     "productName": "ArchBrowser",
-    "buildVersion": "1.0.0.2",
+    "buildVersion": "1.0.0.3",
     "extraMetadata": {
-      "buildVersion": "1.0.0.2"
+      "buildVersion": "1.0.0.3"
     },
     "directories": {
       "output": "dist"
