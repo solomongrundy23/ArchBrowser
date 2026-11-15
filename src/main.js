@@ -1118,7 +1118,10 @@ const vpn = new VpnManager({
   userDataDir: USER_DATA_DIR,
   getSettings: () => settings.all,
 });
-vpn.on('change', scheduleBroadcastAll);
+vpn.on('change', () => {
+  if (torrentService) torrentService.applyVpnPolicy();
+  scheduleBroadcastAll();
+});
 
 // ------------------------------------------------------------------ extensions
 const extensions = new ExtensionsManager({
@@ -1169,6 +1172,7 @@ torrentService = new TorrentService({
   userDataDir: USER_DATA_DIR,
   getSettings: () => settings.all,
   getDir: () => (settings.get('torrentDir') || settings.get('downloadDir') || path.join(os.homedir(), 'Downloads')),
+  isVpnActive: () => !!(vpn.status && vpn.status().connected),
   onChange: () => scheduleBroadcastAll(),
 });
 torrentService.restoreLater();
@@ -1779,6 +1783,9 @@ function registerIpc() {
     }
     if ('vpnBypassRu' in next) {
       vpn.refreshProxy().catch((err) => console.error('[vpn] bypass:', err.message));
+    }
+    if ('torrentBypassVpn' in next) {
+      torrentService?.applyVpnPolicy();
     }
     if ('theme' in next) broadcastTheme();
     if ('rssEnabled' in next) {

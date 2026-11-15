@@ -3220,6 +3220,10 @@ function openTorrentSettings() {
       <span class="switch"><input id="torrent-set-trackers" type="checkbox" ${s.useTrackers ? 'checked' : ''}><span class="slider"></span></span>
     </label>
     <label class="setting">
+      <div class="setting-text"><div class="setting-title">Торренты в обход VPN</div><div class="setting-desc">Торрент-трафик идёт напрямую, минуя браузерный VPN. Если выключить, при активном VPN новые загрузки блокируются, а текущие ставятся на паузу.</div></div>
+      <span class="switch"><input id="torrent-set-bypass" type="checkbox" ${s.bypassVpn !== false ? 'checked' : ''}><span class="slider"></span></span>
+    </label>
+    <label class="setting">
       <div class="setting-text"><div class="setting-title">Продолжать при запуске</div><div class="setting-desc">Возобновлять незавершённые загрузки после перезапуска браузера.</div></div>
       <span class="switch"><input id="torrent-set-resume" type="checkbox" ${s.resumeOnStart ? 'checked' : ''}><span class="slider"></span></span>
     </label>
@@ -3256,6 +3260,7 @@ function openTorrentSettings() {
       torrentSeedRatio: number('#torrent-set-ratio', 0, 100, 0),
       torrentDht: $('#torrent-set-dht', root).checked,
       torrentUseTrackers: $('#torrent-set-trackers', root).checked,
+      torrentBypassVpn: $('#torrent-set-bypass', root).checked,
       torrentResumeOnStart: $('#torrent-set-resume', root).checked,
       torrentStartPaused: $('#torrent-set-paused', root).checked,
     };

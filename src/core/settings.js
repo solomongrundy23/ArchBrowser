@@ -102,6 +102,8 @@ const DEFAULTS = {
   torrentSeedRatio: 2,
   torrentResumeOnStart: true,
   torrentStartPaused: false,
+  // Разрешать торрент-трафик напрямую (в обход браузерного VPN).
+  torrentBypassVpn: true,
 
   // VPN
   vpnAutoConnect: false,

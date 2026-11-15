@@ -490,15 +490,17 @@ class TorrentJob {
 }
 
 class TorrentService {
-  constructor({ userDataDir, getSettings, getDir, onChange }) {
+  constructor({ userDataDir, getSettings, getDir, isVpnActive, onChange }) {
     this.userDataDir = userDataDir;
     this.getSettings = getSettings || (() => ({}));
     this.getDir = getDir || (() => path.join(os.homedir(), 'Downloads'));
+    this.isVpnActive = typeof isVpnActive === 'function' ? isVpnActive : (() => false);
     this.onChange = onChange || (() => {});
     this.jobs = new Map();
     this.counter = 0;
     this.storeFile = path.join(userDataDir, 'torrents.json');
     this.items = [];
+    this._vpnPaused = new Set();
     this._saveTimer = null;
     this.dht = null;
     this.dhtReady = false;
@@ -596,7 +598,41 @@ class TorrentService {
       seedRatio: Math.max(0, Number(s.torrentSeedRatio) || 0),
       resumeOnStart: s.torrentResumeOnStart !== false,
       startPaused: !!s.torrentStartPaused,
+      bypassVpn: s.torrentBypassVpn !== false,
     };
+  }
+
+  _blockedByVpn() {
+    return this.isVpnActive() && this.settings().bypassVpn === false;
+  }
+
+  _ensureAllowed() {
+    if (this._blockedByVpn()) {
+      throw new Error('Скачивание торрентов в обход VPN выключено, а VPN активен. Отключите VPN или включите обход для торрентов.');
+    }
+  }
+
+  // Пока VPN активен и обход для торрентов выключен, не даём торрент-трафику
+  // идти напрямую. При снятии блокировки возвращаем только те задания,
+  // которые были приостановлены именно этим правилом.
+  applyVpnPolicy() {
+    const blocked = this._blockedByVpn();
+    if (blocked) {
+      for (const [id, job] of this.jobs) {
+        if (job.paused) continue;
+        job.pause();
+        this._vpnPaused.add(id);
+      }
+      this.stopDht();
+    } else {
+      for (const id of [...this._vpnPaused]) {
+        const job = this.jobs.get(id);
+        if (job && job.paused) job.resume();
+      }
+      this._vpnPaused.clear();
+    }
+    this._persist();
+    this.onChange();
   }
 
   enabled() {
@@ -691,6 +727,7 @@ class TorrentService {
 
   async add(source, { paused = false, dir = '' } = {}) {
     if (!this.enabled()) throw new Error('BitTorrent-клиент выключен в настройках');
+    this._ensureAllowed();
     if (!source || !source.value) throw new Error('Пустая ссылка на торрент');
     if (source.kind !== 'magnet' && source.kind !== 'file') throw new Error('Неизвестный источник торрента');
     const settings = this.settings();
@@ -723,6 +760,7 @@ class TorrentService {
   }
 
   async addUrl(url, options = {}) {
+    this._ensureAllowed();
     const text = String(url || '').trim();
     if (!/^https?:\/\//i.test(text)) throw new Error('Нужна magnet-ссылка или адрес .torrent');
     const file = path.join(this.userDataDir, 'torrents', `url-${crypto.createHash('sha1').update(text).digest('hex').slice(0, 16)}.torrent`);
@@ -816,6 +854,7 @@ class TorrentService {
     this._persist();
     this.onChange();
     this._dhtLookup(true);
+    this.applyVpnPolicy();
     const announceTimer = setTimeout(() => this._dhtLookup(true), 5000);
     if (announceTimer.unref) announceTimer.unref();
   }
